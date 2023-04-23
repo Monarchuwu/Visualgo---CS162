@@ -139,7 +139,33 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Application.cpp" />
+    <ClCompile Include="Arrow.cpp" />
+    <ClCompile Include="BasicList.cpp" />
+    <ClCompile Include="BasicNode.cpp" />
+    <ClCompile Include="CircleShape.cpp" />
+    <ClCompile Include="Constants.cpp" />
+    <ClCompile Include="DashTable.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="SceneNode.cpp" />
+    <ClCompile Include="Random.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Application.h" />
+    <ClInclude Include="Arrow.h" />
+    <ClInclude Include="BasicList.h" />
+    <ClInclude Include="BasicNode.h" />
+    <ClInclude Include="CircleShape.h" />
+    <ClInclude Include="Constants.h" />
+    <ClInclude Include="DashTable.h" />
+    <ClInclude Include="Random.h" />
+    <ClInclude Include="SceneNode.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include=".clang-format" />
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="arial.ttf" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

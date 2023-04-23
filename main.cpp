@@ -1,14 +1,11 @@
-#include <SFML/Graphics.hpp>
+#include "Application.h"
+#include "Constants.h"
 
 int main() {
-	sf::RenderWindow window(sf::VideoMode(800, 600), "Not Tetris");
-	sf::Event event;
+    Constants::init();
 
-	while (window.isOpen()) {
-		while (window.pollEvent(event)) {
-			if (event.type == sf::Event::Closed) {
-				window.close();
-			}
-		}
-	}
+    Application app;
+    app.run();
+
+    return 0;
 }
