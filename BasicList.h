@@ -9,6 +9,8 @@ public:
     virtual void draw(sf::RenderTarget& target) const;
     // virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 
+    size_t getCountNode() const;
+
 private:
     void update();
 

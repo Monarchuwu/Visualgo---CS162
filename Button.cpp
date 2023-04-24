@@ -4,6 +4,8 @@
 Button::Button()
     : mButton(),
       mText(),
+      mTextConst(),
+      mTextTemp(),
       mFitContent(true) {
     setID(-1);
     mText.setFont(Constants::Font);
@@ -44,8 +46,15 @@ void Button::setCharacterSize(size_t size) {
     mText.setCharacterSize(size);
 }
 
+void Button::setTextConst(std::string text) {
+    mTextConst = text;
+    mText.setString(mTextConst + mTextTemp);
+    setPositionContent();
+}
+
 void Button::setText(std::string text) {
-    mText.setString(text);
+    mTextTemp = text;
+    mText.setString(mTextConst + mTextTemp);
     setPositionContent();
 }
 
@@ -53,7 +62,15 @@ void Button::setTextFillColor(const sf::Color& color) {
     mText.setFillColor(color);
 }
 
+std::string Button::getTextConst() const {
+    return mTextConst;
+}
+
 std::string Button::getText() const {
+    return mTextTemp;
+}
+
+std::string Button::getTextAll() const {
     return mText.getString();
 }
 
@@ -70,13 +87,29 @@ void Button::setAction(std::function<void()> clickedAction) {
 sf::FloatRect Button::getGlobalBounds() const { return mButton.getGlobalBounds(); }
 sf::FloatRect Button::getLocalBounds() const { return mButton.getLocalBounds(); }
 
-//void Button::EnableFitContent() { mFitContent = true; }
-//void Button::DisableFitContent() { mFitContent = false; }
+//void Button::enableFitContent() {
+//    mFitContent = true;
+//    setPositionContent();
+//}
+//
+//void Button::disableFitContent() {
+//    mFitContent = false;
+//    setPositionContent();
+//}
+
 void Button::setPositionContent() {
     sf::FloatRect rect = mText.getLocalBounds();
+    int x              = rect.left + rect.width / 2;
+    int y              = rect.top + rect.height / 2;
     if (mFitContent) {
-        int x = rect.left + rect.width / 2;
-        int y = rect.top + rect.height / 2;
         mText.setOrigin(x, y);
     }
+    //else {
+    //    if (x < y) {
+    //        mText.setOrigin(x, y);
+    //    }
+    //    else {
+    //        mText.setOrigin(y, y);
+    //    }
+    //}
 }

@@ -5,11 +5,13 @@
 
 Application::Application()
     : mWindow(),
-      mList(10) {
+      mList(Constants::MaxCountNode) {
     sf::ContextSettings settings;
     settings.antialiasingLevel = 8;
     mWindow.create(sf::VideoMode(Constants::SceneWidth, Constants::SceneHeight), "Data Structure Visualization", sf::Style::Close, settings);
     mWindow.setPosition(sf::Vector2i(10, 10));
+
+    Constants::CountNode = mList.getCountNode();
 }
 
 void Application::run() {
@@ -39,6 +41,10 @@ void Application::processEvents() {
 
             case sf::Event::MouseButtonReleased:
                 mControlTable.handleButtonInput(event.mouseButton, false);
+                break;
+
+            case sf::Event::KeyReleased:
+                mControlTable.handleKeyInput(event.key);
                 break;
 
             case sf::Event::Closed:

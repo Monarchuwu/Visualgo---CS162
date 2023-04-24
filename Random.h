@@ -5,5 +5,5 @@
 
 namespace Random {
     extern std::mt19937_64 rd;
-    int Rand();
+    int Rand(int l = Constants::MinVal, int r = Constants::MaxVal);
 } // namespace Random

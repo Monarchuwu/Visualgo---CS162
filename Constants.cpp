@@ -20,6 +20,9 @@ namespace Constants {
     sf::Color NodeOutlineColor = sf::Color::Black;
     sf::Color TextNodeColor    = sf::Color::Black;
 
+    /// Basic List Constants
+    size_t CountNode;
+
     /// Control Table Constants
     // Control Table
     sf::Color ControlTableThemeColor = StandardColor[1];
@@ -30,13 +33,39 @@ namespace Constants {
     // Parameter Table
     sf::Color ParameterTableThemeColor = StandardColor[3];
     sf::Color BackGroundTextColor      = StandardColor[2];
+    sf::Color BackGroundTextColorHold  = StandardColor[1];
     // Position Row (Row 1)
     int PositionType = 0;
+    // Box Input
+    Button* BoxInputHolder = nullptr;
+    size_t BoxInputPositionMinVal = 0;
+    size_t BoxInputPositionMaxVal = 0;
 
     void init() {
         if (!Font.loadFromFile(FontName)) {
             std::cout << "Can't load the font !!!";
             exit(0);
+        }
+    }
+
+    void updateBoxInputPositionValue() {
+        switch (PositionType) {
+            case Position::Beginning:
+                BoxInputPositionMinVal = BoxInputPositionMaxVal = 0;
+                break;
+
+            case Position::Middle:
+                BoxInputPositionMinVal = BoxInputPositionMaxVal = 1;
+                if (CountNode >= 2)
+                    BoxInputPositionMaxVal = CountNode - 1;
+                break;
+
+            case Position::End:
+                BoxInputPositionMinVal = BoxInputPositionMaxVal = CountNode;
+                break;
+
+            default:
+                break;
         }
     }
 

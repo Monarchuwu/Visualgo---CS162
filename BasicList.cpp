@@ -9,17 +9,6 @@ BasicList::BasicList(size_t countNode)
     update();
 }
 
-void BasicList::update() {
-    if (mCountNode > Constants::MaxCountNode) {
-        mCountNode = Constants::MaxCountNode;
-    }
-    mList.resize(mCountNode);
-    mStartingPosition = Constants::MidPointSceneVisual;
-    if (mCountNode > 0) {
-        mStartingPosition.x -= (mCountNode - 1) * Constants::ShiftNode.x / 2;
-    }
-}
-
 void BasicList::draw(sf::RenderTarget& target) const {
     sf::Transform states;
     states.translate(mStartingPosition);
@@ -36,5 +25,18 @@ void BasicList::draw(sf::RenderTarget& target) const {
             drawArrow(src, dest, target);
         }
         mList[index].draw(target, states);
+    }
+}
+
+size_t BasicList::getCountNode() const { return mCountNode; }
+
+void BasicList::update() {
+    if (mCountNode > Constants::MaxCountNode) {
+        mCountNode = Constants::MaxCountNode;
+    }
+    mList.resize(mCountNode);
+    mStartingPosition = Constants::MidPointSceneVisual;
+    if (mCountNode > 0) {
+        mStartingPosition.x -= (mCountNode - 1) * Constants::ShiftNode.x / 2;
     }
 }

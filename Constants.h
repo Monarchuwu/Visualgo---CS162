@@ -1,5 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include "Button.h"
 
 namespace Constants {
     /// Color Constants
@@ -32,6 +33,7 @@ namespace Constants {
     /// Basic List Constants
     // Max Count Node
     const size_t MaxCountNode = 10;
+    extern size_t CountNode;
     // Shift Node by Arrow
     const sf::Vector2f ShiftNode = sf::Vector2f(160.f, 0.f); // transform between 2 node
 
@@ -52,6 +54,7 @@ namespace Constants {
     // Parameter Table
     extern sf::Color ParameterTableThemeColor;
     extern sf::Color BackGroundTextColor;
+    extern sf::Color BackGroundTextColorHold;
     // Position Row (Row 1)
     extern int PositionType;
     enum Position {
@@ -64,10 +67,16 @@ namespace Constants {
         "Middle (i = 1..n - 1)",
         "End (i = n)"
     };
+    // Box Input
+    extern Button* BoxInputHolder;
+    extern size_t BoxInputPositionMinVal;
+    extern size_t BoxInputPositionMaxVal;
 
     // Misc
     constexpr int MinVal = 0;
     constexpr int MaxVal = 99;
 
     void init();
+    void updateBoxInputPositionValue();
+
 } // namespace Constants
