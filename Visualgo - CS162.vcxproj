@@ -143,6 +143,7 @@
     <ClCompile Include="Arrow.cpp" />
     <ClCompile Include="BasicList.cpp" />
     <ClCompile Include="BasicNode.cpp" />
+    <ClCompile Include="Button.cpp" />
     <ClCompile Include="CircleShape.cpp" />
     <ClCompile Include="Constants.cpp" />
     <ClCompile Include="ControlTable.cpp" />
@@ -155,6 +156,7 @@
     <ClInclude Include="Arrow.h" />
     <ClInclude Include="BasicList.h" />
     <ClInclude Include="BasicNode.h" />
+    <ClInclude Include="Button.h" />
     <ClInclude Include="CircleShape.h" />
     <ClInclude Include="Constants.h" />
     <ClInclude Include="ControlTable.h" />
