@@ -1,6 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include "Button.h"
+#include "CircleShape.h"
 
 class ControlTable {
     // [0..900] x [500..900]
@@ -30,8 +31,13 @@ private:
     /// Parameter Table
     // Theme : [290..890] x [510..890]
     sf::RectangleShape mParameterTableTheme;
-    // Table
-    // is <At Begin (i = 0), At Middle (i = 1..n-2), At End (i = n-1)>
+    // Select Position to Insert/Delete : [395..785] x [530..590]
+    // Display: <Beginning (i = 0), Middle (i = 1..n-1), End (i = n)>
+    Button mSelectPosition;
+    // Triangle in the Left of mSelectPosition : [(355, 560), 30]
+    CircleShape mTriangleLeft;
+    // Triangle in the Right of mSelectPosition : [(825, 560), 30]
+    CircleShape mTriangleRight;
     // [input position][random]
     // [input  value  ][random]
     // [Play] (change to [Unavailable] when animation is begin played) <=> Enter

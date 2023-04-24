@@ -8,6 +8,7 @@ public:
     float getRadius() const;
     void setInitAngle(float initAngle);
     float getInitAngle() const;
+    void setPointCount(size_t pointCount);
     virtual size_t getPointCount() const;
     virtual sf::Vector2f getPoint(size_t index) const;
 

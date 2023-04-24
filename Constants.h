@@ -47,9 +47,23 @@ namespace Constants {
                      Search,
                      Update,
                      Insert,
-                     Remove };
+                     Remove
+    };
     // Parameter Table
     extern sf::Color ParameterTableThemeColor;
+    extern sf::Color BackGroundTextColor;
+    // Position Row (Row 1)
+    extern int PositionType;
+    enum Position {
+        Beginning,
+        Middle,
+        End
+    };
+    const std::string PositionText[3] = {
+        "Beginning (i = 0)",
+        "Middle (i = 1..n - 1)",
+        "End (i = n)"
+    };
 
     // Misc
     constexpr int MinVal = 0;

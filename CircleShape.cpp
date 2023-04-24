@@ -25,6 +25,10 @@ float CircleShape::getInitAngle() const {
     return mInitAngle;
 }
 
+void CircleShape::setPointCount(size_t pointCount) {
+    mPointCount = pointCount;
+}
+
 size_t CircleShape::getPointCount() const {
     return mPointCount; // fixed, but could be an attribute of the class if needed
 }

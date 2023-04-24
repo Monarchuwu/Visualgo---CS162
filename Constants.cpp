@@ -26,9 +26,12 @@ namespace Constants {
     // Button Main
     sf::Color ButtonMainColor = StandardColor[0];
     sf::Color ButtonMainColorClicked = StandardColor[3];
-    int OperationType = -1;
+    int OperationType = 0;
     // Parameter Table
     sf::Color ParameterTableThemeColor = StandardColor[3];
+    sf::Color BackGroundTextColor      = StandardColor[2];
+    // Position Row (Row 1)
+    int PositionType = 0;
 
     void init() {
         if (!Font.loadFromFile(FontName)) {
