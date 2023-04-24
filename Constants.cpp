@@ -25,6 +25,8 @@ namespace Constants {
     sf::Color ControlTableThemeColor = StandardColor[1];
     // Button Main
     sf::Color ButtonMainColor = StandardColor[0];
+    sf::Color ButtonMainColorClicked = StandardColor[3];
+    int OperationType = -1;
     // Parameter Table
     sf::Color ParameterTableThemeColor = StandardColor[3];
 

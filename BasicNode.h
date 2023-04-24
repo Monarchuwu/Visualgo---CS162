@@ -6,12 +6,11 @@ class BasicNode {
 public:
     BasicNode();
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states = sf::RenderStates::Default) const;
-
-private:
     void updateValue(int value);
     void setText(std::string text = "");
     std::string getText() const;
 
+private:
 private:
     CircleShape mBody;
     sf::Text mText;

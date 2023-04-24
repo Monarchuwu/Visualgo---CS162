@@ -5,12 +5,16 @@ Button::Button()
     : mButton(),
       mText(),
       mFitContent(true) {
+    setID(-1);
     mText.setFont(Constants::Font);
     mText.setStyle(sf::Text::Bold);
     mText.setFillColor(sf::Color::Black);
     setCharacterSize();
     setText();
 }
+
+void Button::setID(int ID) { mID = ID; }
+int Button::getID() const { return mID; }
 
 void Button::setPosition(const sf::Vector2f& position) {
     mButton.setPosition(position);

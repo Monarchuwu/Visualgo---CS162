@@ -6,6 +6,9 @@ class Button {
 public:
     Button();
 
+    void setID(int ID);
+    int getID() const;
+
     void setPosition(const sf::Vector2f &position);
     void setPosition(float x, float y);
     void setSize(const sf::Vector2f& size);
@@ -32,6 +35,7 @@ private:
     void setPositionContent();
 
 private:
+    int mID;
     sf::RectangleShape mButton;
     sf::Text mText;
     std::function<void()> mAction;

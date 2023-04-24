@@ -33,6 +33,14 @@ void Application::processEvents() {
     sf::Event event;
     while (mWindow.pollEvent(event)) {
         switch (event.type) {
+            case sf::Event::MouseButtonPressed:
+                mControlTable.handleButtonInput(event.mouseButton, true);
+                break;
+
+            case sf::Event::MouseButtonReleased:
+                mControlTable.handleButtonInput(event.mouseButton, false);
+                break;
+
             case sf::Event::Closed:
                 mWindow.close();
                 break;

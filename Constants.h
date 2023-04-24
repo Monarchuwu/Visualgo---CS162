@@ -40,7 +40,14 @@ namespace Constants {
     extern sf::Color ControlTableThemeColor;
     // Button Main
     extern sf::Color ButtonMainColor;
+    extern sf::Color ButtonMainColorClicked;
     constexpr size_t ButtonMainCharacterSize = 35;
+    extern int OperationType;
+    enum Operation { Create,
+                     Search,
+                     Update,
+                     Insert,
+                     Remove };
     // Parameter Table
     extern sf::Color ParameterTableThemeColor;
 
