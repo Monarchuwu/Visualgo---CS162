@@ -12,7 +12,7 @@ BasicNode::BasicNode()
 
     mText.setFont(Constants::Font);
     mText.setStyle(sf::Text::Bold);
-    mText.setCharacterSize(Constants::CharacterSize);
+    mText.setCharacterSize(Constants::TextNodeCharacterSize);
     mText.setFillColor(Constants::TextNodeColor);
     updateValue(Random::Rand());
 }

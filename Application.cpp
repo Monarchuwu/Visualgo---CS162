@@ -44,7 +44,8 @@ void Application::update() {
 }
 
 void Application::render() {
-    mWindow.clear();
+    mWindow.clear(Constants::StandardColor[1]);
+    mControlTable.draw(mWindow);
     mList.draw(mWindow);
     mWindow.display();
 }

@@ -2,11 +2,31 @@
 #include "Constants.h"
 
 namespace Constants {
-    sf::Color NodeFillColor    = sf::Color::Black;
-    sf::Color NodeOutlineColor = sf::Color::White;
-    sf::Color TextNodeColor    = sf::Color::White;
+    /// Color Constants
+    // Dark > DarkMedium > LightMedium > Light
+    sf::Color StandardColor[4] = {
+        sf::Color(96, 150, 180),
+        sf::Color(147, 191, 207),
+        sf::Color(189, 205, 214),
+        sf::Color(238, 233, 218)
+    };
 
+    /// Font Constants
     sf::Font Font;
+
+    /// Node Constants
+    // Body
+    sf::Color NodeFillColor    = StandardColor[1];
+    sf::Color NodeOutlineColor = sf::Color::Black;
+    sf::Color TextNodeColor    = sf::Color::Black;
+
+    /// Control Table Constants
+    // Control Table
+    sf::Color ControlTableThemeColor = StandardColor[1];
+    // Button Main
+    sf::Color ButtonMainColor = StandardColor[0];
+    // Parameter Table
+    sf::Color ParameterTableThemeColor = StandardColor[3];
 
     void init() {
         if (!Font.loadFromFile(FontName)) {

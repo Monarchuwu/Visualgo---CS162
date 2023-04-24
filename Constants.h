@@ -2,6 +2,9 @@
 #include <SFML/Graphics.hpp>
 
 namespace Constants {
+    /// Color Constants
+    extern sf::Color StandardColor[4];
+
     /// Scene Constants
     // Scene Main [0..1600] x [0..900]
     constexpr int SceneWidth      = 1600;
@@ -18,13 +21,13 @@ namespace Constants {
 
     /// Node Constants
     // Body
-    constexpr float CirleNodeRadius      = 26.f;
-    constexpr float NodeOutlineThinkness = 4.f;
+    constexpr float CirleNodeRadius      = 25.f;
+    constexpr float NodeOutlineThinkness = 5.f;
     extern sf::Color NodeFillColor;
     extern sf::Color NodeOutlineColor;
     extern sf::Color TextNodeColor;
     // Text
-    constexpr size_t CharacterSize = 24;
+    constexpr size_t TextNodeCharacterSize = 26;
 
     /// Basic List Constants
     // Max Count Node
@@ -32,8 +35,14 @@ namespace Constants {
     // Shift Node by Arrow
     const sf::Vector2f ShiftNode = sf::Vector2f(160.f, 0.f); // transform between 2 node
 
-    /// Arrow Constants
-    constexpr float HeadArrowRadius = 7.f;
+    /// Control Table Constants
+    // Control Table
+    extern sf::Color ControlTableThemeColor;
+    // Button Main
+    extern sf::Color ButtonMainColor;
+    constexpr size_t ButtonMainCharacterSize = 35;
+    // Parameter Table
+    extern sf::Color ParameterTableThemeColor;
 
     // Misc
     constexpr int MinVal = 0;

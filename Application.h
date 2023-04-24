@@ -1,6 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include "BasicList.h"
+#include "ControlTable.h"
 
 class Application {
 public:
@@ -15,4 +16,5 @@ private:
 private:
     sf::RenderWindow mWindow;
     BasicList mList;
+    ControlTable mControlTable;
 };

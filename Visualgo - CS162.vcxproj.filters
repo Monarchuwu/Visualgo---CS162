@@ -42,7 +42,7 @@
     <ClCompile Include="Random.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="DashTable.cpp">
+    <ClCompile Include="ControlTable.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -71,7 +71,7 @@
     <ClInclude Include="Random.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DashTable.h">
+    <ClInclude Include="ControlTable.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
