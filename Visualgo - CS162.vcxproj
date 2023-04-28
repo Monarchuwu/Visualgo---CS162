@@ -162,6 +162,7 @@
     <ClInclude Include="ControlTable.h" />
     <ClInclude Include="Random.h" />
     <ClInclude Include="SceneNode.h" />
+    <ClInclude Include="Vector.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".clang-format" />
