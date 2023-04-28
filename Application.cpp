@@ -4,12 +4,28 @@
 #include "Constants.h"
 
 Application::Application()
-    : mWindow(),
-      mList(Constants::MaxCountNode) {
+    : mCarrier(),
+      mWindow(),
+      mList(mCarrier, Constants::MaxCountNode),
+      mControlTable(mCarrier) {
     sf::ContextSettings settings;
     settings.antialiasingLevel = 8;
     mWindow.create(sf::VideoMode(Constants::SceneWidth, Constants::SceneHeight), "Data Structure Visualization", sf::Style::Close, settings);
     mWindow.setPosition(sf::Vector2i(10, 10));
+
+    Vector<int> nameButtonMain;
+    nameButtonMain.push_back(Constants::Operation::Init);
+    nameButtonMain.push_back(Constants::Operation::Insert);
+    nameButtonMain.push_back(Constants::Operation::Delete);
+    nameButtonMain.push_back(Constants::Operation::Update);
+    nameButtonMain.push_back(Constants::Operation::Search);
+    mControlTable.setButtonMainList(nameButtonMain);
+
+    Vector<int> SelectPosList;
+    SelectPosList.push_back(Constants::Position::Beginning);
+    SelectPosList.push_back(Constants::Position::Middle);
+    SelectPosList.push_back(Constants::Position::End);
+    mControlTable.setSelectPositionList(SelectPosList);
 
     Constants::CountNode = mList.getCountNode();
 }
@@ -55,6 +71,12 @@ void Application::processEvents() {
 }
 
 void Application::update() {
+    //for (int i = 0; i < mCarrier.mArr.size(); ++i) {
+    //    std::cout << mCarrier.mArr[i] << ' ';
+    //}
+    //std::cout << '\n';
+    //std::cout << mCarrier.mPos << '\n';
+    //std::cout << mCarrier.mVal << '\n';
 }
 
 void Application::render() {

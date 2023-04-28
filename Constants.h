@@ -43,20 +43,39 @@ namespace Constants {
     // Button Main
     extern sf::Color ButtonMainColor;
     extern sf::Color ButtonMainColorClicked;
-    constexpr size_t ButtonMainCharacterSize = 35;
-    extern int OperationType;
-    enum Operation { Create,
-                     Search,
-                     Update,
+    constexpr size_t ButtonMainCharacterSize = 30;
+    enum Operation { Init,
                      Insert,
-                     Remove
+                     Delete,
+                     Update,
+                     Allocate,
+                     Access,
+                     Search,
+                     Push,
+                     Pop,
+                     Add,
+                     Remove,
+                     Clear
+    };
+    const std::string OperationText[12] = {
+        "Init",
+        "Insert",
+        "Delete",
+        "Update",
+        "Allocate",
+        "Access",
+        "Search",
+        "Push",
+        "Pop",
+        "Add",
+        "Remove",
+        "Clear"
     };
     // Parameter Table
     extern sf::Color ParameterTableThemeColor;
     extern sf::Color BackGroundTextColor;
     extern sf::Color BackGroundTextColorHold;
     // Position Row (Row 1)
-    extern int PositionType;
     enum Position {
         Beginning,
         Middle,
@@ -67,16 +86,11 @@ namespace Constants {
         "Middle (i = 1..n - 1)",
         "End (i = n)"
     };
-    // Box Input
-    extern Button* BoxInputHolder;
-    extern size_t BoxInputPositionMinVal;
-    extern size_t BoxInputPositionMaxVal;
 
     // Misc
     constexpr int MinVal = 0;
     constexpr int MaxVal = 99;
 
     void init();
-    void updateBoxInputPositionValue();
 
 } // namespace Constants

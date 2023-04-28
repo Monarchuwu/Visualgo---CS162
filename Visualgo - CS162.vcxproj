@@ -143,25 +143,33 @@
     <ClCompile Include="Arrow.cpp" />
     <ClCompile Include="BasicList.cpp" />
     <ClCompile Include="BasicNode.cpp" />
+    <ClCompile Include="BoxInput.cpp" />
     <ClCompile Include="Button.cpp" />
+    <ClCompile Include="Carrier.cpp" />
     <ClCompile Include="CircleShape.cpp" />
     <ClCompile Include="Constants.cpp" />
     <ClCompile Include="ControlTable.cpp" />
+    <ClCompile Include="InitArrayBlock.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="SceneNode.cpp" />
     <ClCompile Include="Random.cpp" />
+    <ClCompile Include="SelectPositionBlock.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
     <ClInclude Include="Arrow.h" />
     <ClInclude Include="BasicList.h" />
     <ClInclude Include="BasicNode.h" />
+    <ClInclude Include="BoxInput.h" />
     <ClInclude Include="Button.h" />
+    <ClInclude Include="Carrier.h" />
     <ClInclude Include="CircleShape.h" />
     <ClInclude Include="Constants.h" />
     <ClInclude Include="ControlTable.h" />
+    <ClInclude Include="InitArrayBlock.h" />
     <ClInclude Include="Random.h" />
     <ClInclude Include="SceneNode.h" />
+    <ClInclude Include="SelectPositionBlock.h" />
     <ClInclude Include="Vector.h" />
   </ItemGroup>
   <ItemGroup>
@@ -169,6 +177,9 @@
   </ItemGroup>
   <ItemGroup>
     <Font Include="arial.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="initSLL.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

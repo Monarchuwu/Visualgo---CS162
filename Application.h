@@ -2,6 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include "BasicList.h"
 #include "ControlTable.h"
+#include "Carrier.h"
 
 class Application {
 public:
@@ -14,6 +15,8 @@ private:
     void render();
 
 private:
+    Carrier mCarrier;
+
     sf::RenderWindow mWindow;
     BasicList mList;
     ControlTable mControlTable;

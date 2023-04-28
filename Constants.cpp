@@ -29,17 +29,11 @@ namespace Constants {
     // Button Main
     sf::Color ButtonMainColor = StandardColor[0];
     sf::Color ButtonMainColorClicked = StandardColor[3];
-    int OperationType = 0;
     // Parameter Table
     sf::Color ParameterTableThemeColor = StandardColor[3];
     sf::Color BackGroundTextColor      = StandardColor[2];
     sf::Color BackGroundTextColorHold  = StandardColor[1];
     // Position Row (Row 1)
-    int PositionType = 0;
-    // Box Input
-    Button* BoxInputHolder = nullptr;
-    size_t BoxInputPositionMinVal = 0;
-    size_t BoxInputPositionMaxVal = 0;
 
     void init() {
         if (!Font.loadFromFile(FontName)) {
@@ -47,26 +41,4 @@ namespace Constants {
             exit(0);
         }
     }
-
-    void updateBoxInputPositionValue() {
-        switch (PositionType) {
-            case Position::Beginning:
-                BoxInputPositionMinVal = BoxInputPositionMaxVal = 0;
-                break;
-
-            case Position::Middle:
-                BoxInputPositionMinVal = BoxInputPositionMaxVal = 1;
-                if (CountNode >= 2)
-                    BoxInputPositionMaxVal = CountNode - 1;
-                break;
-
-            case Position::End:
-                BoxInputPositionMinVal = BoxInputPositionMaxVal = CountNode;
-                break;
-
-            default:
-                break;
-        }
-    }
-
 } // namespace Constants

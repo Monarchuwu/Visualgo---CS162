@@ -2,8 +2,9 @@
 #include "Arrow.h"
 #include "Constants.h"
 
-BasicList::BasicList(size_t countNode)
-    : mCountNode(countNode),
+BasicList::BasicList(Carrier &carrier, size_t countNode)
+    : mCarrier(carrier),
+      mCountNode(countNode),
       mList(),
       mStartingPosition() {
     update();

@@ -1,5 +1,6 @@
 // https://github.com/Miguel-Deniz/Vector-Implementation/blob/master/Vector%20Implementation/Vector.h?fbclid=IwAR1M0UoHF2Qm0IvFzxTrzq6GBuDe-LcrNXraMawZ-MEiiP5IZ5HjnG7kkp4
 #pragma once
+#include <stdexcept>
 
 template <typename T>
 class Vector {
@@ -10,6 +11,8 @@ public:
     Vector();
     // Destructor
     ~Vector();
+    // Copy constructor
+    Vector(const Vector& arg);
     // Copy Assingment
     Vector<T>& operator=(const Vector<T>& arg);
 
@@ -35,6 +38,9 @@ public:
     void push_back(T value);
 	// Removes the last element from the Vector
     void pop_back();
+    // Removes all elements from the Vector
+    // Capacity is not changed
+    void clear();
 
     /* ----- ELEMENT ACCESS ----- */
 
@@ -60,6 +66,16 @@ template<typename T>
 Vector<T>::~Vector() { delete[] mData; }
 
 template<typename T>
+Vector<T>::Vector(const Vector& arg)
+    : mSize(arg.mSize),
+      mCapacity(arg.mCapacity),
+      mData(new T[arg.mSize]) {
+    for (int i = 0; i < arg.mSize; ++i) {
+        mData[i] = arg.mData[i];
+    }
+}
+
+template<typename T>
 Vector<T>& Vector<T>::operator=(const Vector<T>& arg) {
     mSize     = arg.mSize;
     mCapacity = arg.mCapacity;
@@ -67,6 +83,7 @@ Vector<T>& Vector<T>::operator=(const Vector<T>& arg) {
     for (int i = 0; i < mSize; ++i) {
         mData[i] = arg.mData[i];
     }
+    return *this;
 }
 
 // Iterators
@@ -102,7 +119,7 @@ void Vector<T>::push_back(T value) {
     if (mSize == mCapacity) {
         reserve(mCapacity * 2);
     }
-    m_data[mSize++] = value;
+    mData[mSize++] = value;
 }
 
 template<typename T>
@@ -113,13 +130,18 @@ void Vector<T>::pop_back() {
     --mSize;
 }
 
+template<typename T>
+void Vector<T>::clear() {
+    mSize = 0;
+}
+
 // Element Access
 template<typename T>
 T& Vector<T>::operator[](size_t index) {
     if (index >= mSize) {
         throw std::out_of_range("Index out of range");
     }
-    return m_data[index];
+    return mData[index];
 }
 
 template<typename T>
@@ -127,5 +149,5 @@ const T& Vector<T>::operator[](size_t index) const {
     if (index >= mSize) {
         throw std::out_of_range("Index out of range");
     }
-    return m_data[index];
+    return mData[index];
 }
