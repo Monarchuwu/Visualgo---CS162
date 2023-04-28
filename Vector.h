@@ -10,6 +10,8 @@ public:
     Vector();
     // Destructor
     ~Vector();
+    // Copy Assingment
+    Vector<T>& operator=(const Vector<T>& arg);
 
     /* -------- ITERATORS --------*/
 
@@ -56,6 +58,16 @@ Vector<T>::Vector()
 
 template<typename T>
 Vector<T>::~Vector() { delete[] mData; }
+
+template<typename T>
+Vector<T>& Vector<T>::operator=(const Vector<T>& arg) {
+    mSize     = arg.mSize;
+    mCapacity = arg.mCapacity;
+    mData     = new T[mCapacity];
+    for (int i = 0; i < mSize; ++i) {
+        mData[i] = arg.mData[i];
+    }
+}
 
 // Iterators
 template<typename T>
