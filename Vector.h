@@ -85,6 +85,8 @@ size_t Vector<T>::size() const { return mSize; }
 
 template<typename T>
 void Vector<T>::reserve(size_t capacity) {
+    if (capacity <= mCapacity) return;
+
     T* newData = new T[capacity];
     for (size_t i = 0; i < mSize; ++i) {
         newData[i] = mData[i];
