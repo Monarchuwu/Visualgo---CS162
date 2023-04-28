@@ -71,6 +71,7 @@ void Application::processEvents() {
 }
 
 void Application::update() {
+    //
     //for (int i = 0; i < mCarrier.mArr.size(); ++i) {
     //    std::cout << mCarrier.mArr[i] << ' ';
     //}
