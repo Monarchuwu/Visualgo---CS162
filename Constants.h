@@ -33,7 +33,6 @@ namespace Constants {
     /// Basic List Constants
     // Max Count Node
     const size_t MaxCountNode = 10;
-    extern size_t CountNode;
     // Shift Node by Arrow
     const sf::Vector2f ShiftNode = sf::Vector2f(130.f, 0.f); // transform between 2 node
 
@@ -90,6 +89,7 @@ namespace Constants {
     // Misc
     constexpr int MinVal = 0;
     constexpr int MaxVal = 99;
+    const sf::Color OrangeColor = sf::Color(255, 165, 0);
 
     void init();
 

@@ -15,4 +15,5 @@ public:
     int mPos;
     int mVal;
     bool mPlayIsPressed;
+    bool mAnimationIsPlaying;
 };

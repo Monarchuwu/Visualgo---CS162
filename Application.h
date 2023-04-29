@@ -20,4 +20,7 @@ private:
     sf::RenderWindow mWindow;
     BasicList mList;
     ControlTable mControlTable;
+
+    int mCntFrames;
+    Animation mAnimation;
 };

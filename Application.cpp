@@ -7,7 +7,9 @@ Application::Application()
     : mCarrier(),
       mWindow(),
       mList(mCarrier, Vector<int>()),
-      mControlTable(mCarrier) {
+      mControlTable(mCarrier),
+      mCntFrames(0),
+      mAnimation() {
     sf::ContextSettings settings;
     settings.antialiasingLevel = 8;
     mWindow.create(sf::VideoMode(Constants::SceneWidth, Constants::SceneHeight), "Data Structure Visualization", sf::Style::Close, settings);
@@ -26,8 +28,6 @@ Application::Application()
     SelectPosList.push_back(Constants::Position::Middle);
     SelectPosList.push_back(Constants::Position::End);
     mControlTable.setSelectPositionList(SelectPosList);
-
-    Constants::CountNode = mList.getCountNode();
 }
 
 void Application::run() {
@@ -71,12 +71,26 @@ void Application::processEvents() {
 }
 
 void Application::update() {
-    if (mCarrier.mPlayIsPressed) {
-        mCarrier.mPlayIsPressed = false;
+    ++mCntFrames;
 
-        if (mCarrier.mOperationType == Constants::Operation::Init) {
-            mList.updateArray(mCarrier.mArr);
+    if (!mAnimation.empty()) {
+        mCarrier.mPlayIsPressed = false;
+        if (mCntFrames % Constants::FramesPerSecond == 0) {
+            int index = mCntFrames / Constants::FramesPerSecond;
+            if (index == mAnimation.size()) {
+                mAnimation.clear();
+            }
+            else {
+                for (int i = 0; i < mAnimation[index].size(); ++i) {
+                    mAnimation[index][i].apply();
+                }
+            }
         }
+    }
+
+    if (mCarrier.mPlayIsPressed) {
+        mAnimation = mList.applyOperation();
+        mCntFrames = -1;
     }
 }
 

@@ -68,22 +68,6 @@ void SceneNode::drawArrow(sf::RenderTarget& target, sf::RenderStates states) con
         child->drawArrow(target, states);
     }
 }
-// sf::Transform states;
-// states.translate();
-
-// for (size_t index = 0; index < mCountNode; ++index) {
-//     if (index > 0) {
-//         sf::Vector2f src = states.transformPoint(0, 0);
-//         states.translate(Constants::ShiftNode);
-//         sf::Vector2f dest = states.transformPoint(0, 0);
-
-//        float dist = Constants::CirleNodeRadius + Constants::NodeOutlineThinkness;
-//        src.x += dist;
-//        dest.x -= dist;
-//        drawArrow(src, dest, target);
-//    }
-//    mList[index].draw(target, states);
-//}
 
 void SceneNode::drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const {
     mNode.draw(target, states);

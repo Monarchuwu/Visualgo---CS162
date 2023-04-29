@@ -139,6 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AnimationBuilder.cpp" />
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Arrow.cpp" />
     <ClCompile Include="BasicList.cpp" />
@@ -154,8 +155,10 @@
     <ClCompile Include="SceneNode.cpp" />
     <ClCompile Include="Random.cpp" />
     <ClCompile Include="SelectPositionBlock.cpp" />
+    <ClCompile Include="UpdateSceneNode.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AnimationBuilder.h" />
     <ClInclude Include="Application.h" />
     <ClInclude Include="Arrow.h" />
     <ClInclude Include="BasicList.h" />
@@ -170,6 +173,7 @@
     <ClInclude Include="Random.h" />
     <ClInclude Include="SceneNode.h" />
     <ClInclude Include="SelectPositionBlock.h" />
+    <ClInclude Include="UpdateSceneNode.h" />
     <ClInclude Include="Vector.h" />
   </ItemGroup>
   <ItemGroup>

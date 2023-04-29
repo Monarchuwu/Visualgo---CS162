@@ -20,9 +20,6 @@ namespace Constants {
     sf::Color NodeOutlineColor = sf::Color::Black;
     sf::Color TextNodeColor    = sf::Color::Black;
 
-    /// Basic List Constants
-    size_t CountNode;
-
     /// Control Table Constants
     // Control Table
     sf::Color ControlTableThemeColor = StandardColor[1];

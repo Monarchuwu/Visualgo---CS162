@@ -11,11 +11,14 @@ public:
               float outlineThickness = Constants::NodeOutlineThinkness,
               int val                = -1);
 
-    /* ---- Set Color ---- */
+    /* ------ Color ------ */
 
     void setFillColorBody(sf::Color& color);
     void setFillColorText(sf::Color& color);
     void setOutlineColor(sf::Color& color);
+    sf::Color getFillColorBody() const;
+    sf::Color getFillColorText() const;
+    sf::Color getOutlineColor() const;
 
     /* ----- Detail ----- */
 

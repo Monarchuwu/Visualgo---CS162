@@ -6,5 +6,6 @@ Carrier::Carrier()
       mArr(),
       mPos(),
       mVal(),
-      mPlayIsPressed(false) {
+      mPlayIsPressed(false),
+      mAnimationIsPlaying(false) {
 }

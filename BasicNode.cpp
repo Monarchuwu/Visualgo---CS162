@@ -29,6 +29,16 @@ void BasicNode::setOutlineColor(sf::Color& color) {
     mBody.setOutlineColor(color);
 }
 
+sf::Color BasicNode::getFillColorBody() const {
+    return mBody.getFillColor();
+}
+sf::Color BasicNode::getFillColorText() const {
+    return mText.getFillColor();
+}
+sf::Color BasicNode::getOutlineColor() const {
+    return mBody.getOutlineColor();
+}
+
 void BasicNode::setRadius(float radius) {
     mBody.setRadius(radius);
 }

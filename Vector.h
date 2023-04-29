@@ -50,6 +50,14 @@ public:
     T& operator[](size_t index);
     // Access elements
     const T& operator[](size_t index) const;
+    // Returns a reference to the first element
+    T& front();
+    // Returns a reference to the first element
+    const T& front() const;
+    // Returns a reference to the last element
+    T& back();
+    // Returns a reference to the last element
+    const T& back() const;
 
 private:
     size_t mSize;
@@ -162,4 +170,25 @@ const T& Vector<T>::operator[](size_t index) const {
         throw std::out_of_range("Index out of range");
     }
     return mData[index];
+}
+
+// Returns a reference to the first element
+template<typename T>
+T& Vector<T>::front() {
+    return mData[0];
+}
+// Returns a reference to the first element
+template<typename T>
+const T& Vector<T>::front() const {
+    return mData[0];
+}
+// Returns a reference to the last element
+template<typename T>
+T& Vector<T>::back() {
+    return mData[mSize - 1];
+}
+// Returns a reference to the last element
+template<typename T>
+const T& Vector<T>::back() const {
+    return mData[mSize - 1];
 }

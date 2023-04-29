@@ -36,7 +36,6 @@ public:
     BasicNode mNode;
     bool mIsNeedArrow;
 
-private:
     // they should be private, but i have to do this to access mChildren...
     Vector<SceneNode*> mChildren;
     SceneNode* mParent;

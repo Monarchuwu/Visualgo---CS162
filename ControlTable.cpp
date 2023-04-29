@@ -190,11 +190,11 @@ void ControlTable::SetRangeValueBoxInputPosition() {
 
         case Constants::Position::Middle:
             mBoxInputPos.setMinValue(1);
-            mBoxInputPos.setMaxValue(Constants::CountNode >= 2 ? Constants::CountNode - 1 : 1);
+            mBoxInputPos.setMaxValue(mCarrier.mCountNode >= 2 ? mCarrier.mCountNode - 1 : 1);
             break;
 
         case Constants::Position::End:
-            mBoxInputPos.setRangeValue(Constants::CountNode, Constants::CountNode);
+            mBoxInputPos.setRangeValue(mCarrier.mCountNode, mCarrier.mCountNode);
             break;
 
         default:
