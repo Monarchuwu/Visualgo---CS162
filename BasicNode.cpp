@@ -35,6 +35,12 @@ void BasicNode::setRadius(float radius) {
 void BasicNode::setOutlineThickness(float outlineThickness) {
     mBody.setOutlineThickness(outlineThickness);
 }
+float BasicNode::getRadius() const {
+    return mBody.getRadius();
+}
+float BasicNode::getOutlineThickness() const {
+    return mBody.getOutlineThickness();
+}
 
 void BasicNode::setValue(int value) {
     mValue = value;

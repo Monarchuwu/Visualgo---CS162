@@ -2,42 +2,66 @@
 #include "Arrow.h"
 #include "Constants.h"
 
-BasicList::BasicList(Carrier &carrier, size_t countNode)
+BasicList::BasicList(Carrier &carrier, Vector<int> arr)
     : mCarrier(carrier),
-      mCountNode(countNode),
-      mList(),
-      mStartingPosition() {
-    update();
+      mArr(arr),
+      mHead(nullptr),
+      mTail(nullptr) {
+
+    updateArray();
 }
 
-void BasicList::draw(sf::RenderTarget& target, sf::RenderStates state) const {
-    sf::Transform states;
-    states.translate(mStartingPosition);
+size_t BasicList::getCountNode() const { return mArr.size(); }
 
-    for (size_t index = 0; index < mCountNode; ++index) {
-        if (index > 0) {
-            sf::Vector2f src = states.transformPoint(0, 0);
-            states.translate(Constants::ShiftNode);
-            sf::Vector2f dest = states.transformPoint(0, 0);
-
-            float dist = Constants::CirleNodeRadius + Constants::NodeOutlineThinkness;
-            src.x += dist;
-            dest.x -= dist;
-            drawArrow(src, dest, target);
-        }
-        mList[index].draw(target, states);
-    }
+void BasicList::draw(sf::RenderTarget& target, sf::RenderStates states) const {
+    mHead->drawArrow(target, states);
+    mHead->draw(target, states);
+}
+void BasicList::updateArray(Vector<int> arr) {
+    mArr = arr;
+    updateArray();
 }
 
-size_t BasicList::getCountNode() const { return mCountNode; }
+void BasicList::clear() {
+    if (mHead) {
+        delete mHead;
+        mHead = mTail = nullptr;
+    }
+}
+void BasicList::updateArray() {
+    clear();
 
-void BasicList::update() {
-    if (mCountNode > Constants::MaxCountNode) {
-        mCountNode = Constants::MaxCountNode;
+    // Head
+    mHead = new SceneNode(BasicNode(Constants::CirleNodeRadius + 10,
+                                    Constants::NodeOutlineThinkness));
+    mHead->mNode.setFillColorBody(Constants::ControlTableThemeColor);
+    mHead->mNode.setOutlineColor(Constants::ControlTableThemeColor);
+    mHead->mNode.setText("Head");
+
+    // Array
+    SceneNode* temp = mHead;
+    for (int i = 0; i < mArr.size(); ++i) {
+        mTail = new SceneNode(BasicNode(Constants::CirleNodeRadius,
+                                        Constants::NodeOutlineThinkness,
+                                        mArr[i]));
+        mTail->setPosition(Constants::ShiftNode);
+        temp->attachChild(mTail);
+        temp = mTail;
     }
-    mList.resize(mCountNode);
-    mStartingPosition = Constants::MidPointSceneVisual;
-    if (mCountNode > 0) {
-        mStartingPosition.x -= (mCountNode - 1) * Constants::ShiftNode.x / 2;
-    }
+
+    // NULL (Tail)
+    mTail = new SceneNode(BasicNode(Constants::CirleNodeRadius + 10,
+                                    Constants::NodeOutlineThinkness));
+    mTail->mNode.setFillColorBody(Constants::ControlTableThemeColor);
+    mTail->mNode.setOutlineColor(Constants::ControlTableThemeColor);
+    mTail->mNode.setText("NULL");
+    mTail->setPosition(Constants::ShiftNode);
+    temp->attachChild(mTail);
+
+    updateHeadPosition();
+}
+void BasicList::updateHeadPosition() {
+    int mCountNode = mArr.size() + 2;
+    mHead->setPosition(Constants::MidPointSceneVisual);
+    mHead->move(-(mCountNode - 1) * Constants::ShiftNode.x / 2, 0);
 }

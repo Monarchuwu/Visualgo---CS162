@@ -6,7 +6,7 @@
 Application::Application()
     : mCarrier(),
       mWindow(),
-      mList(mCarrier, Constants::MaxCountNode),
+      mList(mCarrier, Vector<int>()),
       mControlTable(mCarrier) {
     sf::ContextSettings settings;
     settings.antialiasingLevel = 8;
@@ -71,13 +71,13 @@ void Application::processEvents() {
 }
 
 void Application::update() {
-    //
-    //for (int i = 0; i < mCarrier.mArr.size(); ++i) {
-    //    std::cout << mCarrier.mArr[i] << ' ';
-    //}
-    //std::cout << '\n';
-    //std::cout << mCarrier.mPos << '\n';
-    //std::cout << mCarrier.mVal << '\n';
+    if (mCarrier.mPlayIsPressed) {
+        mCarrier.mPlayIsPressed = false;
+
+        if (mCarrier.mOperationType == Constants::Operation::Init) {
+            mList.updateArray(mCarrier.mArr);
+        }
+    }
 }
 
 void Application::render() {

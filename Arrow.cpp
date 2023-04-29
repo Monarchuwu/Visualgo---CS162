@@ -1,7 +1,7 @@
 #include "Arrow.h"
 #include "Constants.h"
 
-void drawArrow(sf::Vector2f src, sf::Vector2f dest, sf::RenderTarget& target, sf::Color colorArrow) {
+void drawArrow2Point(sf::Vector2f src, sf::Vector2f dest, sf::RenderTarget& target, sf::Color colorArrow) {
     static const float pi = 3.141592654f;
     float arrowThickness  = Constants::NodeOutlineThinkness;
     float headArrowRadius = arrowThickness * 2;

@@ -35,7 +35,7 @@ namespace Constants {
     const size_t MaxCountNode = 10;
     extern size_t CountNode;
     // Shift Node by Arrow
-    const sf::Vector2f ShiftNode = sf::Vector2f(160.f, 0.f); // transform between 2 node
+    const sf::Vector2f ShiftNode = sf::Vector2f(130.f, 0.f); // transform between 2 node
 
     /// Control Table Constants
     // Control Table

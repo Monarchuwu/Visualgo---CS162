@@ -1,24 +1,35 @@
 #pragma once
-#include <vector>
 #include <SFML/Graphics.hpp>
 #include "BasicNode.h"
 #include "SceneNode.h"
+#include "Vector.h"
 #include "Carrier.h"
 
 class BasicList {
 public:
-    BasicList(Carrier &carrier, size_t countNode = 0);
-    virtual void draw(sf::RenderTarget& target, sf::RenderStates states = sf::RenderStates::Default) const;
+    /* ---- Constructor ---- */
+    // Constructor
+    BasicList(Carrier &carrier, Vector<int> arr);
 
+    /* ------ Modify ------ */
     size_t getCountNode() const;
 
+    /* ----- Interact ----- */
+    virtual void draw(sf::RenderTarget& target, sf::RenderStates states = sf::RenderStates::Default) const;
+    void updateArray(Vector<int> arr);
+
 private:
-    void update();
+    // Clear the old array
+    void clear();
+    // Set the new array
+    void updateArray();
+    // Set the position of HeadNode
+    void updateHeadPosition();
 
 private:
     Carrier mCarrier;
 
-    size_t mCountNode;
-    std::vector<BasicNode> mList;
-    sf::Vector2f mStartingPosition; // the position of the first node
+    Vector<int> mArr;
+
+    SceneNode *mHead, *mTail;
 };

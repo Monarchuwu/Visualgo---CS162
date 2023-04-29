@@ -7,7 +7,9 @@ class SceneNode : public sf::Transformable {
 public:
     /* ---- Constructor ---- */
     // Constructor
-    SceneNode();
+    SceneNode(BasicNode node = BasicNode(), bool isNeedArrow = true);
+    // Destructor
+    ~SceneNode();
 
     /* ------ Modify ------ */
     // Attach a SceneNode as a child
@@ -16,14 +18,26 @@ public:
     // Return pointer to that child
     SceneNode* detachChild(const SceneNode& node);
 
-private:
+    /* ------- Arrow ------- */
+    void enableArrow();
+    void disableArrow();
+
+    /* ----- Interact ----- */
+    // Draw SceneTree on target with states
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+    virtual void drawArrow(sf::RenderTarget& target, sf::RenderStates states) const;
+
+private:
+    /* ----- Interact ----- */
+    // Draw SceneNode on target with states
     virtual void drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const;
 
 public:
     BasicNode mNode;
+    bool mIsNeedArrow;
 
 private:
+    // they should be private, but i have to do this to access mChildren...
     Vector<SceneNode*> mChildren;
     SceneNode* mParent;
 };

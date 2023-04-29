@@ -21,6 +21,8 @@ public:
 
     void setRadius(float radius);
     void setOutlineThickness(float outlineThickness);
+    float getRadius() const;
+    float getOutlineThickness() const;
 
     /* ---- Update Value ---- */
     // set value in Node
