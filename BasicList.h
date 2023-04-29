@@ -2,13 +2,13 @@
 #include <vector>
 #include <SFML/Graphics.hpp>
 #include "BasicNode.h"
+#include "SceneNode.h"
 #include "Carrier.h"
 
 class BasicList {
 public:
     BasicList(Carrier &carrier, size_t countNode = 0);
-    virtual void draw(sf::RenderTarget& target) const;
-    // virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+    virtual void draw(sf::RenderTarget& target, sf::RenderStates states = sf::RenderStates::Default) const;
 
     size_t getCountNode() const;
 

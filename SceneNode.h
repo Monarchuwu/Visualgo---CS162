@@ -1,20 +1,29 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include "Vector.h"
+#include "BasicNode.h"
 
-class SceneNode : public sf::Transformable, public sf::Drawable, private sf::NonCopyable {
+class SceneNode : public sf::Transformable {
 public:
-    typedef std::unique_ptr<SceneNode> Ptr;
-
-public:
+    /* ---- Constructor ---- */
+    // Constructor
     SceneNode();
-    void attachChild(Ptr child);
-    Ptr detachChild(const SceneNode& node);
+
+    /* ------ Modify ------ */
+    // Attach a SceneNode as a child
+    void attachChild(SceneNode* child);
+    // Detach a child
+    // Return pointer to that child
+    SceneNode* detachChild(const SceneNode& node);
 
 private:
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
     virtual void drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const;
 
+public:
+    BasicNode mNode;
+
 private:
-    std::vector<Ptr> mChildren;
+    Vector<SceneNode*> mChildren;
     SceneNode* mParent;
 };

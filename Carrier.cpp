@@ -2,6 +2,7 @@
 
 Carrier::Carrier()
     : mCountNode(),
+      mOperationType(),
       mArr(),
       mPos(),
       mVal(),

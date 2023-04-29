@@ -151,6 +151,7 @@ void ControlTable::handleButtonInput(sf::Event::MouseButtonEvent mouse, bool isP
     // Play Button (Row 4)
     if (mouse.button == sf::Mouse::Left && !isPressed) {
         if (mPlay.getGlobalBounds().contains(mouse.x, mouse.y)) {
+            mCarrier.mOperationType = mOperationType;
             mCarrier.mArr           = mInitBlock.getArray();
             mCarrier.mPos           = mBoxInputPos.getValue();
             mCarrier.mVal           = mBoxInputVal.getValue();

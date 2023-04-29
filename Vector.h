@@ -38,6 +38,8 @@ public:
     void push_back(T value);
 	// Removes the last element from the Vector
     void pop_back();
+    // Removes the element at ite from the Vector
+    void erase(T* ite);
     // Removes all elements from the Vector
     // Capacity is not changed
     void clear();
@@ -126,6 +128,16 @@ template<typename T>
 void Vector<T>::pop_back() {
     if (empty()) {
         throw std::out_of_range("Index out of range");
+    }
+    --mSize;
+}
+
+template<typename T>
+void Vector<T>::erase(T* ite) {
+    if (ite == end()) return;
+    while (ite + 1 != end()) {
+        *(ite) = *(ite + 1);
+        ++ite;
     }
     --mSize;
 }

@@ -10,7 +10,7 @@ BasicList::BasicList(Carrier &carrier, size_t countNode)
     update();
 }
 
-void BasicList::draw(sf::RenderTarget& target) const {
+void BasicList::draw(sf::RenderTarget& target, sf::RenderStates state) const {
     sf::Transform states;
     states.translate(mStartingPosition);
 

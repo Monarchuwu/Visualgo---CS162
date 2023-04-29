@@ -10,6 +10,7 @@ public:
     // List
     int mCountNode;
     // ControlTable
+    int mOperationType;
     Vector<int> mArr;
     int mPos;
     int mVal;
