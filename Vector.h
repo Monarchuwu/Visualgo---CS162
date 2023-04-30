@@ -147,6 +147,7 @@ void Vector<T>::erase(T* ite) {
         *(ite) = *(ite + 1);
         ++ite;
     }
+    *ite = T();
     --mSize;
 }
 

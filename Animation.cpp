@@ -44,3 +44,6 @@ bool Animation::empty() const { return mListState.empty(); }
 AnimationState& Animation::stateAt() {
     return mListState[mIndex];
 }
+AnimationState& Animation::stateBack() {
+    return mListState.back();
+}

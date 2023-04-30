@@ -151,9 +151,23 @@ Animation BasicList::applyOperation() {
 
         case Constants::Operation::Delete: {
             SceneNode* ptr = find(mCarrier.mPos);
-            deleteNode(ptr);
 
-            return Animation();
+            Animation animation = buildAnimationDelete(ptr, mHead,
+                                                       sf::Color::Red,
+                                                       sf::Color::Red,
+                                                       sf::Color::White,
+                                                       Constants::OrangeColor,
+                                                       Constants::OrangeColor,
+                                                       sf::Color::White,
+                                                       mCarrier.mPos == 0,
+                                                       mCarrier.mPos + 1 == mCarrier.mCountNode);
+
+            --mCountNode;
+            // no need this because the head position will be update while animation
+            // updateHeadPosition();
+            updateCarrier();
+
+            return animation;
             break;
         }
 

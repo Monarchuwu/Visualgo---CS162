@@ -7,7 +7,8 @@ UpdateSceneNode::UpdateSceneNode(SceneNode* ptr)
       mColorBody(),
       mColorOutline(),
       mColorText(),
-      mParent() {
+      mArrowVisible() {
+    setArrowVisible(true);
 }
 
 void UpdateSceneNode::setVal(int val) {
@@ -26,17 +27,34 @@ void UpdateSceneNode::setTextColor(const sf::Color &color) {
     mColorText = color;
     mStatus |= 1 << ColorText;
 }
-void UpdateSceneNode::setParent(SceneNode* parent) {
-    mParent = parent;
-    mStatus |= 1 << Parent;
+void UpdateSceneNode::setAttach(SceneNode* children) {
+    mAttachChild = children;
+    mStatus |= 1 << Attach;
 }
-void UpdateSceneNode::setChildren(const Vector<SceneNode*>&children) {
-    mChildren = children;
-    mStatus |= 1 << Children;
+void UpdateSceneNode::setAttachHolder(SceneNode** holder) {
+    mHolder = holder;
+    mStatus |= 1 << Attach;
+    mStatus |= 1 << Holder;
+}
+void UpdateSceneNode::setDetach(SceneNode* children) {
+    mDetachChild = children;
+    mStatus |= 1 << Detach;
+}
+void UpdateSceneNode::setDetach(SceneNode** holder, SceneNode* children) {
+    mHolder     = holder;
+    mDetachChild = children;
+    mStatus |= 1 << Detach;
+    mStatus |= 1 << Holder;
 }
 void UpdateSceneNode::setTranslation(const sf::Vector2f &translation) {
     mTranslation = translation;
     mStatus |= 1 << Translation;
+}
+void UpdateSceneNode::setTranslation(float x, float y) {
+    setTranslation(sf::Vector2f(x, y));
+}
+void UpdateSceneNode::setArrowVisible(bool visible) {
+    mArrowVisible = visible;
 }
 
 void UpdateSceneNode::apply() {
@@ -56,15 +74,28 @@ void UpdateSceneNode::apply() {
         mPtr->mNode.setFillColorText(mColorText);
     }
 
-    if (mStatus >> Parent & 1) {
-        mPtr->mParent = mParent;
+    if (mStatus >> Attach & 1) {
+        if (mStatus >> Holder & 1)
+            mPtr->attachChild(*mHolder);
+        else
+            mPtr->attachChild(mAttachChild);
     }
 
-    if (mStatus >> Children & 1) {
-        mPtr->mChildren = mChildren;
+    if (mStatus >> Detach & 1) {
+        if (mStatus >> Holder & 1)
+            *mHolder = mPtr->detachChild(*mDetachChild);
+        else
+            mPtr->detachChild(*mDetachChild);
     }
 
     if (mStatus >> Translation & 1) {
         mPtr->move(mTranslation);
+    }
+    
+    if (mArrowVisible) {
+        mPtr->enableArrow();
+    }
+    else {
+        mPtr->disableArrow();
     }
 }

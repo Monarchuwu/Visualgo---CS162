@@ -156,6 +156,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="SceneNode.cpp" />
     <ClCompile Include="Random.cpp" />
+    <ClCompile Include="SceneNodeHolder.cpp" />
     <ClCompile Include="SelectPositionBlock.cpp" />
     <ClCompile Include="UpdateSceneNode.cpp" />
   </ItemGroup>
@@ -176,6 +177,7 @@
     <ClInclude Include="InitArrayBlock.h" />
     <ClInclude Include="Random.h" />
     <ClInclude Include="SceneNode.h" />
+    <ClInclude Include="SceneNodeHolder.h" />
     <ClInclude Include="SelectPositionBlock.h" />
     <ClInclude Include="UpdateSceneNode.h" />
     <ClInclude Include="Vector.h" />

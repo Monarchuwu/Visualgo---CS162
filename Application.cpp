@@ -85,7 +85,6 @@ void Application::update() {
         mAnimation.updateIndex();
     }
     if (!mAnimation.done()) {
-        mCarrier.mPlayIsPressed = false;
         if (mAnimation.stateAt().getDurationPlayed() == 0) {
             mAnimation.stateAt().apply();
         }

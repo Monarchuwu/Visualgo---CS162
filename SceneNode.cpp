@@ -2,9 +2,9 @@
 #include "Arrow.h"
 #include <cassert>
 
-SceneNode::SceneNode(BasicNode node, bool isNeedArrow)
+SceneNode::SceneNode(BasicNode node, bool arrowVisible)
     : mNode(node),
-      mIsNeedArrow(isNeedArrow),
+      mArrowVisible(arrowVisible),
       mParent(nullptr) {
 }
 SceneNode::~SceneNode() {
@@ -36,8 +36,8 @@ SceneNode* SceneNode::detachChild(const SceneNode& node) {
     return result;
 }
 
-void SceneNode::enableArrow() { mIsNeedArrow = true; }
-void SceneNode::disableArrow() { mIsNeedArrow = false; }
+void SceneNode::enableArrow() { mArrowVisible = true; }
+void SceneNode::disableArrow() { mArrowVisible = false; }
 
 void SceneNode::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     states.transform *= getTransform();
@@ -54,7 +54,7 @@ void SceneNode::drawArrow(sf::RenderTarget& target, sf::RenderStates states) con
     sf::Vector2f src = states.transform.transformPoint(0, 0);
     for (int i = 0; i < mChildren.size(); ++i) {
         SceneNode* child = mChildren[i];
-        if (child->mIsNeedArrow) {
+        if (child->mArrowVisible) {
             sf::Vector2f translation = child->getTransform().transformPoint(0, 0);
             float length             = sqrt(translation.x * translation.x + translation.y * translation.y);
             if (length > 1) {

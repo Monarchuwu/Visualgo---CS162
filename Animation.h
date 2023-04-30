@@ -25,6 +25,8 @@ public:
     bool empty() const;
     // return the reference to the state at this time, no done check
     AnimationState& stateAt();
+    // return the reference to the state at the end, no done check
+    AnimationState& stateBack();
 
 public:
     Vector<AnimationState> mListState;

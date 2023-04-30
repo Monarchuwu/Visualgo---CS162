@@ -6,8 +6,9 @@ enum AnimationUpdate {
     ColorBody,
     ColorOutLine,
     ColorText,
-    Parent,
-    Children,
+    Attach,
+    Detach,
+    Holder,
     Translation
 };
 
@@ -19,9 +20,13 @@ public:
     void setFillColor(const sf::Color &color);
     void setOutlineColor(const sf::Color &color);
     void setTextColor(const sf::Color &color);
-    void setParent(SceneNode* parent);
-    void setChildren(const Vector<SceneNode*> &children);
+    void setAttach(SceneNode* children);
+    void setAttachHolder(SceneNode** holder);
+    void setDetach(SceneNode* children);
+    void setDetach(SceneNode** holder, SceneNode* children);
     void setTranslation(const sf::Vector2f &translation);
+    void setTranslation(float x, float y);
+    void setArrowVisible(bool visible);
 
     void apply();
 
@@ -33,7 +38,9 @@ private:
     sf::Color mColorBody;
     sf::Color mColorOutline;
     sf::Color mColorText;
-    SceneNode* mParent;
-    Vector<SceneNode*> mChildren;
+    SceneNode* mAttachChild;
+    SceneNode* mDetachChild;
+    SceneNode** mHolder;
     sf::Vector2f mTranslation;
+    bool mArrowVisible;
 };
