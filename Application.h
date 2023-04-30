@@ -21,6 +21,5 @@ private:
     BasicList mList;
     ControlTable mControlTable;
 
-    int mCntFrames;
     Animation mAnimation;
 };

@@ -156,6 +156,7 @@ Animation BasicList::applyOperation() {
             return Animation();
             break;
         }
+
         case Constants::Operation::Update: {
             SceneNode* ptr      = find(mCarrier.mPos);
             mStatesHolder  = holdColorAnimationFind(mHead->mChildren[0], ptr);
@@ -168,7 +169,7 @@ Animation BasicList::applyOperation() {
                                                         sf::Color::Red,
                                                         sf::Color::Red,
                                                         sf::Color::White);
-            add(animation1, animation2);
+            animation1.add(animation2);
             return animation1;
             break;
         }

@@ -8,7 +8,6 @@ Application::Application()
       mWindow(),
       mList(mCarrier, Vector<int>()),
       mControlTable(mCarrier),
-      mCntFrames(0),
       mAnimation() {
     sf::ContextSettings settings;
     settings.antialiasingLevel = 8;
@@ -71,26 +70,26 @@ void Application::processEvents() {
 }
 
 void Application::update() {
-    ++mCntFrames;
-
-    if (!mAnimation.empty()) {
-        mCarrier.mPlayIsPressed = false;
-        if (mCntFrames % Constants::FramesPerSecond == 0) {
-            int index = mCntFrames / Constants::FramesPerSecond;
-            if (index == mAnimation.size()) {
-                mAnimation.clear();
-            }
-            else {
-                for (int i = 0; i < mAnimation[index].size(); ++i) {
-                    mAnimation[index][i].apply();
-                }
-            }
-        }
+    while (!mAnimation.done() && mAnimation.stateAt().done()) {
+        mAnimation.updateIndex();
     }
 
+    // the play button is pressed
     if (mCarrier.mPlayIsPressed) {
+        mAnimation.applyAll();
         mAnimation = mList.applyOperation();
-        mCntFrames = -1;
+    }
+
+    // play animation
+    while (!mAnimation.done() && mAnimation.stateAt().done()) {
+        mAnimation.updateIndex();
+    }
+    if (!mAnimation.done()) {
+        mCarrier.mPlayIsPressed = false;
+        if (mAnimation.stateAt().getDurationPlayed() == 0) {
+            mAnimation.stateAt().apply();
+        }
+        mAnimation.stateAt().update(1);
     }
 }
 
