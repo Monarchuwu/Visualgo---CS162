@@ -12,6 +12,7 @@ class ControlTable {
     // [0..900] x [500..900]
 public:
     ControlTable(Carrier &carrier);
+    void setButtonMainList(int listOperation);
     void setButtonMainList(Vector<int> &list);
     void setSelectPositionList(Vector<int> &selectPosition);
 

@@ -1,25 +1,17 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-#include "BasicList.h"
 #include "ControlTable.h"
 #include "Carrier.h"
 #include "SinglyLinkedList.h"
 #include "DoublyLinkedList.h"
+#include "DataStructureButtonBlock.h"
 
 class Application {
-    enum DataStructure {
-        SLL,
-        DLL,
-        CLL,
-        Stack,
-        Queue,
-        StaticArr,
-        DynamicArr,
-    };
-    int mDataStructure;
-
 public:
     Application();
+
+    void setDataStructure(int dataStructure);
+
     void run();
 
 private:
@@ -36,4 +28,7 @@ private:
     ControlTable mControlTable;
 
     Animation mAnimation;
+
+    int mDataStructure;
+    DataStructureButtonBlock mDSButtonBlock;
 };

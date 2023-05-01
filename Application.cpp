@@ -21,19 +21,14 @@ Application::Application()
       mDLL(mCarrier),
       mControlTable(mCarrier),
       mAnimation(),
-      mDataStructure(0) {
+      mDataStructure(),
+      mDSButtonBlock(sf::Vector2f(0, 0), sf::Vector2f(200, 50)) {
+    setDataStructure(0);
+
     sf::ContextSettings settings;
     settings.antialiasingLevel = 8;
     mWindow.create(sf::VideoMode(Constants::SceneWidth, Constants::SceneHeight), "Data Structure Visualization", sf::Style::Close, settings);
     mWindow.setPosition(sf::Vector2i(10, 10));
-
-    Vector<int> nameButtonMain;
-    nameButtonMain.push_back(Constants::Operation::Init);
-    nameButtonMain.push_back(Constants::Operation::Insert);
-    nameButtonMain.push_back(Constants::Operation::Delete);
-    nameButtonMain.push_back(Constants::Operation::Update);
-    nameButtonMain.push_back(Constants::Operation::Search);
-    mControlTable.setButtonMainList(nameButtonMain);
 }
 
 void Application::run() {
@@ -61,9 +56,14 @@ void Application::processEvents() {
                 mControlTable.handleButtonInput(event.mouseButton, true);
                 break;
 
-            case sf::Event::MouseButtonReleased:
+            case sf::Event::MouseButtonReleased: {
                 mControlTable.handleButtonInput(event.mouseButton, false);
+                int temp = mDSButtonBlock.handleButtonInput(event.mouseButton, false);
+                if (temp != -1 && temp != mDataStructure) {
+                    setDataStructure(temp);
+                }
                 break;
+            }
 
             case sf::Event::KeyReleased:
                 mControlTable.handleKeyInput(event.key);
@@ -76,6 +76,11 @@ void Application::processEvents() {
     }
 }
 
+void Application::setDataStructure(int dataStructure) {
+    mDataStructure = dataStructure;
+    mControlTable.setButtonMainList(Constants::DSOperationList[mDataStructure]);
+}
+
 void Application::update() {
     while (!mAnimation.done() && mAnimation.stateAt().done()) {
         mAnimation.updateIndex();
@@ -85,11 +90,11 @@ void Application::update() {
     if (mCarrier.mPlayIsPressed) {
         mAnimation.applyAll();
         switch (mDataStructure) {
-            case DataStructure::SLL:
+            case Constants::DataStructure::SLL:
                 mAnimation = mSLL.applyOperation();
                 break;
 
-            case DataStructure::DLL:
+            case Constants::DataStructure::DLL:
                 mAnimation = mDLL.applyOperation();
                 break;
 
@@ -114,16 +119,17 @@ void Application::render() {
     mWindow.clear(Constants::StandardColor[1]);
     mControlTable.draw(mWindow);
     switch (mDataStructure) {
-        case DataStructure::SLL:
+        case Constants::DataStructure::SLL:
             mSLL.draw(mWindow);
             break;
 
-        case DataStructure::DLL:
+        case Constants::DataStructure::DLL:
             mDLL.draw(mWindow);
             break;
 
         default:
             break;
     }
+    mDSButtonBlock.draw(mWindow);
     mWindow.display();
 }

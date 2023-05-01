@@ -37,9 +37,18 @@ ControlTable::ControlTable(Carrier &carrier)
     mPlay.setText("Play");
 }
 
+void ControlTable::setButtonMainList(int listOperation) {
+    Vector<int> nameButtonMain;
+    for (int i = 0; i < Constants::CountOperation; ++i) {
+        if (listOperation >> i & 1) {
+            nameButtonMain.push_back(i);
+        }
+    }
+    setButtonMainList(nameButtonMain);
+}
 void ControlTable::setButtonMainList(Vector<int> &list) {
     mButtonMainList = list;
-    mButtonMain.reserve(mButtonMainList.size());
+    mButtonMain = Vector<Button>();
 
     // [10..290] x [530..890]
     int stepY = (890 - 530) / mButtonMainList.size();
@@ -93,7 +102,7 @@ void ControlTable::draw(sf::RenderTarget& target) {
 
 void ControlTable::handleButtonInput(sf::Event::MouseButtonEvent mouse, bool isPressed) {
     // Main Button
-    if (mouse.button == sf::Mouse::Left && isPressed) {
+    if (mouse.button == sf::Mouse::Left && !isPressed) {
         int temp = -1;
         for (int i = 0; i < mButtonMain.size(); ++i) {
             if (mButtonMain[i].getGlobalBounds().contains(mouse.x, mouse.y)) {

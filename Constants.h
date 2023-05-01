@@ -13,8 +13,8 @@ namespace Constants {
     constexpr int FramesPerSecond = 20;
     const sf::Time TimePerFrame   = sf::seconds(1.f / FramesPerSecond);
     // Scene Visualize [0..1600] x [0..400]
-    // Scene Visualize List [50..1550] x [100..350]
-    const sf::Vector2f MidPointSceneVisual(800, 130);
+    // Scene Visualize List [50..1550] x [250..310]
+    const sf::Vector2f MidPointSceneVisual(800, 280);
 
     // Font Constants
     extern sf::Font Font;
@@ -43,6 +43,7 @@ namespace Constants {
     extern sf::Color ButtonMainColor;
     extern sf::Color ButtonMainColorClicked;
     constexpr size_t ButtonMainCharacterSize = 30;
+    const int CountOperation                 = 12;
     enum Operation { Init,
                      Insert,
                      Delete,
@@ -106,6 +107,73 @@ namespace Constants {
         0,                                                       // Add (mark)
         0,                                                       // Remove (mark)
         0,                                                       // Clear (mark)
+    };
+
+    // Data Structure
+    const int CountDataStructure = 7;
+    enum DataStructure {
+        SLL,
+        DLL,
+        CLL,
+        Stack,
+        Queue,
+        StaticArray,
+        DynamicArray,
+    };
+    const std::string DataStructureText[7] = {
+        "Singly LL",
+        "Doubly LL",
+        "Circular LL",
+        "Stack",
+        "Queue",
+        "Static",
+        "Dynamic"
+    };
+    // Total 12 Operations
+    const int DSOperationList[7] = {
+        0 // SLL
+            | (1 << Operation::Init)
+            | (1 << Operation::Insert)
+            | (1 << Operation::Delete)
+            | (1 << Operation::Update)
+            | (1 << Operation::Search),
+        0 // DLL
+            | (1 << Operation::Init)
+            | (1 << Operation::Insert)
+            | (1 << Operation::Delete)
+            | (1 << Operation::Update)
+            | (1 << Operation::Search),
+        0 // CLL
+            | (1 << Operation::Init)
+            | (1 << Operation::Insert)
+            | (1 << Operation::Delete)
+            | (1 << Operation::Update)
+            | (1 << Operation::Search),
+        0 // Stack
+            | (1 << Operation::Init)
+            | (1 << Operation::Push)
+            | (1 << Operation::Pop)
+            | (1 << Operation::Clear),
+        0 // Queue
+            | (1 << Operation::Init)
+            | (1 << Operation::Add)
+            | (1 << Operation::Remove)
+            | (1 << Operation::Clear),
+        0 // Static Array
+            | (1 << Operation::Init)
+            | (1 << Operation::Insert)
+            | (1 << Operation::Delete)
+            | (1 << Operation::Update)
+            | (1 << Operation::Access)
+            | (1 << Operation::Search),
+        0 // Dynamic Array
+            | (1 << Operation::Init)
+            | (1 << Operation::Insert)
+            | (1 << Operation::Delete)
+            | (1 << Operation::Update)
+            | (1 << Operation::Allocate)
+            | (1 << Operation::Access)
+            | (1 << Operation::Search)
     };
 
     // Misc
