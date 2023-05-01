@@ -31,7 +31,12 @@ Animation SinglyLinkedList::applyOperation() {
 
         case Constants::Operation::Insert: {
             Animation animation;
-            if (mCountNode == 0) {}        // Just Insert = Init 1 element
+            if (mCountNode == 0) { // Just Insert = Init 1 element
+                Vector<int> arr;
+                arr.push_back(mCarrier.mVal);
+                updateArray(arr);
+                updateCarrier();
+            }        
             else if (mCarrier.mPos == 0) { // Insert At Beginning
                 SceneNodeHolder::Holder31 = &mHead;
                 SceneNode* newPtr         = new SceneNode(BasicNode(mRadiusNode,

@@ -15,7 +15,8 @@ enum AnimationUpdate {
     VisibleArrow,
     TextBelow,
     AddTextBelow,
-    ResetTextBelow
+    ResetTextBelow,
+    HeadTailTextBelow
 };
 
 class UpdateSceneNode {
@@ -37,6 +38,7 @@ public:
     void setTextBelow(std::string str);
     void addTextBelow(std::string str);
     void resetTextBelow();
+    void handleHeadTailTextBelow();
 
     void apply();
 

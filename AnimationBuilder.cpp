@@ -80,7 +80,7 @@ buildAnimationInsertAtBeginning(SceneNode* mHead, SceneNode* newPtr,
     update3_1.setTextBelow("Head/");
     UpdateSceneNode update3_2(mHead);
     update3_2.setArrowVisible(true);
-    update3_2.setTextBelow("");
+    update3_2.handleHeadTailTextBelow();
     // Scene add
     scene3.addUpdateSceneNode(update3_1);
     scene3.addUpdateSceneNode(update3_2);
