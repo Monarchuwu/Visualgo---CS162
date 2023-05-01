@@ -34,6 +34,8 @@ buildAnimationDelete(SceneNode* ptr, SceneNode* mHead,
     Animation animation;
 
     /* ---------- Scene 1 ---------- */
+    /* ------ Highlight Node  ------ */
+    /* ---- ptr is pulled down  ---- */
     AnimationState scene1(1.0f);
     // Update 1.1
     UpdateSceneNode update1_1(parent);
@@ -63,6 +65,9 @@ buildAnimationDelete(SceneNode* ptr, SceneNode* mHead,
     /* ----------------------------- */
 
     /* ---------- Scene 2 ---------- */
+    /* ----- Fix the distance  ----- */
+    /* ------- Left go right ------- */
+    /* ------- Right to left ------- */
     AnimationState scene2(1.0f);
     // Update 2.1
     UpdateSceneNode update2_1(mHead);
@@ -80,6 +85,7 @@ buildAnimationDelete(SceneNode* ptr, SceneNode* mHead,
     /* ----------------------------- */
 
     /* ---------- Scene 3 ---------- */
+    /* ---- Disvisible 2 arrows ---- */
     AnimationState scene3(1.0f);
     // Update 3.1
     UpdateSceneNode update3_1(ptr);
@@ -93,6 +99,9 @@ buildAnimationDelete(SceneNode* ptr, SceneNode* mHead,
     /* ----------------------------- */
 
     /* ---------- Scene 4 ---------- */
+    /* - Connect parent and child  - */
+    /* ------ Disvisible ptr  ------ */
+    /* ------- Enable arrow  ------- */
     AnimationState scene4(1.0f);
     // Update 4.1
     UpdateSceneNode update4_1(parent);
@@ -118,6 +127,7 @@ buildAnimationDelete(SceneNode* ptr, SceneNode* mHead,
     /* ----------------------------- */
 
     /* ---------- Scene 5 ---------- */
+    /* ----- Un-highlight Node ----- */
     AnimationState scene5(1.0f);
     // Update 5.1
     UpdateSceneNode update5_1(parent);
