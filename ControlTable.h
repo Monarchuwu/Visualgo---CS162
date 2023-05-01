@@ -20,6 +20,8 @@ public:
     void handleKeyInput(sf::Event::KeyEvent mouse);
 
 private:
+    // update OperationType and update SelectionPositionBlock
+    void setOperationType(int type);
     void SetRangeValueBoxInputPosition(); // must change
 
 private:

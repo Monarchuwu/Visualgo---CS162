@@ -56,7 +56,7 @@ void ControlTable::setButtonMainList(Vector<int> &list) {
         button.setText(Constants::OperationText[mButtonMainList[i]]);
         mButtonMain.push_back(button);
     }
-    mOperationType = mButtonMainList[0];
+    setOperationType(mButtonMainList[0]);
 }
 
 void ControlTable::setSelectPositionList(Vector<int>& list) {
@@ -97,11 +97,13 @@ void ControlTable::handleButtonInput(sf::Event::MouseButtonEvent mouse, bool isP
         int temp = -1;
         for (int i = 0; i < mButtonMain.size(); ++i) {
             if (mButtonMain[i].getGlobalBounds().contains(mouse.x, mouse.y)) {
-                mOperationType = mButtonMain[i].getID();
+                temp = mButtonMain[i].getID();
             }
         }
         if (temp != -1) {
-            mOperationType = temp;
+            if (mOperationType != temp) {
+                setOperationType(temp);
+            }
             return;
         }
     }
@@ -182,19 +184,68 @@ void ControlTable::handleKeyInput(sf::Event::KeyEvent key) {
     }
 }
 
+void ControlTable::setOperationType(int type) {
+    mOperationType = type;
+    Vector<int> list;
+    for (int i = 0; i < 7; ++i) {
+        if (Constants::SelectPosList[type] >> i & 1) {
+            list.push_back(i);
+        }
+    }
+    setSelectPositionList(list);
+}
 void ControlTable::SetRangeValueBoxInputPosition() {
+    int mi = 0;
+    int ma = 0;
+    int pos = 0;
     switch (mSelectPosition.getPositionType()) {
-        case Constants::Position::Beginning:
-            mBoxInputPos.setRangeValue(0, 0);
+        case Constants::Position::Beginning_0:
+            pos = 0;
+            mBoxInputPos.setRangeValue(pos, pos);
             break;
 
-        case Constants::Position::Middle:
-            mBoxInputPos.setMinValue(1);
-            mBoxInputPos.setMaxValue(mCarrier.mCountNode >= 2 ? mCarrier.mCountNode - 1 : 1);
+        case Constants::Position::Middle_0_n1:
+            mi = 0;
+            ma = (int)mCarrier.mCountNode - 1;
+            if (ma < mi) ma = mi;
+            mBoxInputPos.setMinValue(mi);
+            mBoxInputPos.setMaxValue(ma);
             break;
 
-        case Constants::Position::End:
-            mBoxInputPos.setRangeValue(mCarrier.mCountNode, mCarrier.mCountNode);
+        case Constants::Position::Middle_0_n:
+            mi = 0;
+            ma = (int)mCarrier.mCountNode;
+            if (ma < mi) ma = mi;
+            mBoxInputPos.setMinValue(mi);
+            mBoxInputPos.setMaxValue(ma);
+            break;
+
+        case Constants::Position::Middle_1_n1:
+            mi = 1;
+            ma = (int)mCarrier.mCountNode - 1;
+            if (ma < mi) ma = mi;
+            mBoxInputPos.setMinValue(mi);
+            mBoxInputPos.setMaxValue(ma);
+            break;
+
+        case Constants::Position::Middle_1_n2:
+            mi = 1;
+            ma = (int)mCarrier.mCountNode - 2;
+            if (ma < mi) ma = mi;
+            mBoxInputPos.setMinValue(mi);
+            mBoxInputPos.setMaxValue(ma);
+            break;
+
+        case Constants::Position::End_n1:
+            pos = (int)mCarrier.mCountNode - 1;
+            if (pos < 0) pos = 0;
+            mBoxInputPos.setRangeValue(pos, pos);
+            break;
+
+        case Constants::Position::End_n:
+            pos = (int)mCarrier.mCountNode;
+            if (pos < 0) pos = 0;
+            mBoxInputPos.setRangeValue(pos, pos);
             break;
 
         default:

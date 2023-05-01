@@ -22,11 +22,11 @@ Application::Application()
     nameButtonMain.push_back(Constants::Operation::Search);
     mControlTable.setButtonMainList(nameButtonMain);
 
-    Vector<int> SelectPosList;
-    SelectPosList.push_back(Constants::Position::Beginning);
-    SelectPosList.push_back(Constants::Position::Middle);
-    SelectPosList.push_back(Constants::Position::End);
-    mControlTable.setSelectPositionList(SelectPosList);
+    //Vector<int> SelectPosList;
+    //SelectPosList.push_back(Constants::Position::Beginning);
+    //SelectPosList.push_back(Constants::Position::Middle);
+    //SelectPosList.push_back(Constants::Position::End);
+    //mControlTable.setSelectPositionList(SelectPosList);
 }
 
 void Application::run() {

@@ -76,14 +76,36 @@ namespace Constants {
     extern sf::Color BackGroundTextColorHold;
     // Position Row (Row 1)
     enum Position {
-        Beginning,
-        Middle,
-        End
+        Beginning_0,
+        Middle_0_n1,
+        Middle_0_n,
+        Middle_1_n1,
+        Middle_1_n2,
+        End_n1,
+        End_n
     };
-    const std::string PositionText[3] = {
+    const std::string PositionText[7] = {
         "Beginning (i = 0)",
+        "Middle (i = 0..n - 1)",
+        "Middle (i = 0..n)",
         "Middle (i = 1..n - 1)",
+        "Middle (i = 1..n - 2)",
+        "End (i = n - 1)",
         "End (i = n)"
+    };
+    const int SelectPosList[12] = {
+        (1 << Middle_0_n1),                                      // Init
+        (1 << Beginning_0) | (1 << Middle_1_n1) | (1 << End_n),  // Insert
+        (1 << Beginning_0) | (1 << Middle_1_n2) | (1 << End_n1), // Delete
+        (1 << Middle_0_n1),                                      // Update
+        0,                                                       // Allocate (mark)
+        0,                                                       // Access (mark)
+        (1 << Middle_0_n),                                       // Search
+        (1 << Beginning_0),                                      // Push
+        (1 << End_n1),                                           // Pop
+        0,                                                       // Add (mark)
+        0,                                                       // Remove (mark)
+        0,                                                       // Clear (mark)
     };
 
     // Misc
