@@ -109,8 +109,9 @@ namespace Constants {
     };
 
     // Misc
-    constexpr int MinVal = 0;
-    constexpr int MaxVal = 99;
+    constexpr int MinVal        = 0;
+    constexpr int MaxVal        = 99;
+    constexpr float pi          = 3.14159265359;
     const sf::Color OrangeColor = sf::Color(255, 165, 0);
 
     void init();

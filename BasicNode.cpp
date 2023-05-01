@@ -2,8 +2,12 @@
 #include "Constants.h"
 #include "Random.h"
 
-BasicNode::BasicNode(float radius, float outlineThickness, int val)
-    : mBody(radius),
+BasicNode::BasicNode(float radius,
+                     float outlineThickness,
+                     size_t pointCount,
+                     float initAngle,
+                     int val)
+    : mBody(radius, pointCount, initAngle),
       mText(),
       mValue() {
     mBody.setOutlineThickness(outlineThickness);

@@ -7,7 +7,7 @@ class SceneNode : public sf::Transformable {
 public:
     /* ---- Constructor ---- */
     // Constructor
-    SceneNode(BasicNode node = BasicNode(), bool isNeedArrow = true);
+    SceneNode(BasicNode node, bool arrowVisible = true);
     // Destructor
     ~SceneNode();
 

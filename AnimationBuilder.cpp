@@ -19,7 +19,7 @@ Vector<UpdateSceneNode> holdColorAnimationFind(SceneNode* src, SceneNode* dest) 
 }
 
 Animation
-buildAnimationInsert(SceneNode* ptr, SceneNode* mHead,
+buildAnimationInsert(SceneNode* ptr, SceneNode* mHead, SceneNode* newPtr,
                      sf::Color colorBody1,
                      sf::Color colorOutline1,
                      sf::Color colorText1,
@@ -28,14 +28,11 @@ buildAnimationInsert(SceneNode* ptr, SceneNode* mHead,
                      sf::Color colorText2,
                      bool isHead,
                      bool isTail,
-                     int val) {
+                     sf::Vector2f shiftNode) {
 
     SceneNode* child  = ptr;
     SceneNode* parent = ptr->mParent;
-    ptr               = new SceneNode(BasicNode(Constants::CirleNodeRadius,
-                                                Constants::NodeOutlineThinkness,
-                                                val),
-                                      false);
+    ptr               = newPtr;
 
     Animation animation;
 
@@ -48,7 +45,7 @@ buildAnimationInsert(SceneNode* ptr, SceneNode* mHead,
     AnimationState scene1(0.5f);
     // Update 1.1
     UpdateSceneNode update1_1(mHead);
-    update1_1.setTranslation(-Constants::ShiftNode.x / 2, 0);
+    update1_1.setTranslation(-shiftNode.x / 2, 0);
     // Update 1.2
     UpdateSceneNode update1_2(parent);
     if (!isHead) {
@@ -74,7 +71,7 @@ buildAnimationInsert(SceneNode* ptr, SceneNode* mHead,
         update1_3.setTextColor(Constants::TextNodeColor);
     }
     update1_3.setArrowVisible(false);
-    update1_3.setTranslation(Constants::ShiftNode.x, 0);
+    update1_3.setTranslation(shiftNode.x, 0);
     // Scene add
     scene1.addUpdateSceneNode(update1_1);
     scene1.addUpdateSceneNode(update1_2);
@@ -101,11 +98,11 @@ buildAnimationInsert(SceneNode* ptr, SceneNode* mHead,
     update2_3.setOutlineColor(colorOutline1);
     update2_3.setTextColor(colorText1);
     update2_3.setAttachHolder(&SceneNodeHolder::Holder02);
-    update2_3.setTranslation(Constants::ShiftNode.x, Constants::ShiftNode.x);
+    update2_3.setTranslation(shiftNode.x, Constants::ShiftNode.x);
     update2_3.setArrowVisible(true);
     // Update 2.4
     UpdateSceneNode update2_4(child);
-    update2_4.setTranslation(-Constants::ShiftNode.x, -Constants::ShiftNode.x);
+    update2_4.setTranslation(-shiftNode.x, -Constants::ShiftNode.x);
     update2_4.setArrowVisible(true);
     // Scene add
     scene2.addUpdateSceneNode(update2_1);
@@ -174,7 +171,8 @@ buildAnimationDelete(SceneNode* ptr, SceneNode* mHead,
                      sf::Color colorOutline2,
                      sf::Color colorText2,
                      bool isHead,
-                     bool isTail) {
+                     bool isTail,
+                     sf::Vector2f shiftNode) {
     SceneNode* parent = ptr->mParent;
     SceneNode* child  = ptr->mChildren[0];
 
@@ -228,13 +226,13 @@ buildAnimationDelete(SceneNode* ptr, SceneNode* mHead,
     AnimationState scene2(1.0f);
     // Update 2.1
     UpdateSceneNode update2_1(mHead);
-    update2_1.setTranslation(Constants::ShiftNode.x / 2, 0);
+    update2_1.setTranslation(shiftNode.x / 2, 0);
     // Update 2.2
     UpdateSceneNode update2_2(ptr);
-    update2_2.setTranslation(-Constants::ShiftNode.x / 2, 0);
+    update2_2.setTranslation(-shiftNode.x / 2, 0);
     // Update 2.3
     UpdateSceneNode update2_3(child);
-    update2_3.setTranslation(-Constants::ShiftNode.x / 2, 0);
+    update2_3.setTranslation(-shiftNode.x / 2, 0);
     // Scene add
     scene2.addUpdateSceneNode(update2_1);
     scene2.addUpdateSceneNode(update2_2);
@@ -272,7 +270,7 @@ buildAnimationDelete(SceneNode* ptr, SceneNode* mHead,
     // Update 4.3
     UpdateSceneNode update4_3(child);
     update4_3.setArrowVisible(true);
-    update4_3.setTranslation(Constants::ShiftNode.x / 2, Constants::ShiftNode.x);
+    update4_3.setTranslation(shiftNode.x / 2, Constants::ShiftNode.x);
     // Update 4.4
     UpdateSceneNode update4_4(parent);
     update4_4.setAttachHolder(&SceneNodeHolder::Holder01);

@@ -10,7 +10,12 @@ class BasicList {
 public:
     /* ---- Constructor ---- */
     // Constructor
-    BasicList(Carrier &carrier, Vector<int> arr);
+    BasicList(float radiusNode,
+              float outlineThickness,
+              size_t pointCount,
+              float initAngle,
+              sf::Vector2f shiftNode,
+              Carrier &carrier, Vector<int> arr);
 
     /* ------ Modify ------ */
     // return the number of Node
@@ -46,6 +51,16 @@ private:
     void updateCarrier();
 
 private:
+    // init for BasicNode
+
+    float mRadiusNode;
+    float mOutlineThicknessNode;
+    size_t mPointCountNode;
+    float mInitAngleNode;
+    sf::Vector2f mShiftNode;
+
+    // Misc
+
     Carrier &mCarrier;
 
     Vector<int> mArr;

@@ -6,7 +6,12 @@
 Application::Application()
     : mCarrier(),
       mWindow(),
-      mList(mCarrier, Vector<int>()),
+      mList(Constants::CirleNodeRadius,
+           Constants::NodeOutlineThinkness,
+           4, Constants::pi / 4,
+           //Constants::ShiftNode,
+           sf::Vector2f(Constants::CirleNodeRadius * 1.405f + Constants::NodeOutlineThinkness * 2, 0),
+           mCarrier, Vector<int>()),
       mControlTable(mCarrier),
       mAnimation() {
     sf::ContextSettings settings;
@@ -21,12 +26,6 @@ Application::Application()
     nameButtonMain.push_back(Constants::Operation::Update);
     nameButtonMain.push_back(Constants::Operation::Search);
     mControlTable.setButtonMainList(nameButtonMain);
-
-    //Vector<int> SelectPosList;
-    //SelectPosList.push_back(Constants::Position::Beginning);
-    //SelectPosList.push_back(Constants::Position::Middle);
-    //SelectPosList.push_back(Constants::Position::End);
-    //mControlTable.setSelectPositionList(SelectPosList);
 }
 
 void Application::run() {

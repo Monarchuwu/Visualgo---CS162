@@ -3,13 +3,23 @@
 #include "Constants.h"
 #include "SceneNodeHolder.h"
 
-BasicList::BasicList(Carrier &carrier, Vector<int> arr)
-    : mCarrier(carrier),
+BasicList::BasicList(float radiusNode,
+                     float outlineThickness,
+                     size_t pointCount,
+                     float initAngle,
+                     sf::Vector2f shiftNode,
+                     Carrier& carrier,
+                     Vector<int> arr)
+    : mRadiusNode(radiusNode),
+      mOutlineThicknessNode(outlineThickness),
+      mPointCountNode(pointCount),
+      mInitAngleNode(initAngle),
+      mShiftNode(shiftNode),
+      mCarrier(carrier),
       mArr(arr),
       mCountNode(arr.size()),
       mHead(nullptr),
       mTail(nullptr) {
-
     updateArray();
 }
 
@@ -18,10 +28,12 @@ SceneNode* BasicList::find(const size_t index) const {
     return internalFind(index);
 }
 void BasicList::insertNodeBefore(SceneNode* ptr, int val) {
-    SceneNode* temp = new SceneNode(BasicNode(Constants::CirleNodeRadius,
-                                              Constants::NodeOutlineThinkness,
+    SceneNode* temp = new SceneNode(BasicNode(mRadiusNode,
+                                              mOutlineThicknessNode,
+                                              mPointCountNode,
+                                              mInitAngleNode,
                                               val));
-    temp->setPosition(Constants::ShiftNode);
+    temp->setPosition(mShiftNode);
 
     SceneNode* parent = ptr->mParent;
     ptr               = parent->detachChild(*ptr);
@@ -91,7 +103,8 @@ void BasicList::updateArray() {
 
     // Head
     mHead = new SceneNode(BasicNode(Constants::CirleNodeRadius + 10,
-                                    Constants::NodeOutlineThinkness));
+                                    Constants::NodeOutlineThinkness,
+                                    30, 0));
     mHead->mNode.setFillColorBody(Constants::ControlTableThemeColor);
     mHead->mNode.setOutlineColor(Constants::ControlTableThemeColor);
     mHead->mNode.setText("Head");
@@ -99,17 +112,20 @@ void BasicList::updateArray() {
     // Array
     SceneNode* temp = mHead;
     for (int i = 0; i < mArr.size(); ++i) {
-        mTail = new SceneNode(BasicNode(Constants::CirleNodeRadius,
-                                        Constants::NodeOutlineThinkness,
+        mTail = new SceneNode(BasicNode(mRadiusNode,
+                                        mOutlineThicknessNode,
+                                        mPointCountNode,
+                                        mInitAngleNode,
                                         mArr[i]));
-        mTail->setPosition(Constants::ShiftNode);
+        mTail->setPosition(i == 0 ? Constants::ShiftNode : mShiftNode);
         temp->attachChild(mTail);
         temp = mTail;
     }
 
     // NULL (Tail)
     mTail = new SceneNode(BasicNode(Constants::CirleNodeRadius + 10,
-                                    Constants::NodeOutlineThinkness));
+                                    Constants::NodeOutlineThinkness,
+                                    30, 0));
     mTail->mNode.setFillColorBody(Constants::ControlTableThemeColor);
     mTail->mNode.setOutlineColor(Constants::ControlTableThemeColor);
     mTail->mNode.setText("NULL");
@@ -122,7 +138,20 @@ void BasicList::updateArray() {
 void BasicList::updateHeadPosition() {
     int mCnt = mCountNode + 2;
     mHead->setPosition(Constants::MidPointSceneVisual);
-    mHead->move(-(mCnt - 1) * Constants::ShiftNode.x / 2, 0);
+    int x = 0, y = 0;
+    if (mCountNode == 0) {
+        x = -Constants::ShiftNode.x / 2;
+        y = -Constants::ShiftNode.y / 2;
+    }
+    else if (mCountNode == 1) {
+        x = -Constants::ShiftNode.x;
+        y = -Constants::ShiftNode.y;
+    }
+    else {
+        x = -(Constants::ShiftNode.x + (mCnt - 1) * mShiftNode.x / 2);
+        y = -(Constants::ShiftNode.y + (mCnt - 1) * mShiftNode.y / 2);
+    }
+    mHead->move(x, y);
 }
 void BasicList::updateCarrier() {
     mCarrier.mCountNode = mCountNode;
@@ -151,16 +180,22 @@ Animation BasicList::applyOperation() {
                                                       Constants::OrangeColor,
                                                       sf::Color::White);
 
-            Animation animation2  = buildAnimationInsert(ptr, mHead,
-                                                       sf::Color::Red,
-                                                       sf::Color::Red,
-                                                       sf::Color::White,
-                                                       Constants::OrangeColor,
-                                                       Constants::OrangeColor,
-                                                       sf::Color::White,
-                                                       mCarrier.mPos == 0,
-                                                       mCarrier.mPos == mCarrier.mCountNode,
-                                                       mCarrier.mVal);
+            SceneNode* newPtr    = new SceneNode(BasicNode(mRadiusNode,
+                                                           mOutlineThicknessNode,
+                                                           mPointCountNode,
+                                                           mInitAngleNode,
+                                                           mCarrier.mVal),
+                                                 false);
+            Animation animation2 = buildAnimationInsert(ptr, mHead, newPtr,
+                                                        sf::Color::Red,
+                                                        sf::Color::Red,
+                                                        sf::Color::White,
+                                                        Constants::OrangeColor,
+                                                        Constants::OrangeColor,
+                                                        sf::Color::White,
+                                                        mCarrier.mPos == 0,
+                                                        mCarrier.mPos == mCarrier.mCountNode,
+                                                        mShiftNode);
 
             animation1.add(animation2);
 
@@ -185,14 +220,15 @@ Animation BasicList::applyOperation() {
             if (ptr == mTail) return animation1;
 
             Animation animation2 = buildAnimationDelete(ptr, mHead,
-                                                       sf::Color::Red,
-                                                       sf::Color::Red,
-                                                       sf::Color::White,
-                                                       Constants::OrangeColor,
-                                                       Constants::OrangeColor,
-                                                       sf::Color::White,
-                                                       mCarrier.mPos == 0,
-                                                       mCarrier.mPos + 1 == mCarrier.mCountNode);
+                                                        sf::Color::Red,
+                                                        sf::Color::Red,
+                                                        sf::Color::White,
+                                                        Constants::OrangeColor,
+                                                        Constants::OrangeColor,
+                                                        sf::Color::White,
+                                                        mCarrier.mPos == 0,
+                                                        mCarrier.mPos + 1 == mCarrier.mCountNode,
+                                                        mShiftNode);
 
             animation1.add(animation2);
 

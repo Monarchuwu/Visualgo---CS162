@@ -7,9 +7,11 @@ class BasicNode {
 public:
     /* --- Constructors --- */
     // Constructor
-    BasicNode(float radius           = Constants::CirleNodeRadius,
-              float outlineThickness = Constants::NodeOutlineThinkness,
-              int val                = -1);
+    BasicNode(float radius,
+              float outlineThickness,
+              size_t pointCount,
+              float initAngle,
+              int val = -1);
 
     /* ------ Color ------ */
 
@@ -41,7 +43,6 @@ public:
     // draw Node on target
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states = sf::RenderStates::Default) const;
 
-private:
 private:
     CircleShape mBody;
     sf::Text mText;
