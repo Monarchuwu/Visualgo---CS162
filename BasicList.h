@@ -15,6 +15,7 @@ public:
               size_t pointCount,
               float initAngle,
               sf::Vector2f shiftNode,
+              bool doubleHeadedArrow,
               Carrier &carrier, Vector<int> arr);
 
     /* ------ Modify ------ */
@@ -58,6 +59,7 @@ private:
     size_t mPointCountNode;
     float mInitAngleNode;
     sf::Vector2f mShiftNode;
+    bool mDoubleHeadedArrow;
 
     // Misc
 

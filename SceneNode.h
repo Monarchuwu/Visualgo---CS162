@@ -7,7 +7,9 @@ class SceneNode : public sf::Transformable {
 public:
     /* ---- Constructor ---- */
     // Constructor
-    SceneNode(BasicNode node, bool arrowVisible = true);
+    SceneNode(BasicNode node,
+              bool doubleHeadedArrow,
+              bool arrowVisible = true);
     // Destructor
     ~SceneNode();
 
@@ -34,6 +36,7 @@ private:
 
 public:
     BasicNode mNode;
+    bool mDoubleHeadedArrow;
     bool mArrowVisible;
 
     // they should be private, but i have to do this to access mChildren...

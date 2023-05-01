@@ -8,6 +8,7 @@ BasicList::BasicList(float radiusNode,
                      size_t pointCount,
                      float initAngle,
                      sf::Vector2f shiftNode,
+                     bool doubleHeadedArrow,
                      Carrier& carrier,
                      Vector<int> arr)
     : mRadiusNode(radiusNode),
@@ -15,6 +16,7 @@ BasicList::BasicList(float radiusNode,
       mPointCountNode(pointCount),
       mInitAngleNode(initAngle),
       mShiftNode(shiftNode),
+      mDoubleHeadedArrow(doubleHeadedArrow),
       mCarrier(carrier),
       mArr(arr),
       mCountNode(arr.size()),
@@ -32,7 +34,8 @@ void BasicList::insertNodeBefore(SceneNode* ptr, int val) {
                                               mOutlineThicknessNode,
                                               mPointCountNode,
                                               mInitAngleNode,
-                                              val));
+                                              val),
+                                    mDoubleHeadedArrow);
     temp->setPosition(mShiftNode);
 
     SceneNode* parent = ptr->mParent;
@@ -104,7 +107,8 @@ void BasicList::updateArray() {
     // Head
     mHead = new SceneNode(BasicNode(Constants::CirleNodeRadius + 10,
                                     Constants::NodeOutlineThinkness,
-                                    30, 0));
+                                    30, 0),
+                          mDoubleHeadedArrow);
     mHead->mNode.setFillColorBody(Constants::ControlTableThemeColor);
     mHead->mNode.setOutlineColor(Constants::ControlTableThemeColor);
     mHead->mNode.setText("Head");
@@ -116,7 +120,8 @@ void BasicList::updateArray() {
                                         mOutlineThicknessNode,
                                         mPointCountNode,
                                         mInitAngleNode,
-                                        mArr[i]));
+                                        mArr[i]),
+                              mDoubleHeadedArrow && i != 0);
         mTail->setPosition(i == 0 ? Constants::ShiftNode : mShiftNode);
         temp->attachChild(mTail);
         temp = mTail;
@@ -125,7 +130,8 @@ void BasicList::updateArray() {
     // NULL (Tail)
     mTail = new SceneNode(BasicNode(Constants::CirleNodeRadius + 10,
                                     Constants::NodeOutlineThinkness,
-                                    30, 0));
+                                    30, 0),
+                          false);
     mTail->mNode.setFillColorBody(Constants::ControlTableThemeColor);
     mTail->mNode.setOutlineColor(Constants::ControlTableThemeColor);
     mTail->mNode.setText("NULL");
@@ -136,7 +142,6 @@ void BasicList::updateArray() {
     updateCarrier();
 }
 void BasicList::updateHeadPosition() {
-    int mCnt = mCountNode + 2;
     mHead->setPosition(Constants::MidPointSceneVisual);
     int x = 0, y = 0;
     if (mCountNode == 0) {
@@ -148,8 +153,8 @@ void BasicList::updateHeadPosition() {
         y = -Constants::ShiftNode.y;
     }
     else {
-        x = -(Constants::ShiftNode.x + (mCnt - 1) * mShiftNode.x / 2);
-        y = -(Constants::ShiftNode.y + (mCnt - 1) * mShiftNode.y / 2);
+        x = -(Constants::ShiftNode.x + (mCountNode - 1) * mShiftNode.x / 2);
+        y = -(Constants::ShiftNode.y + (mCountNode - 1) * mShiftNode.y / 2);
     }
     mHead->move(x, y);
 }
@@ -185,6 +190,7 @@ Animation BasicList::applyOperation() {
                                                            mPointCountNode,
                                                            mInitAngleNode,
                                                            mCarrier.mVal),
+                                                 mDoubleHeadedArrow,
                                                  false);
             Animation animation2 = buildAnimationInsert(ptr, mHead, newPtr,
                                                         sf::Color::Red,

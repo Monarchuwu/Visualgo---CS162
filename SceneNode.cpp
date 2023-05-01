@@ -2,8 +2,11 @@
 #include "Arrow.h"
 #include <cassert>
 
-SceneNode::SceneNode(BasicNode node, bool arrowVisible)
+SceneNode::SceneNode(BasicNode node,
+                     bool doubleHeadedArrow,
+                     bool arrowVisible)
     : mNode(node),
+      mDoubleHeadedArrow(doubleHeadedArrow),
       mArrowVisible(arrowVisible),
       mParent(nullptr) {
 }
@@ -62,8 +65,14 @@ void SceneNode::drawArrow(sf::RenderTarget& target, sf::RenderStates states) con
                 sf::Vector2f unit = translation / length;
                 float dist1       = mNode.getRadius() + mNode.getOutlineThickness();
                 float dist2       = child->mNode.getRadius() + child->mNode.getOutlineThickness();
-                drawArrow2Point(src + dist1 * unit,
-                                src + translation - dist2 * unit, target);
+                if (child->mDoubleHeadedArrow) {
+                    drawArrow2Head2Point(src + dist1 * unit,
+                                         src + translation - dist2 * unit, target);
+                }
+                else {
+                    drawArrow2Point(src + dist1 * unit,
+                                    src + translation - dist2 * unit, target);
+                }
             }
         }
         child->drawArrow(target, states);
