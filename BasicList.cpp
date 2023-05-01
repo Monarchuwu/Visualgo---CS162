@@ -1,6 +1,7 @@
 #include "BasicList.h"
 #include "Arrow.h"
 #include "Constants.h"
+#include "SceneNodeHolder.h"
 
 BasicList::BasicList(Carrier &carrier, Vector<int> arr)
     : mCarrier(carrier),
@@ -143,9 +144,24 @@ Animation BasicList::applyOperation() {
 
         case Constants::Operation::Insert: {
             SceneNode* ptr = find(mCarrier.mPos);
-            insertNodeBefore(ptr, mCarrier.mVal);
 
-            return Animation();
+            Animation animation = buildAnimationInsert(ptr, mHead,
+                                                       sf::Color::Red,
+                                                       sf::Color::Red,
+                                                       sf::Color::White,
+                                                       Constants::OrangeColor,
+                                                       Constants::OrangeColor,
+                                                       sf::Color::White,
+                                                       mCarrier.mPos == 0,
+                                                       mCarrier.mPos == mCarrier.mCountNode,
+                                                       mCarrier.mVal);
+
+            ++mCountNode;
+            // no need this because the head position will be update while animation
+            // updateHeadPosition();
+            updateCarrier();
+
+            return animation;
             break;
         }
 

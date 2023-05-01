@@ -19,6 +19,143 @@ Vector<UpdateSceneNode> holdColorAnimationFind(SceneNode* src, SceneNode* dest) 
 }
 
 Animation
+buildAnimationInsert(SceneNode* ptr, SceneNode* mHead,
+                     sf::Color colorBody1,
+                     sf::Color colorOutline1,
+                     sf::Color colorText1,
+                     sf::Color colorBody2,
+                     sf::Color colorOutline2,
+                     sf::Color colorText2,
+                     bool isHead,
+                     bool isTail,
+                     int val) {
+
+    SceneNode* child  = ptr;
+    SceneNode* parent = ptr->mParent;
+    ptr               = new SceneNode(BasicNode(Constants::CirleNodeRadius,
+                                                Constants::NodeOutlineThinkness,
+                                                val),
+                                      false);
+
+    Animation animation;
+
+    /* ---------- Scene 1 ---------- */
+    /* ------ Highlight Node  ------ */
+    /* ----- Disvisible arrow  ----- */
+    /* ----- Fix the distance  ----- */
+    /* ------- Left go left  ------- */
+    /* ------ Right to right  ------ */
+    AnimationState scene1(0.5f);
+    // Update 1.1
+    UpdateSceneNode update1_1(mHead);
+    update1_1.setTranslation(-Constants::ShiftNode.x / 2, 0);
+    // Update 1.2
+    UpdateSceneNode update1_2(parent);
+    if (!isHead) {
+        update1_2.setFillColor(colorBody2);
+        update1_2.setOutlineColor(colorOutline2);
+        update1_2.setTextColor(colorText2);
+    }
+    // Update 1.3
+    UpdateSceneNode update1_3(child);
+    if (!isTail) {
+        update1_3.setFillColor(colorBody2);
+        update1_3.setOutlineColor(colorOutline2);
+        update1_3.setTextColor(colorText2);
+    }
+    update1_3.setArrowVisible(false);
+    update1_3.setTranslation(Constants::ShiftNode.x, 0);
+    // Scene add
+    scene1.addUpdateSceneNode(update1_1);
+    scene1.addUpdateSceneNode(update1_2);
+    scene1.addUpdateSceneNode(update1_3);
+    /* ----------------------------- */
+
+    /* ---------- Scene 2 ---------- */
+    /* --------- Enable ptr -------- */
+    /* ------- Highlight ptr ------- */
+    /* --- Detach parent - child --- */
+    /* Attach parent - ptr - child   */
+    /* ---- ptr is pulled down  ---- */
+    /* ----- Envisible arrows  ----- */
+    AnimationState scene2(1.0f);
+    // Update 2.1
+    UpdateSceneNode update2_1(parent);
+    update2_1.setDetach(&SceneNodeHolder::Holder02, child);
+    // Update 2.2
+    UpdateSceneNode update2_2(parent);
+    update2_2.setAttach(ptr);
+    // Update 2.3
+    UpdateSceneNode update2_3(ptr);
+    update2_3.setFillColor(colorBody1);
+    update2_3.setOutlineColor(colorOutline1);
+    update2_3.setTextColor(colorText1);
+    update2_3.setAttachHolder(&SceneNodeHolder::Holder02);
+    update2_3.setTranslation(Constants::ShiftNode.x, Constants::ShiftNode.x);
+    update2_3.setArrowVisible(true);
+    // Update 2.4
+    UpdateSceneNode update2_4(child);
+    update2_4.setTranslation(-Constants::ShiftNode.x, -Constants::ShiftNode.x);
+    update2_4.setArrowVisible(true);
+    // Scene add
+    scene2.addUpdateSceneNode(update2_1);
+    scene2.addUpdateSceneNode(update2_2);
+    scene2.addUpdateSceneNode(update2_3);
+    scene2.addUpdateSceneNode(update2_4);
+    /* ----------------------------- */
+
+    /* ---------- Scene 3 ---------- */
+    /* ----- ptr is pulled up  ----- */
+    AnimationState scene3(1.0f);
+    // Update 3.1
+    UpdateSceneNode update3_1(ptr);
+    update3_1.setTranslation(0, -Constants::ShiftNode.x);
+    // Update 3.2
+    UpdateSceneNode update3_2(child);
+    update3_2.setTranslation(0, Constants::ShiftNode.x);
+    // Scene add
+    scene3.addUpdateSceneNode(update3_1);
+    scene3.addUpdateSceneNode(update3_2);
+    /* ----------------------------- */
+
+    /* ---------- Scene 4 ---------- */
+    /* ----- Un-highlight Node ----- */
+    AnimationState scene4(1.0f);
+    // Update 4.1
+    UpdateSceneNode update4_1(parent);
+    if (!isHead) {
+        update4_1.setFillColor(Constants::NodeFillColor);
+        update4_1.setOutlineColor(Constants::NodeOutlineColor);
+        update4_1.setTextColor(Constants::TextNodeColor);
+    }
+    // Update 4.2
+    UpdateSceneNode update4_2(ptr);
+    update4_2.setFillColor(Constants::NodeFillColor);
+    update4_2.setOutlineColor(Constants::NodeOutlineColor);
+    update4_2.setTextColor(Constants::TextNodeColor);
+    // Update 4.3
+    UpdateSceneNode update4_3(child);
+    if (!isTail) {
+        update4_3.setFillColor(Constants::NodeFillColor);
+        update4_3.setOutlineColor(Constants::NodeOutlineColor);
+        update4_3.setTextColor(Constants::TextNodeColor);
+    }
+    // Scene add
+    scene4.addUpdateSceneNode(update4_1);
+    scene4.addUpdateSceneNode(update4_2);
+    scene4.addUpdateSceneNode(update4_3);
+    /* ----------------------------- */
+
+    // Animation add
+    animation.addState(scene1);
+    animation.addState(scene2);
+    animation.addState(scene3);
+    animation.addState(scene4);
+
+    return animation;
+}
+
+Animation
 buildAnimationDelete(SceneNode* ptr, SceneNode* mHead,
                      sf::Color colorBody1,
                      sf::Color colorOutline1,
@@ -154,7 +291,6 @@ buildAnimationDelete(SceneNode* ptr, SceneNode* mHead,
     animation.addState(scene3);
     animation.addState(scene4);
     animation.addState(scene5);
-    //animation.stateBack().deleteSceneNode(ptr);
 
     return animation;
 }

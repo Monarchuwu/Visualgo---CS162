@@ -30,7 +30,8 @@ SceneNode* SceneNode::detachChild(const SceneNode& node) {
                               [&](SceneNode* p) -> bool { return p == &node; });
     assert(found != mChildren.end());
 
-    SceneNode* result = std::move(*found);
+    // SceneNode* result = std::move(*found);
+    SceneNode* result = *found;
     result->mParent   = nullptr;
     mChildren.erase(found);
     return result;
