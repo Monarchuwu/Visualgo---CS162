@@ -9,6 +9,7 @@ public:
     // Constructor
     SceneNode(BasicNode node,
               bool doubleHeadedArrow,
+              bool reverseArrow = false,
               bool arrowVisible = true);
     // Destructor
     ~SceneNode();
@@ -37,6 +38,7 @@ private:
 public:
     BasicNode mNode;
     bool mDoubleHeadedArrow;
+    bool mReverseArrow;
     bool mArrowVisible;
 
     // they should be private, but i have to do this to access mChildren...
