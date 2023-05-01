@@ -1,20 +1,22 @@
+#include "Queue.h"
+
 #include "SinglyLinkedList.h"
 
-SinglyLinkedList::SinglyLinkedList(Carrier& carrier)
+Queue::Queue(Carrier& carrier)
     : mCarrier(carrier),
       BasicList(Constants::CirleNodeRadius,
                 Constants::NodeOutlineThinkness,
                 30, 0,
                 Constants::ShiftNode,
                 false, Vector<int>(),
-                "Head", "NULL") {
+                "Front", "Back") {
 }
 
-void SinglyLinkedList::updateCarrier() {
+void Queue::updateCarrier() {
     mCarrier.mCountNode = mCountNode;
 }
 
-Animation SinglyLinkedList::applyOperation() {
+Animation Queue::applyOperation() {
     mCarrier.mPlayIsPressed = false;
     while (!mStatesHolder.empty()) {
         mStatesHolder.back().apply();
@@ -29,14 +31,8 @@ Animation SinglyLinkedList::applyOperation() {
             break;
         }
 
-        case Constants::Operation::Insert: {
+        case Constants::Operation::Add: {
             SceneNode* ptr = find(mCarrier.mPos);
-
-            mStatesHolder        = holdColorAnimationFind(mHead->mChildren[0], ptr);
-            Animation animation1 = buildAnimationFind(mHead->mChildren[0], ptr,
-                                                      Constants::OrangeColor,
-                                                      Constants::OrangeColor,
-                                                      sf::Color::White);
 
             SceneNode* newPtr    = new SceneNode(BasicNode(mRadiusNode,
                                                            mOutlineThicknessNode,
@@ -45,7 +41,7 @@ Animation SinglyLinkedList::applyOperation() {
                                                            mCarrier.mVal),
                                                  mDoubleHeadedArrow,
                                                  false);
-            Animation animation2 = buildAnimationInsert(ptr, mHead, newPtr,
+            Animation animation = buildAnimationInsert(ptr, mHead, newPtr,
                                                         sf::Color::Red,
                                                         sf::Color::Red,
                                                         sf::Color::White,
@@ -56,29 +52,21 @@ Animation SinglyLinkedList::applyOperation() {
                                                         mCarrier.mPos == mCarrier.mCountNode,
                                                         mShiftNode);
 
-            animation1.add(animation2);
-
             ++mCountNode;
             // no need this because the head position will be update while animation
             // updateHeadPosition();
             updateCarrier();
 
-            return animation1;
+            return animation;
             break;
         }
 
-        case Constants::Operation::Delete: {
+        case Constants::Operation::Remove: {
             SceneNode* ptr = find(mCarrier.mPos);
 
-            mStatesHolder        = holdColorAnimationFind(mHead->mChildren[0], ptr);
-            Animation animation1 = buildAnimationFind(mHead->mChildren[0], ptr,
-                                                      Constants::OrangeColor,
-                                                      Constants::OrangeColor,
-                                                      sf::Color::White);
+            if (ptr == mTail) return Animation();
 
-            if (ptr == mTail) return animation1;
-
-            Animation animation2 = buildAnimationDelete(ptr, mHead,
+            Animation animation = buildAnimationDelete(ptr, mHead,
                                                         sf::Color::Red,
                                                         sf::Color::Red,
                                                         sf::Color::White,
@@ -89,44 +77,20 @@ Animation SinglyLinkedList::applyOperation() {
                                                         mCarrier.mPos + 1 == mCarrier.mCountNode,
                                                         mShiftNode);
 
-            animation1.add(animation2);
-
             --mCountNode;
             // no need this because the head position will be update while animation
             // updateHeadPosition();
             updateCarrier();
 
-            return animation1;
+            return animation;
             break;
         }
 
-        case Constants::Operation::Update: {
-            SceneNode* ptr       = find(mCarrier.mPos);
-            mStatesHolder        = holdColorAnimationFind(mHead->mChildren[0], ptr);
-            Animation animation1 = buildAnimationFind(mHead->mChildren[0], ptr,
-                                                      Constants::OrangeColor,
-                                                      Constants::OrangeColor,
-                                                      sf::Color::White);
+        case Constants::Operation::Clear: {
+            updateArray(Vector<int>());
+            updateCarrier();
 
-            if (ptr == mTail) return animation1;
-
-            Animation animation2 = buildAnimationUpdate(ptr,
-                                                        mCarrier.mVal,
-                                                        sf::Color::Red,
-                                                        sf::Color::Red,
-                                                        sf::Color::White);
-            animation1.add(animation2);
-            return animation1;
-            break;
-        }
-
-        case Constants::Operation::Search: {
-            SceneNode* ptr = search(mCarrier.mVal);
-            mStatesHolder  = holdColorAnimationFind(mHead->mChildren[0], ptr);
-            return buildAnimationFind(mHead->mChildren[0], ptr,
-                                      Constants::OrangeColor,
-                                      Constants::OrangeColor,
-                                      sf::Color::White);
+            return Animation();
             break;
         }
 

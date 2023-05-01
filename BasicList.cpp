@@ -9,7 +9,9 @@ BasicList::BasicList(float radiusNode,
                      float initAngle,
                      sf::Vector2f shiftNode,
                      bool doubleHeadedArrow,
-                     Vector<int> arr)
+                     Vector<int> arr,
+    std::string nameHead,
+    std::string nameTail)
     : mRadiusNode(radiusNode),
       mOutlineThicknessNode(outlineThickness),
       mPointCountNode(pointCount),
@@ -18,6 +20,8 @@ BasicList::BasicList(float radiusNode,
       mDoubleHeadedArrow(doubleHeadedArrow),
       mArr(arr),
       mCountNode(arr.size()),
+      mNameHead(nameHead),
+      mNameTail(nameTail),
       mHead(nullptr),
       mTail(nullptr) {
     updateArray();
@@ -76,7 +80,7 @@ void BasicList::updateArray() {
                           mDoubleHeadedArrow);
     mHead->mNode.setFillColorBody(Constants::ControlTableThemeColor);
     mHead->mNode.setOutlineColor(Constants::ControlTableThemeColor);
-    mHead->mNode.setText("Head");
+    mHead->mNode.setText(mNameHead);
 
     // Array
     SceneNode* temp = mHead;
@@ -99,7 +103,7 @@ void BasicList::updateArray() {
                           false);
     mTail->mNode.setFillColorBody(Constants::ControlTableThemeColor);
     mTail->mNode.setOutlineColor(Constants::ControlTableThemeColor);
-    mTail->mNode.setText("NULL");
+    mTail->mNode.setText(mNameTail);
     mTail->setPosition(Constants::ShiftNode);
     temp->attachChild(mTail);
 

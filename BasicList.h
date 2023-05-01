@@ -16,7 +16,9 @@ public:
               float initAngle,
               sf::Vector2f shiftNode,
               bool doubleHeadedArrow,
-              Vector<int> arr);
+              Vector<int> arr,
+              std::string nameHead,
+              std::string nameTail);
 
     /* ------ Modify ------ */
     // return the number of Node
@@ -58,6 +60,8 @@ protected:
 
 private:
     Vector<int> mArr;
+
+    std::string mNameHead, mNameTail;
 
 protected:
     int mCountNode;

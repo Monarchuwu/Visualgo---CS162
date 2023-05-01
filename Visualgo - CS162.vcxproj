@@ -156,6 +156,7 @@
     <ClCompile Include="DoublyLinkedList.cpp" />
     <ClCompile Include="InitArrayBlock.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Queue.cpp" />
     <ClCompile Include="SceneNode.cpp" />
     <ClCompile Include="Random.cpp" />
     <ClCompile Include="SceneNodeHolder.cpp" />
@@ -180,6 +181,7 @@
     <ClInclude Include="DataStructureButtonBlock.h" />
     <ClInclude Include="DoublyLinkedList.h" />
     <ClInclude Include="InitArrayBlock.h" />
+    <ClInclude Include="Queue.h" />
     <ClInclude Include="Random.h" />
     <ClInclude Include="SceneNode.h" />
     <ClInclude Include="SceneNodeHolder.h" />

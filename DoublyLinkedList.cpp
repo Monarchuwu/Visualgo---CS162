@@ -6,7 +6,8 @@ DoublyLinkedList::DoublyLinkedList(Carrier& carrier)
                 Constants::NodeOutlineThinkness,
                 30, 0,
                 Constants::ShiftNode,
-                true, Vector<int>()) {
+                true, Vector<int>(),
+                "Head", "NULL") {
 }
 
 void DoublyLinkedList::updateCarrier() {

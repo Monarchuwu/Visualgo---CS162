@@ -99,14 +99,14 @@ namespace Constants {
         (1 << Beginning_0) | (1 << Middle_1_n1) | (1 << End_n),  // Insert
         (1 << Beginning_0) | (1 << Middle_1_n2) | (1 << End_n1), // Delete
         (1 << Middle_0_n1),                                      // Update
-        0,                                                       // Allocate (mark)
-        0,                                                       // Access (mark)
+        (1 << Middle_0_n1),                                      // Allocate (mark)
+        (1 << Middle_0_n1),                                      // Access (mark)
         (1 << Middle_0_n),                                       // Search
         (1 << Beginning_0),                                      // Push
-        (1 << End_n1),                                           // Pop
-        0,                                                       // Add (mark)
-        0,                                                       // Remove (mark)
-        0,                                                       // Clear (mark)
+        (1 << Beginning_0),                                      // Pop
+        (1 << Beginning_0),                                      // Add
+        (1 << End_n1),                                           // Remove
+        (1 << Middle_0_n1),                                      // Clear
     };
 
     // Data Structure

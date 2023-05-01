@@ -4,6 +4,7 @@
 #include "Carrier.h"
 #include "SinglyLinkedList.h"
 #include "DoublyLinkedList.h"
+#include "Queue.h"
 #include "DataStructureButtonBlock.h"
 
 class Application {
@@ -25,6 +26,7 @@ private:
     sf::RenderWindow mWindow;
     SinglyLinkedList mSLL;
     DoublyLinkedList mDLL;
+    Queue mQueue;
     ControlTable mControlTable;
 
     Animation mAnimation;

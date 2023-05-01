@@ -19,6 +19,7 @@ Application::Application()
       mWindow(),
       mSLL(mCarrier),
       mDLL(mCarrier),
+      mQueue(mCarrier),
       mControlTable(mCarrier),
       mAnimation(),
       mDataStructure(),
@@ -98,6 +99,10 @@ void Application::update() {
                 mAnimation = mDLL.applyOperation();
                 break;
 
+            case Constants::DataStructure::Queue:
+                mAnimation = mQueue.applyOperation();
+                break;
+
             default:
                 break;
         }
@@ -125,6 +130,10 @@ void Application::render() {
 
         case Constants::DataStructure::DLL:
             mDLL.draw(mWindow);
+            break;
+
+        case Constants::DataStructure::Queue:
+            mQueue.draw(mWindow);
             break;
 
         default:
