@@ -17,9 +17,11 @@ public:
 
     void setFillColorBody(sf::Color& color);
     void setFillColorText(sf::Color& color);
+    void setFillColorTextBelow(sf::Color& color);
     void setOutlineColor(sf::Color& color);
     sf::Color getFillColorBody() const;
     sf::Color getFillColorText() const;
+    sf::Color getFillColorTextBelow() const;
     sf::Color getOutlineColor() const;
 
     /* ----- Detail ----- */
@@ -38,6 +40,10 @@ public:
     void setText(std::string text = "");
     // return the text in Node
     std::string getText() const;
+    // set text below the Node
+    void setTextBelow(std::string text = "");
+    // return the text below the Node
+    std::string getTextBelow() const;
 
     /* ----- Interact ----- */
     // draw Node on target
@@ -46,6 +52,7 @@ public:
 private:
     CircleShape mBody;
     sf::Text mText;
+    sf::Text mTextBelow;
     int mValue;
     std::string mStrText;
 };
