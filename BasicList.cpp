@@ -145,7 +145,13 @@ Animation BasicList::applyOperation() {
         case Constants::Operation::Insert: {
             SceneNode* ptr = find(mCarrier.mPos);
 
-            Animation animation = buildAnimationInsert(ptr, mHead,
+            mStatesHolder        = holdColorAnimationFind(mHead->mChildren[0], ptr);
+            Animation animation1 = buildAnimationFind(mHead->mChildren[0], ptr,
+                                                      Constants::OrangeColor,
+                                                      Constants::OrangeColor,
+                                                      sf::Color::White);
+
+            Animation animation2  = buildAnimationInsert(ptr, mHead,
                                                        sf::Color::Red,
                                                        sf::Color::Red,
                                                        sf::Color::White,
@@ -156,19 +162,29 @@ Animation BasicList::applyOperation() {
                                                        mCarrier.mPos == mCarrier.mCountNode,
                                                        mCarrier.mVal);
 
+            animation1.add(animation2);
+
             ++mCountNode;
             // no need this because the head position will be update while animation
             // updateHeadPosition();
             updateCarrier();
 
-            return animation;
+            return animation1;
             break;
         }
 
         case Constants::Operation::Delete: {
             SceneNode* ptr = find(mCarrier.mPos);
 
-            Animation animation = buildAnimationDelete(ptr, mHead,
+            mStatesHolder        = holdColorAnimationFind(mHead->mChildren[0], ptr);
+            Animation animation1 = buildAnimationFind(mHead->mChildren[0], ptr,
+                                                      Constants::OrangeColor,
+                                                      Constants::OrangeColor,
+                                                      sf::Color::White);
+
+            if (ptr == mTail) return animation1;
+
+            Animation animation2 = buildAnimationDelete(ptr, mHead,
                                                        sf::Color::Red,
                                                        sf::Color::Red,
                                                        sf::Color::White,
@@ -178,12 +194,14 @@ Animation BasicList::applyOperation() {
                                                        mCarrier.mPos == 0,
                                                        mCarrier.mPos + 1 == mCarrier.mCountNode);
 
+            animation1.add(animation2);
+
             --mCountNode;
             // no need this because the head position will be update while animation
             // updateHeadPosition();
             updateCarrier();
 
-            return animation;
+            return animation1;
             break;
         }
 
@@ -194,6 +212,9 @@ Animation BasicList::applyOperation() {
                                                       Constants::OrangeColor,
                                                       Constants::OrangeColor,
                                                       sf::Color::White);
+
+            if (ptr == mTail) return animation1;
+
             Animation animation2 = buildAnimationUpdate(ptr,
                                                         mCarrier.mVal,
                                                         sf::Color::Red,

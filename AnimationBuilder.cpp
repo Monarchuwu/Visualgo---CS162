@@ -56,12 +56,22 @@ buildAnimationInsert(SceneNode* ptr, SceneNode* mHead,
         update1_2.setOutlineColor(colorOutline2);
         update1_2.setTextColor(colorText2);
     }
+    else {
+        update1_2.setFillColor(Constants::ControlTableThemeColor);
+        update1_2.setOutlineColor(Constants::ControlTableThemeColor);
+        update1_2.setTextColor(Constants::TextNodeColor);
+    }
     // Update 1.3
     UpdateSceneNode update1_3(child);
     if (!isTail) {
         update1_3.setFillColor(colorBody2);
         update1_3.setOutlineColor(colorOutline2);
         update1_3.setTextColor(colorText2);
+    }
+    else {
+        update1_3.setFillColor(Constants::ControlTableThemeColor);
+        update1_3.setOutlineColor(Constants::ControlTableThemeColor);
+        update1_3.setTextColor(Constants::TextNodeColor);
     }
     update1_3.setArrowVisible(false);
     update1_3.setTranslation(Constants::ShiftNode.x, 0);
@@ -181,6 +191,11 @@ buildAnimationDelete(SceneNode* ptr, SceneNode* mHead,
         update1_1.setOutlineColor(colorOutline2);
         update1_1.setTextColor(colorText2);
     }
+    else {
+        update1_1.setFillColor(Constants::ControlTableThemeColor);
+        update1_1.setOutlineColor(Constants::ControlTableThemeColor);
+        update1_1.setTextColor(Constants::TextNodeColor);
+    }
     // Update 1.2
     UpdateSceneNode update1_2(ptr);
     update1_2.setTranslation(sf::Vector2f(0, Constants::ShiftNode.x));
@@ -194,6 +209,11 @@ buildAnimationDelete(SceneNode* ptr, SceneNode* mHead,
         update1_3.setFillColor(colorBody2);
         update1_3.setOutlineColor(colorOutline2);
         update1_3.setTextColor(colorText2);
+    }
+    else {
+        update1_3.setFillColor(Constants::ControlTableThemeColor);
+        update1_3.setOutlineColor(Constants::ControlTableThemeColor);
+        update1_3.setTextColor(Constants::TextNodeColor);
     }
     // Scene add
     scene1.addUpdateSceneNode(update1_1);
