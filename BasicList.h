@@ -16,15 +16,11 @@ public:
               float initAngle,
               sf::Vector2f shiftNode,
               bool doubleHeadedArrow,
-              Carrier &carrier, Vector<int> arr);
+              Vector<int> arr);
 
     /* ------ Modify ------ */
     // return the number of Node
     size_t getCountNode() const;
-    // insert new Node before Node ptr
-    void insertNodeBefore(SceneNode *ptr, int val);
-    // delete Node ptr
-    void deleteNode(SceneNode *ptr);
 
     /* ------ Search & Find ------ */
     // Find
@@ -35,7 +31,8 @@ public:
     /* ----- Interact ----- */
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states = sf::RenderStates::Default) const;
     void updateArray(Vector<int> arr);
-    Animation applyOperation();
+    // Set the position of HeadNode
+    void updateHeadPosition();
 
 private:
     // Internal Find
@@ -46,12 +43,8 @@ private:
     void clear();
     // Set the new array
     void updateArray();
-    // Set the position of HeadNode
-    void updateHeadPosition();
-    // Update Carrier
-    void updateCarrier();
 
-private:
+protected:
     // init for BasicNode
 
     float mRadiusNode;
@@ -61,14 +54,11 @@ private:
     sf::Vector2f mShiftNode;
     bool mDoubleHeadedArrow;
 
-    // Misc
-
-    Carrier &mCarrier;
-
-    Vector<int> mArr;
-    int mCountNode;
-
     SceneNode *mHead, *mTail;
 
-    Vector<UpdateSceneNode> mStatesHolder;
+private:
+    Vector<int> mArr;
+
+protected:
+    int mCountNode;
 };

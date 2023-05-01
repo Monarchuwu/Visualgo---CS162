@@ -3,9 +3,7 @@
 #include "BasicList.h"
 #include "Constants.h"
 
-Application::Application()
-    : mCarrier(),
-      mWindow(),
+/*
       mList(Constants::CirleNodeRadius,
            Constants::NodeOutlineThinkness,
            30, 0,
@@ -14,6 +12,12 @@ Application::Application()
            //sf::Vector2f(Constants::CirleNodeRadius * 1.405f + Constants::NodeOutlineThinkness * 2, 0),
            true,
            mCarrier, Vector<int>()),
+*/
+
+Application::Application()
+    : mCarrier(),
+      mWindow(),
+      mList(mCarrier),
       mControlTable(mCarrier),
       mAnimation() {
     sf::ContextSettings settings;

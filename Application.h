@@ -3,6 +3,7 @@
 #include "BasicList.h"
 #include "ControlTable.h"
 #include "Carrier.h"
+#include "SinglyLinkedList.h"
 
 class Application {
 public:
@@ -18,7 +19,7 @@ private:
     Carrier mCarrier;
 
     sf::RenderWindow mWindow;
-    BasicList mList;
+    SinglyLinkedList mList;
     ControlTable mControlTable;
 
     Animation mAnimation;
