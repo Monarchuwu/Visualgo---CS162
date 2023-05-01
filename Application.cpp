@@ -17,9 +17,11 @@
 Application::Application()
     : mCarrier(),
       mWindow(),
-      mList(mCarrier),
+      mSLL(mCarrier),
+      mDLL(mCarrier),
       mControlTable(mCarrier),
-      mAnimation() {
+      mAnimation(),
+      mDataStructure(0) {
     sf::ContextSettings settings;
     settings.antialiasingLevel = 8;
     mWindow.create(sf::VideoMode(Constants::SceneWidth, Constants::SceneHeight), "Data Structure Visualization", sf::Style::Close, settings);
@@ -82,7 +84,18 @@ void Application::update() {
     // the play button is pressed
     if (mCarrier.mPlayIsPressed) {
         mAnimation.applyAll();
-        mAnimation = mList.applyOperation();
+        switch (mDataStructure) {
+            case DataStructure::SLL:
+                mAnimation = mSLL.applyOperation();
+                break;
+
+            case DataStructure::DLL:
+                mAnimation = mDLL.applyOperation();
+                break;
+
+            default:
+                break;
+        }
     }
 
     // play animation
@@ -100,6 +113,17 @@ void Application::update() {
 void Application::render() {
     mWindow.clear(Constants::StandardColor[1]);
     mControlTable.draw(mWindow);
-    mList.draw(mWindow);
+    switch (mDataStructure) {
+        case DataStructure::SLL:
+            mSLL.draw(mWindow);
+            break;
+
+        case DataStructure::DLL:
+            mDLL.draw(mWindow);
+            break;
+
+        default:
+            break;
+    }
     mWindow.display();
 }

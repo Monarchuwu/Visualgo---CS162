@@ -152,6 +152,7 @@
     <ClCompile Include="CircleShape.cpp" />
     <ClCompile Include="Constants.cpp" />
     <ClCompile Include="ControlTable.cpp" />
+    <ClCompile Include="DoublyLinkedList.cpp" />
     <ClCompile Include="InitArrayBlock.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="SceneNode.cpp" />
@@ -175,6 +176,7 @@
     <ClInclude Include="CircleShape.h" />
     <ClInclude Include="Constants.h" />
     <ClInclude Include="ControlTable.h" />
+    <ClInclude Include="DoublyLinkedList.h" />
     <ClInclude Include="InitArrayBlock.h" />
     <ClInclude Include="Random.h" />
     <ClInclude Include="SceneNode.h" />
