@@ -8,8 +8,7 @@ Queue::Queue(Carrier& carrier)
                 Constants::NodeOutlineThinkness,
                 30, 0,
                 Constants::ShiftNode,
-                false, Vector<int>(),
-                "Front", "Back") {
+                false, Vector<int>()) {
 }
 
 void Queue::updateCarrier() {
@@ -17,6 +16,7 @@ void Queue::updateCarrier() {
 }
 
 Animation Queue::applyOperation() {
+    /*
     mCarrier.mPlayIsPressed = false;
     while (!mStatesHolder.empty()) {
         mStatesHolder.back().apply();
@@ -98,4 +98,6 @@ Animation Queue::applyOperation() {
             return Animation();
             break;
     }
+    */
+    return Animation();
 }

@@ -9,7 +9,10 @@ enum AnimationUpdate {
     Attach,
     Detach,
     Holder,
-    Translation
+    Delete,
+    Translation,
+    TextBelow,
+    AddTextBelow
 };
 
 class UpdateSceneNode {
@@ -22,11 +25,13 @@ public:
     void setTextColor(const sf::Color &color);
     void setAttach(SceneNode* children);
     void setAttachHolder(SceneNode** holder);
-    void setDetach(SceneNode* children);
-    void setDetach(SceneNode** holder, SceneNode* children);
+    void setDetach(SceneNode** holder);
+    void setDelete();
     void setTranslation(const sf::Vector2f &translation);
     void setTranslation(float x, float y);
     void setArrowVisible(bool visible);
+    void setTextBelow(std::string str);
+    void addTextBelow(std::string str);
 
     void apply();
 
@@ -43,4 +48,5 @@ private:
     SceneNode** mHolder;
     sf::Vector2f mTranslation;
     bool mArrowVisible;
+    std::string mTextBelow;
 };

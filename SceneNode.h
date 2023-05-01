@@ -19,7 +19,7 @@ public:
     void attachChild(SceneNode* child);
     // Detach a child
     // Return pointer to that child
-    SceneNode* detachChild(const SceneNode& node);
+    SceneNode* detachChild();
 
     /* ------- Arrow ------- */
     void enableArrow();
@@ -42,6 +42,6 @@ public:
     bool mArrowVisible;
 
     // they should be private, but i have to do this to access mChildren...
-    Vector<SceneNode*> mChildren;
+    SceneNode* mChildren;
     SceneNode* mParent;
 };

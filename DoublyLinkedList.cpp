@@ -6,8 +6,7 @@ DoublyLinkedList::DoublyLinkedList(Carrier& carrier)
                 Constants::NodeOutlineThinkness,
                 30, 0,
                 Constants::ShiftNode,
-                true, Vector<int>(),
-                "Head", "NULL") {
+                true, Vector<int>()) {
 }
 
 void DoublyLinkedList::updateCarrier() {
@@ -15,6 +14,7 @@ void DoublyLinkedList::updateCarrier() {
 }
 
 Animation DoublyLinkedList::applyOperation() {
+    /*
     mCarrier.mPlayIsPressed = false;
     while (!mStatesHolder.empty()) {
         mStatesHolder.back().apply();
@@ -134,4 +134,6 @@ Animation DoublyLinkedList::applyOperation() {
             return Animation();
             break;
     }
+    */
+    return Animation();
 }

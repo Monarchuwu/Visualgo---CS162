@@ -16,9 +16,7 @@ public:
               float initAngle,
               sf::Vector2f shiftNode,
               bool doubleHeadedArrow,
-              Vector<int> arr,
-              std::string nameHead,
-              std::string nameTail);
+              Vector<int> arr);
 
     /* ------ Modify ------ */
     // return the number of Node
@@ -35,6 +33,8 @@ public:
     void updateArray(Vector<int> arr);
     // Set the position of HeadNode
     void updateHeadPosition();
+    // Set the Text Below the Node
+    void updateTextBelow();
 
 private:
     // Internal Find
@@ -43,6 +43,8 @@ private:
     SceneNode *internalSearch(const int val) const;
     // Clear the old array
     void clear();
+    // Clear TextBelow of all node
+    void clearTextBelow();
     // Set the new array
     void updateArray();
 
@@ -56,12 +58,10 @@ protected:
     sf::Vector2f mShiftNode;
     bool mDoubleHeadedArrow;
 
-    SceneNode *mHead, *mTail;
+    SceneNode *mHead;
 
 private:
     Vector<int> mArr;
-
-    std::string mNameHead, mNameTail;
 
 protected:
     int mCountNode;

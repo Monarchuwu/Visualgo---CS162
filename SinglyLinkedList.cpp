@@ -6,8 +6,7 @@ SinglyLinkedList::SinglyLinkedList(Carrier& carrier)
                 Constants::NodeOutlineThinkness,
                 30, 0,
                 Constants::ShiftNode,
-                false, Vector<int>(),
-                "Head", "NULL") {
+                false, Vector<int>()) {
 }
 
 void SinglyLinkedList::updateCarrier() {
@@ -29,6 +28,7 @@ Animation SinglyLinkedList::applyOperation() {
             break;
         }
 
+        /*
         case Constants::Operation::Insert: {
             SceneNode* ptr = find(mCarrier.mPos);
 
@@ -119,11 +119,13 @@ Animation SinglyLinkedList::applyOperation() {
             return animation1;
             break;
         }
+        */
+
 
         case Constants::Operation::Search: {
             SceneNode* ptr = search(mCarrier.mVal);
-            mStatesHolder  = holdColorAnimationFind(mHead->mChildren[0], ptr);
-            return buildAnimationFind(mHead->mChildren[0], ptr,
+            mStatesHolder  = holdColorAnimationFind(mHead, ptr);
+            return buildAnimationFind(mHead, ptr,
                                       Constants::OrangeColor,
                                       Constants::OrangeColor,
                                       sf::Color::White);
@@ -134,4 +136,5 @@ Animation SinglyLinkedList::applyOperation() {
             return Animation();
             break;
     }
+    return Animation();
 }

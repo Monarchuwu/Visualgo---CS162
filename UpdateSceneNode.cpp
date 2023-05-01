@@ -36,17 +36,15 @@ void UpdateSceneNode::setAttachHolder(SceneNode** holder) {
     mStatus |= 1 << Attach;
     mStatus |= 1 << Holder;
 }
-void UpdateSceneNode::setDetach(SceneNode* children) {
-    mDetachChild = children;
-    mStatus |= 1 << Detach;
-}
-void UpdateSceneNode::setDetach(SceneNode** holder, SceneNode* children) {
-    mHolder     = holder;
-    mDetachChild = children;
+void UpdateSceneNode::setDetach(SceneNode** holder) {
+    mHolder = holder;
     mStatus |= 1 << Detach;
     mStatus |= 1 << Holder;
 }
-void UpdateSceneNode::setTranslation(const sf::Vector2f &translation) {
+void UpdateSceneNode::setDelete() {
+    mStatus |= 1 << Delete;
+}
+void UpdateSceneNode::setTranslation(const sf::Vector2f& translation) {
     mTranslation = translation;
     mStatus |= 1 << Translation;
 }
@@ -55,6 +53,14 @@ void UpdateSceneNode::setTranslation(float x, float y) {
 }
 void UpdateSceneNode::setArrowVisible(bool visible) {
     mArrowVisible = visible;
+}
+void UpdateSceneNode::setTextBelow(std::string str) {
+    mTextBelow = str;
+    mStatus |= 1 << TextBelow;
+}
+void UpdateSceneNode::addTextBelow(std::string str) {
+    mTextBelow = str;
+    mStatus |= 1 << AddTextBelow;
 }
 
 void UpdateSceneNode::apply() {
@@ -82,10 +88,12 @@ void UpdateSceneNode::apply() {
     }
 
     if (mStatus >> Detach & 1) {
-        if (mStatus >> Holder & 1)
-            *mHolder = mPtr->detachChild(*mDetachChild);
-        else
-            mPtr->detachChild(*mDetachChild);
+        *mHolder = mPtr->detachChild();
+    }
+
+    if (mStatus >> Delete & 1) {
+        delete mPtr;
+        return;
     }
 
     if (mStatus >> Translation & 1) {
