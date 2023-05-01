@@ -8,9 +8,11 @@ enum AnimationUpdate {
     ColorText,
     Attach,
     Detach,
+    Assigned,
     Holder,
     Delete,
     Translation,
+    VisibleArrow,
     TextBelow,
     AddTextBelow,
     ResetTextBelow
@@ -28,6 +30,7 @@ public:
     void setAttachHolder(SceneNode** holder);
     void setDetach(SceneNode** holder);
     void setDelete();
+    void setAssigned(SceneNode** holder);
     void setTranslation(const sf::Vector2f &translation);
     void setTranslation(float x, float y);
     void setArrowVisible(bool visible);

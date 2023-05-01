@@ -19,6 +19,99 @@ Vector<UpdateSceneNode> holdColorAnimationFind(SceneNode* src, SceneNode* dest) 
 }
 
 Animation
+buildAnimationInsertAtBeginning(SceneNode* mHead, SceneNode* newPtr,
+                                sf::Color colorBody1,
+                                sf::Color colorOutline1,
+                                sf::Color colorText1,
+                                sf::Color colorBody2,
+                                sf::Color colorOutline2,
+                                sf::Color colorText2,
+                                sf::Vector2f shiftNode,
+                                sf::Vector2f headPosition) {
+
+    Animation animation;
+
+    /* ---------- Scene 1 ---------- */
+    AnimationState scene1(0.75f);
+    /* ------ Highlight Node  ------ */
+    // Update 1.1
+    UpdateSceneNode update1_1(mHead);
+    update1_1.setFillColor(colorBody2);
+    update1_1.setOutlineColor(colorOutline2);
+    update1_1.setTextColor(colorText2);
+    // Scene add
+    scene1.addUpdateSceneNode(update1_1);
+    /* ----------------------------- */
+
+    /* ---------- Scene 2 ---------- */
+    AnimationState scene2(0.75f);
+    /* --- Attach newPtr - mHead --- */
+    /* ------ Invisible arrow ------ */
+    /* ----- Set the position  ----- */
+    UpdateSceneNode update2_1(newPtr);
+    update2_1.setAttach(mHead);
+    update2_1.setTranslation(headPosition - shiftNode / 2.f);
+    UpdateSceneNode update2_2(mHead);
+    update2_2.setArrowVisible(false);
+    update2_2.setTranslation(-headPosition + shiftNode);
+    /* ------ mHead = newPtr  ------ */
+    UpdateSceneNode update2_3(newPtr);
+    update2_3.setAssigned(SceneNodeHolder::Holder31);
+    /* ------- Enable newPtr  ------ */
+    /* ----- Highlight newptr  ----- */
+    /* ------- Set TextBelow ------- */
+    UpdateSceneNode update2_4(newPtr);
+    update2_4.setFillColor(colorBody1);
+    update2_4.setOutlineColor(colorOutline1);
+    update2_4.setTextColor(colorText1);
+    update2_4.setTextBelow("tmp/");
+    // Scene add
+    scene2.addUpdateSceneNode(update2_1);
+    scene2.addUpdateSceneNode(update2_2);
+    scene2.addUpdateSceneNode(update2_3);
+    scene2.addUpdateSceneNode(update2_4);
+    /* ----------------------------- */
+
+    /* ---------- Scene 3 ---------- */
+    AnimationState scene3(0.75f);
+    /* ------- Visible arrow ------- */
+    /* ------- Set TextBelow ------- */
+    UpdateSceneNode update3_1(newPtr);
+    update3_1.setTextBelow("Head/");
+    UpdateSceneNode update3_2(mHead);
+    update3_2.setArrowVisible(true);
+    update3_2.setTextBelow("");
+    // Scene add
+    scene3.addUpdateSceneNode(update3_1);
+    scene3.addUpdateSceneNode(update3_2);
+    /* ----------------------------- */
+
+    /* ---------- Scene 4 ---------- */
+    AnimationState scene4(0.75f);
+    /* ---- Un-hightlight Node  ---- */
+    UpdateSceneNode update4_1(newPtr);
+    update4_1.setFillColor(Constants::NodeFillColor);
+    update4_1.setOutlineColor(Constants::NodeOutlineColor);
+    update4_1.setTextColor(Constants::TextNodeColor);
+    UpdateSceneNode update4_2(mHead);
+    update4_2.setFillColor(Constants::NodeFillColor);
+    update4_2.setOutlineColor(Constants::NodeOutlineColor);
+    update4_2.setTextColor(Constants::TextNodeColor);
+    // Scene add
+    scene4.addUpdateSceneNode(update4_1);
+    scene4.addUpdateSceneNode(update4_2);
+    /* ----------------------------- */
+
+    // Animation add
+    animation.addState(scene1);
+    animation.addState(scene2);
+    animation.addState(scene3);
+    animation.addState(scene4);
+
+    return animation;
+}
+
+Animation
 buildAnimationInsertAtMiddle(SceneNode* ptr, SceneNode* mHead, SceneNode* newPtr,
                              sf::Color colorBody1,
                              sf::Color colorOutline1,
@@ -35,12 +128,12 @@ buildAnimationInsertAtMiddle(SceneNode* ptr, SceneNode* mHead, SceneNode* newPtr
 
     /* ---------- Scene 1 ---------- */
     /* ------ Highlight Node  ------ */
-    /* ----- Disvisible arrow  ----- */
+    /* ------ Invisible arrow ------ */
     /* ------- Set TextBelow ------- */
     /* ----- Fix the distance  ----- */
     /* ------- Left go left  ------- */
     /* ------ Right to right  ------ */
-    AnimationState scene1(0.5f);
+    AnimationState scene1(1.0f);
     // Update 1.1
     UpdateSceneNode update1_1(mHead);
     update1_1.setTranslation(-shiftNode.x / 2, 0);
@@ -71,7 +164,7 @@ buildAnimationInsertAtMiddle(SceneNode* ptr, SceneNode* mHead, SceneNode* newPtr
     /* --- Detach parent - child --- */
     /* Attach parent - ptr - child   */
     /* ---- ptr is pulled down  ---- */
-    /* ----- Envisible arrows  ----- */
+    /* ------ Visible arrows  ------ */
     AnimationState scene2(1.0f);
     // Update 2.1
     UpdateSceneNode update2_1(parent);
@@ -217,7 +310,7 @@ buildAnimationDeleteAtMiddle(SceneNode* ptr, SceneNode* mHead,
     /* ----------------------------- */
 
     /* ---------- Scene 3 ---------- */
-    /* ---- Disvisible 2 arrows ---- */
+    /* ---- Invisible 2 arrows  ---- */
     AnimationState scene3(1.0f);
     // Update 3.1
     UpdateSceneNode update3_1(ptr);

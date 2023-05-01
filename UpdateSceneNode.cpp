@@ -41,6 +41,11 @@ void UpdateSceneNode::setDetach(SceneNode** holder) {
     mStatus |= 1 << Detach;
     mStatus |= 1 << Holder;
 }
+void UpdateSceneNode::setAssigned(SceneNode** holder) {
+    mHolder = holder;
+    mStatus |= 1 << Assigned;
+    mStatus |= 1 << Holder;
+}
 void UpdateSceneNode::setDelete() {
     mStatus |= 1 << Delete;
 }
@@ -53,6 +58,7 @@ void UpdateSceneNode::setTranslation(float x, float y) {
 }
 void UpdateSceneNode::setArrowVisible(bool visible) {
     mArrowVisible = visible;
+    mStatus |= 1 << VisibleArrow;
 }
 void UpdateSceneNode::setTextBelow(std::string str) {
     mTextBelow = str;
@@ -94,6 +100,10 @@ void UpdateSceneNode::apply() {
         *mHolder = mPtr->detachChild();
     }
 
+    if (mStatus >> Assigned & 1) {
+        *mHolder = mPtr;
+    }
+
     if (mStatus >> Delete & 1) {
         delete mPtr;
         return;
@@ -103,11 +113,10 @@ void UpdateSceneNode::apply() {
         mPtr->move(mTranslation);
     }
     
-    if (mArrowVisible) {
-        mPtr->enableArrow();
-    }
-    else {
-        mPtr->disableArrow();
+    if (mStatus >> VisibleArrow & 1) {
+        if (mArrowVisible)
+            mPtr->enableArrow();
+        else mPtr->disableArrow();
     }
 
     if (mStatus >> TextBelow & 1) {

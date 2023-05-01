@@ -1,4 +1,5 @@
 #include "SinglyLinkedList.h"
+#include "SceneNodeHolder.h"
 
 SinglyLinkedList::SinglyLinkedList(Carrier& carrier)
     : mCarrier(carrier),
@@ -29,9 +30,28 @@ Animation SinglyLinkedList::applyOperation() {
         }
 
         case Constants::Operation::Insert: {
-            if (mCountNode == 0) {}                  // Just Insert = Init 1 element
-            else if (mCarrier.mPos == 0) {}          // Insert At Beginning
-            else if (mCarrier.mPos == mCountNode) {} // Insert At End
+            Animation animation;
+            if (mCountNode == 0) {}        // Just Insert = Init 1 element
+            else if (mCarrier.mPos == 0) { // Insert At Beginning
+                SceneNodeHolder::Holder31 = &mHead;
+                SceneNode* newPtr         = new SceneNode(BasicNode(mRadiusNode,
+                                                                    mOutlineThicknessNode,
+                                                                    mPointCountNode,
+                                                                    mInitAngleNode,
+                                                                    mCarrier.mVal),
+                                                          mDoubleHeadedArrow);
+                animation.add(buildAnimationInsertAtBeginning(mHead, newPtr,
+                                                              sf::Color::Red,
+                                                              sf::Color::Red,
+                                                              sf::Color::White,
+                                                              Constants::OrangeColor,
+                                                              Constants::OrangeColor,
+                                                              sf::Color::White,
+                                                              mShiftNode,
+                                                              mHead->getPosition()));
+            }
+            else if (mCarrier.mPos == mCountNode) {
+            } // Insert At End
             else { // Insert At Middle
                 SceneNode* ptr = find(mCarrier.mPos - 1);
 
@@ -57,15 +77,16 @@ Animation SinglyLinkedList::applyOperation() {
                                                                     Constants::OrangeColor,
                                                                     sf::Color::White,
                                                                     mShiftNode);
-                animation1.add(animation2);
+
+                animation.add(animation1);
+                animation.add(animation2);
 
                 ++mCountNode;
                 // no need this because the head position will be update while animation
                 // updateHeadPosition();
                 updateCarrier();
-
-                return animation1;
             }
+            return animation;
             break;
         }
 
