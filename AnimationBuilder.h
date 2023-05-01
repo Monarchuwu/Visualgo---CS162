@@ -20,21 +20,17 @@ Vector<UpdateSceneNode> holdColorAnimationFind(SceneNode* src, SceneNode* dest);
 //                     bool isTail,
 //                     sf::Vector2f shiftNode);
 
-// Delete
-
 // color 1 is the color of the node deleted
 // color 2 is the color of the prev and next nodes
-//Animation
-//buildAnimationDelete(SceneNode* ptr, SceneNode* mHead,
-//                     sf::Color colorBody1,
-//                     sf::Color colorOutline1,
-//                     sf::Color colorText1,
-//                     sf::Color colorBody2,
-//                     sf::Color colorOutline2,
-//                     sf::Color colorText2,
-//                     bool isHead,
-//                     bool isTail,
-//                     sf::Vector2f shiftNode);
+Animation
+buildAnimationDeleteMiddle(SceneNode* ptr, SceneNode* mHead,
+                           sf::Color colorBody1,
+                           sf::Color colorOutline1,
+                           sf::Color colorText1,
+                           sf::Color colorBody2,
+                           sf::Color colorOutline2,
+                           sf::Color colorText2,
+                           sf::Vector2f shiftNode);
 
 Animation
 buildAnimationUpdate(SceneNode* ptr,

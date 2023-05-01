@@ -66,40 +66,43 @@ Animation SinglyLinkedList::applyOperation() {
             return animation1;
             break;
         }
+        */
 
         case Constants::Operation::Delete: {
-            SceneNode* ptr = find(mCarrier.mPos);
+            if (mCountNode == 0) break;
+            if (mCountNode == 1) {}                      // Just Delete = Init empty
+            else if (mCarrier.mPos == 0) {}              // Delete At Beginning
+            else if (mCarrier.mPos == mCountNode - 1) {} // Delete At End
+            else { // Delete At Middle
+                SceneNode* ptr = find(mCarrier.mPos - 1);
 
-            mStatesHolder        = holdColorAnimationFind(mHead->mChildren[0], ptr);
-            Animation animation1 = buildAnimationFind(mHead->mChildren[0], ptr,
-                                                      Constants::OrangeColor,
-                                                      Constants::OrangeColor,
-                                                      sf::Color::White);
+                mStatesHolder        = holdColorAnimationFind(mHead, ptr);
+                Animation animation1 = buildAnimationFind(mHead, ptr,
+                                                          Constants::OrangeColor,
+                                                          Constants::OrangeColor,
+                                                          sf::Color::White);
 
-            if (ptr == mTail) return animation1;
+                if (ptr == nullptr) return animation1;
 
-            Animation animation2 = buildAnimationDelete(ptr, mHead,
-                                                        sf::Color::Red,
-                                                        sf::Color::Red,
-                                                        sf::Color::White,
-                                                        Constants::OrangeColor,
-                                                        Constants::OrangeColor,
-                                                        sf::Color::White,
-                                                        mCarrier.mPos == 0,
-                                                        mCarrier.mPos + 1 == mCarrier.mCountNode,
-                                                        mShiftNode);
+                Animation animation2 = buildAnimationDeleteMiddle(ptr, mHead,
+                                                                  sf::Color::Red,
+                                                                  sf::Color::Red,
+                                                                  sf::Color::White,
+                                                                  Constants::OrangeColor,
+                                                                  Constants::OrangeColor,
+                                                                  sf::Color::White,
+                                                                  mShiftNode);
+                animation1.add(animation2);
 
-            animation1.add(animation2);
+                --mCountNode;
+                // no need this because the head position will be update while animation
+                // updateHeadPosition();
+                updateCarrier();
 
-            --mCountNode;
-            // no need this because the head position will be update while animation
-            // updateHeadPosition();
-            updateCarrier();
-
-            return animation1;
+                return animation1;
+            }
             break;
         }
-        */
 
         case Constants::Operation::Update: {
             SceneNode* ptr       = find(mCarrier.mPos);
@@ -119,7 +122,6 @@ Animation SinglyLinkedList::applyOperation() {
             return animation1;
             break;
         }
-
 
         case Constants::Operation::Search: {
             SceneNode* ptr = search(mCarrier.mVal);
