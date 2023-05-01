@@ -2,5 +2,5 @@
 
 namespace SceneNodeHolder {
     SceneNode* Holder01;
-    SceneNode* Holder02;
+    SceneNode* Holder11;
 } // namespace SceneNodeHolder

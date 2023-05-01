@@ -5,5 +5,5 @@ namespace SceneNodeHolder {
     // Delete Holder
     extern SceneNode* Holder01;
     // Insert Holder
-    extern SceneNode* Holder02;
+    extern SceneNode* Holder11;
 } // namespace SceneNodeHolder
