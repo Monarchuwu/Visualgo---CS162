@@ -99,16 +99,16 @@ Animation SinglyLinkedList::applyOperation() {
             return animation1;
             break;
         }
+        */
 
         case Constants::Operation::Update: {
             SceneNode* ptr       = find(mCarrier.mPos);
-            mStatesHolder        = holdColorAnimationFind(mHead->mChildren[0], ptr);
-            Animation animation1 = buildAnimationFind(mHead->mChildren[0], ptr,
+            mStatesHolder        = holdColorAnimationFind(mHead, ptr);
+            Animation animation1 = buildAnimationFind(mHead, ptr,
                                                       Constants::OrangeColor,
                                                       Constants::OrangeColor,
                                                       sf::Color::White);
-
-            if (ptr == mTail) return animation1;
+            if (ptr == nullptr) return animation1;
 
             Animation animation2 = buildAnimationUpdate(ptr,
                                                         mCarrier.mVal,
@@ -119,7 +119,6 @@ Animation SinglyLinkedList::applyOperation() {
             return animation1;
             break;
         }
-        */
 
 
         case Constants::Operation::Search: {

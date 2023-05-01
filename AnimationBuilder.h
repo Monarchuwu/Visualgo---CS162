@@ -36,14 +36,12 @@ Vector<UpdateSceneNode> holdColorAnimationFind(SceneNode* src, SceneNode* dest);
 //                     bool isTail,
 //                     sf::Vector2f shiftNode);
 
-// Update
-
-//Animation
-//buildAnimationUpdate(SceneNode* ptr,
-//                     int val,
-//                     sf::Color colorBody,
-//                     sf::Color colorOutline,
-//                     sf::Color colorText);
+Animation
+buildAnimationUpdate(SceneNode* ptr,
+                     int val,
+                     sf::Color colorBody,
+                     sf::Color colorOutline,
+                     sf::Color colorText);
 
 Animation
 buildAnimationFind(SceneNode* src, SceneNode* dest,

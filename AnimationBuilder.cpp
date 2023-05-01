@@ -319,26 +319,26 @@ Vector<UpdateSceneNode> holdColorAnimationFind(SceneNode* src, SceneNode* dest) 
 
 // Update
 
-//Animation
-//buildAnimationUpdate(SceneNode* ptr,
-//                     int val,
-//                     sf::Color colorBody,
-//                     sf::Color colorOutline,
-//                     sf::Color colorText) {
-//    UpdateSceneNode temp(ptr);
-//    temp.setVal(val);
-//    temp.setFillColor(colorBody);
-//    temp.setOutlineColor(colorOutline);
-//    temp.setTextColor(colorText);
-//
-//    AnimationState state;
-//    state.addUpdateSceneNode(temp);
-//
-//    Animation animation;
-//    animation.addState(state);
-//
-//    return animation;
-//}
+Animation
+buildAnimationUpdate(SceneNode* ptr,
+                     int val,
+                     sf::Color colorBody,
+                     sf::Color colorOutline,
+                     sf::Color colorText) {
+    UpdateSceneNode temp(ptr);
+    temp.setVal(val);
+    temp.setFillColor(colorBody);
+    temp.setOutlineColor(colorOutline);
+    temp.setTextColor(colorText);
+
+    AnimationState state;
+    state.addUpdateSceneNode(temp);
+
+    Animation animation;
+    animation.addState(state);
+
+    return animation;
+}
 
 Animation
 buildAnimationFind(SceneNode* src, SceneNode* dest,
