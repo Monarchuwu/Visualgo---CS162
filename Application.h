@@ -4,6 +4,7 @@
 #include "Carrier.h"
 #include "SinglyLinkedList.h"
 #include "DoublyLinkedList.h"
+#include "CircularLinkedList.h"
 #include "Queue.h"
 #include "Stack.h"
 #include "DataStructureButtonBlock.h"
@@ -27,6 +28,7 @@ private:
     sf::RenderWindow mWindow;
     SinglyLinkedList mSLL;
     DoublyLinkedList mDLL;
+    CircularLinkedList mCLL;
     Queue mQueue;
     Stack mStack;
     ControlTable mControlTable;

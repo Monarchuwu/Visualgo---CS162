@@ -150,6 +150,7 @@
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Carrier.cpp" />
     <ClCompile Include="CircleShape.cpp" />
+    <ClCompile Include="CircularLinkedList.cpp" />
     <ClCompile Include="Constants.cpp" />
     <ClCompile Include="ControlTable.cpp" />
     <ClCompile Include="DataStructureButtonBlock.cpp" />
@@ -177,6 +178,7 @@
     <ClInclude Include="Button.h" />
     <ClInclude Include="Carrier.h" />
     <ClInclude Include="CircleShape.h" />
+    <ClInclude Include="CircularLinkedList.h" />
     <ClInclude Include="Constants.h" />
     <ClInclude Include="ControlTable.h" />
     <ClInclude Include="DataStructureButtonBlock.h" />

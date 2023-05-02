@@ -19,6 +19,7 @@ Application::Application()
       mWindow(),
       mSLL(mCarrier),
       mDLL(mCarrier),
+      mCLL(mCarrier),
       mQueue(mCarrier),
       mStack(mCarrier),
       mControlTable(mCarrier),
@@ -91,6 +92,10 @@ void Application::setDataStructure(int dataStructure) {
             mDLL.updateCarrier();
             break;
 
+        case Constants::DataStructure::CLL:
+            mCLL.updateCarrier();
+            break;
+
         case Constants::DataStructure::Queue:
             mQueue.updateCarrier();
             break;
@@ -119,6 +124,10 @@ void Application::update() {
 
             case Constants::DataStructure::DLL:
                 mAnimation = mDLL.applyOperation();
+                break;
+
+            case Constants::DataStructure::CLL:
+                mAnimation = mCLL.applyOperation();
                 break;
 
             case Constants::DataStructure::Queue:
@@ -156,6 +165,10 @@ void Application::render() {
 
         case Constants::DataStructure::DLL:
             mDLL.draw(mWindow);
+            break;
+
+        case Constants::DataStructure::CLL:
+            mCLL.draw(mWindow);
             break;
 
         case Constants::DataStructure::Queue:
