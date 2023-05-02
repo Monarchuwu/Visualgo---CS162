@@ -41,6 +41,19 @@ buildAnimationInsertAtMiddle(SceneNode* ptr, SceneNode* mHead, SceneNode* newPtr
                              sf::Color colorText2,
                              sf::Vector2f shiftNode);
 
+// color 1 is the color of the node inserted
+// color 2 is the color of the head node
+Animation
+buildAnimationDeleteAtBeginning(SceneNode* mHead,
+                                sf::Color colorBody1,
+                                sf::Color colorOutline1,
+                                sf::Color colorText1,
+                                sf::Color colorBody2,
+                                sf::Color colorOutline2,
+                                sf::Color colorText2,
+                                sf::Vector2f shiftNode,
+                                sf::Vector2f headPosition);
+
 // color 1 is the color of the node deleted
 // color 2 is the color of the prev and next nodes
 Animation

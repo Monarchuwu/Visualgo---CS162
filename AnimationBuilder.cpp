@@ -333,6 +333,90 @@ buildAnimationInsertAtMiddle(SceneNode* ptr, SceneNode* mHead, SceneNode* newPtr
 }
 
 Animation
+buildAnimationDeleteAtBeginning(SceneNode* mHead,
+                                sf::Color colorBody1,
+                                sf::Color colorOutline1,
+                                sf::Color colorText1,
+                                sf::Color colorBody2,
+                                sf::Color colorOutline2,
+                                sf::Color colorText2,
+                                sf::Vector2f shiftNode,
+                                sf::Vector2f headPosition) {
+
+    SceneNode* tmp = mHead->mChildren;
+    
+    Animation animation;
+
+    /* ---------- Scene 1 ---------- */
+    AnimationState scene1(0.75f);
+    /* ------ Highlight Node  ------ */
+    // Update 1.1
+    UpdateSceneNode update1_1(mHead);
+    update1_1.setFillColor(colorBody2);
+    update1_1.setOutlineColor(colorOutline2);
+    update1_1.setTextColor(colorText2);
+    // Update 1.2
+    UpdateSceneNode update1_2(tmp);
+    update1_2.setFillColor(colorBody1);
+    update1_2.setOutlineColor(colorOutline1);
+    update1_2.setTextColor(colorText1);
+    // Scene add
+    scene1.addUpdateSceneNode(update1_1);
+    scene1.addUpdateSceneNode(update1_2);
+    /* ----------------------------- */
+
+    /* ---------- Scene 2 ---------- */
+    AnimationState scene2(0.75f);
+    /* ------ Invisible arrow ------ */
+    /* ------- Set TextBelow ------- */
+    UpdateSceneNode update2_1(tmp);
+    update2_1.setArrowVisible(false);
+    update2_1.addTextBelow("Head/");
+    update2_1.handleTailHeadTextBelow();
+    UpdateSceneNode update2_2(mHead);
+    update2_2.setTextBelow("tmp/");
+    // Scene add
+    scene2.addUpdateSceneNode(update2_1);
+    scene2.addUpdateSceneNode(update2_2);
+    /* ----------------------------- */
+
+    /* ---------- Scene 3 ---------- */
+    AnimationState scene3(0.75f);
+    /* ---- Detach mHead - tmp  ---- */
+    /* -------- Set Delete  -------- */
+    UpdateSceneNode update3_1(mHead);
+    update3_1.setDetach(&SceneNodeHolder::Holder01);
+    update3_1.setDelete();
+    UpdateSceneNode update3_2(tmp);
+    update3_2.setAssigned(SceneNodeHolder::Holder21); // ->mHead
+    /* ------- Set Position  ------- */
+    update3_2.setTranslation(headPosition - shiftNode / 2.f);
+    // Scene add
+    scene3.addUpdateSceneNode(update3_1);
+    scene3.addUpdateSceneNode(update3_2);
+    /* ----------------------------- */
+
+    /* ---------- Scene 4 ---------- */
+    AnimationState scene4(0.75f);
+    /* ---- Un-hightlight Node  ---- */
+    UpdateSceneNode update4_1(tmp);
+    update4_1.setFillColor(Constants::NodeFillColor);
+    update4_1.setOutlineColor(Constants::NodeOutlineColor);
+    update4_1.setTextColor(Constants::TextNodeColor);
+    // Scene add
+    scene4.addUpdateSceneNode(update4_1);
+    /* ----------------------------- */
+
+    // Animation add
+    animation.addState(scene1);
+    animation.addState(scene2);
+    animation.addState(scene3);
+    animation.addState(scene4);
+
+    return animation;
+}
+
+Animation
 buildAnimationDeleteAtMiddle(SceneNode* ptr, SceneNode* mHead,
                              sf::Color colorBody1,
                              sf::Color colorOutline1,

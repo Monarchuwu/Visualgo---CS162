@@ -45,15 +45,16 @@ Animation SinglyLinkedList::applyOperation() {
                                                                     mInitAngleNode,
                                                                     mCarrier.mVal),
                                                           mDoubleHeadedArrow);
-                animation.add(buildAnimationInsertAtBeginning(mHead, newPtr,
-                                                              sf::Color::Red,
-                                                              sf::Color::Red,
-                                                              sf::Color::White,
-                                                              Constants::OrangeColor,
-                                                              Constants::OrangeColor,
-                                                              sf::Color::White,
-                                                              mShiftNode,
-                                                              mHead->getPosition()));
+
+                animation = buildAnimationInsertAtBeginning(mHead, newPtr,
+                                                            sf::Color::Red,
+                                                            sf::Color::Red,
+                                                            sf::Color::White,
+                                                            Constants::OrangeColor,
+                                                            Constants::OrangeColor,
+                                                            sf::Color::White,
+                                                            mShiftNode,
+                                                            mHead->getPosition());
 
                 ++mCountNode;
                 // no need this because the head position will be update while animation
@@ -133,12 +134,30 @@ Animation SinglyLinkedList::applyOperation() {
         }
 
         case Constants::Operation::Delete: {
+            Animation animation;
             if (mCountNode == 0) break;
             if (mCountNode == 1) { // Just Delete = Init empty
                 updateArray(Vector<int>());
                 updateCarrier();
             }
-            else if (mCarrier.mPos == 0) {}              // Delete At Beginning
+            else if (mCarrier.mPos == 0) { // Delete At Beginning
+                SceneNodeHolder::Holder21 = &mHead;
+
+                animation = buildAnimationDeleteAtBeginning(mHead,
+                                                            sf::Color::Red,
+                                                            sf::Color::Red,
+                                                            sf::Color::White,
+                                                            Constants::OrangeColor,
+                                                            Constants::OrangeColor,
+                                                            sf::Color::White,
+                                                            mShiftNode,
+                                                            mHead->getPosition());
+
+                --mCountNode;
+                // no need this because the head position will be update while animation
+                // updateHeadPosition();
+                updateCarrier();
+            }
             else if (mCarrier.mPos == mCountNode - 1) {} // Delete At End
             else { // Delete At Middle
                 SceneNode* ptr = find(mCarrier.mPos - 1);
@@ -149,6 +168,7 @@ Animation SinglyLinkedList::applyOperation() {
                                                           Constants::OrangeColor,
                                                           sf::Color::White);
                 if (ptr == nullptr) return animation1;
+                animation.add(animation1);
 
                 Animation animation2 = buildAnimationDeleteAtMiddle(ptr, mHead,
                                                                     sf::Color::Red,
@@ -158,15 +178,14 @@ Animation SinglyLinkedList::applyOperation() {
                                                                     Constants::OrangeColor,
                                                                     sf::Color::White,
                                                                     mShiftNode);
-                animation1.add(animation2);
+                animation.add(animation2);
 
                 --mCountNode;
                 // no need this because the head position will be update while animation
                 // updateHeadPosition();
                 updateCarrier();
-
-                return animation1;
             }
+            return animation;
             break;
         }
 

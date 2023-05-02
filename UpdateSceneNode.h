@@ -17,6 +17,7 @@ enum AnimationUpdate {
     AddTextBelow,
     ResetTextBelow,
     HeadTailTextBelow,
+    TailHeadTextBelow,
     HoldHeadTextBelow
 };
 
@@ -40,6 +41,7 @@ public:
     void addTextBelow(std::string str);
     void resetTextBelow();
     void handleHeadTailTextBelow();
+    void handleTailHeadTextBelow();
     void setHoldHeadTextBelow();
 
     void apply();
