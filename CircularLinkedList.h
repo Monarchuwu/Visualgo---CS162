@@ -8,7 +8,7 @@ public:
     CircularLinkedList(Carrier &carrier);
 
 public:
-    Animation applyOperation();
+    Animation applyOperation() override;
 
     // Update Carrier
     void updateCarrier();

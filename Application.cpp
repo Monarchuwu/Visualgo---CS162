@@ -17,11 +17,7 @@
 Application::Application()
     : mCarrier(),
       mWindow(),
-      mSLL(mCarrier),
-      mDLL(mCarrier),
-      mCLL(mCarrier),
-      mQueue(mCarrier),
-      mStack(mCarrier),
+      mList(nullptr),
       mControlTable(mCarrier),
       mAnimation(),
       mDataStructure(),
@@ -83,25 +79,28 @@ void Application::setDataStructure(int dataStructure) {
     mDataStructure = dataStructure;
     mControlTable.setButtonMainList(Constants::DSOperationList[mDataStructure]);
 
-        switch (mDataStructure) {
+    delete mList;
+    mList = nullptr;
+
+    switch (mDataStructure) {
         case Constants::DataStructure::SLL:
-            mSLL.updateCarrier();
+            mList = new SinglyLinkedList(mCarrier);
             break;
 
         case Constants::DataStructure::DLL:
-            mDLL.updateCarrier();
+            mList = new DoublyLinkedList(mCarrier);
             break;
 
         case Constants::DataStructure::CLL:
-            mCLL.updateCarrier();
+            mList = new CircularLinkedList(mCarrier);
             break;
 
         case Constants::DataStructure::Queue:
-            mQueue.updateCarrier();
+            mList = new Queue(mCarrier);
             break;
 
         case Constants::DataStructure::Stack:
-            mStack.updateCarrier();
+            mList = new Stack(mCarrier);
             break;
 
         default:
@@ -117,29 +116,8 @@ void Application::update() {
     // the play button is pressed
     if (mCarrier.mPlayIsPressed) {
         mAnimation.applyAll();
-        switch (mDataStructure) {
-            case Constants::DataStructure::SLL:
-                mAnimation = mSLL.applyOperation();
-                break;
-
-            case Constants::DataStructure::DLL:
-                mAnimation = mDLL.applyOperation();
-                break;
-
-            case Constants::DataStructure::CLL:
-                mAnimation = mCLL.applyOperation();
-                break;
-
-            case Constants::DataStructure::Queue:
-                mAnimation = mQueue.applyOperation();
-                break;
-
-            case Constants::DataStructure::Stack:
-                mAnimation = mStack.applyOperation();
-                break;
-
-            default:
-                break;
+        if (mList) {
+            mAnimation = mList->applyOperation();
         }
     }
 
@@ -158,29 +136,8 @@ void Application::update() {
 void Application::render() {
     mWindow.clear(Constants::StandardColor[1]);
     mControlTable.draw(mWindow);
-    switch (mDataStructure) {
-        case Constants::DataStructure::SLL:
-            mSLL.draw(mWindow);
-            break;
-
-        case Constants::DataStructure::DLL:
-            mDLL.draw(mWindow);
-            break;
-
-        case Constants::DataStructure::CLL:
-            mCLL.draw(mWindow);
-            break;
-
-        case Constants::DataStructure::Queue:
-            mQueue.draw(mWindow);
-            break;
-
-        case Constants::DataStructure::Stack:
-            mStack.draw(mWindow);
-            break;
-
-        default:
-            break;
+    if (mList) {
+        mList->draw(mWindow);
     }
     mDSButtonBlock.draw(mWindow);
     mWindow.display();

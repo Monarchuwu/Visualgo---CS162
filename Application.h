@@ -26,11 +26,7 @@ private:
     Carrier mCarrier;
 
     sf::RenderWindow mWindow;
-    SinglyLinkedList mSLL;
-    DoublyLinkedList mDLL;
-    CircularLinkedList mCLL;
-    Queue mQueue;
-    Stack mStack;
+    BasicList* mList;
     ControlTable mControlTable;
 
     Animation mAnimation;

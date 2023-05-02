@@ -11,6 +11,7 @@ public:
     virtual void draw(sf::RenderTarget& target);
     int handleButtonInput(sf::Event::MouseButtonEvent mouse, bool isPressed);
 
-public:
+private:
     Button mButtonDS[Constants::CountDataStructure];
+    int mIsSelected;
 };

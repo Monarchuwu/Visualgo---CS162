@@ -2,7 +2,7 @@
 
 DataStructureButtonBlock::DataStructureButtonBlock(
     sf::Vector2f position,
-    sf::Vector2f size) {
+    sf::Vector2f size) : mIsSelected(0) {
     for (int i = 0; i < Constants::CountDataStructure; ++i) {
         mButtonDS[i].setID(i);
         mButtonDS[i].setSize(size + sf::Vector2f(-1, 0));
@@ -18,6 +18,10 @@ DataStructureButtonBlock::DataStructureButtonBlock(
 
 void DataStructureButtonBlock::draw(sf::RenderTarget& target) {
     for (int i = 0; i < Constants::CountDataStructure; ++i) {
+        if (mIsSelected == mButtonDS[i].getID())
+            mButtonDS[i].setFillColor(Constants::ButtonMainColorClicked);
+        else mButtonDS[i].setFillColor(Constants::ButtonMainColor);
+
         mButtonDS[i].draw(target);
     }
 }
@@ -31,5 +35,6 @@ int DataStructureButtonBlock::handleButtonInput(sf::Event::MouseButtonEvent mous
             }
         }
     }
+    if (temp != -1) mIsSelected = temp;
     return temp;
 }

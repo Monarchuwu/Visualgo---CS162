@@ -4,6 +4,7 @@
 #include "SceneNode.h"
 #include "Vector.h"
 #include "Carrier.h"
+#include "Animation.h"
 #include "AnimationBuilder.h"
 
 class BasicList {
@@ -35,6 +36,8 @@ public:
     void updateHeadPosition();
     // Set the Text Below the Node
     void updateTextBelow();
+
+    virtual Animation applyOperation() = 0;
 
 private:
     // Internal Find
