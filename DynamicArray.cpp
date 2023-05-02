@@ -1,7 +1,7 @@
-#include "StaticArray.h"
+#include "DynamicArray.h"
 #include "SceneNodeHolder.h"
 
-StaticArray::StaticArray(Carrier& carrier)
+DynamicArray::DynamicArray(Carrier& carrier)
     : mCarrier(carrier),
       mStaticLength(0),
       mCurrentLength(0),
@@ -12,14 +12,17 @@ StaticArray::StaticArray(Carrier& carrier)
                 false, Vector<int>(), true) {
 }
 
-void StaticArray::updateCarrier() {
-    if (mCarrier.mOperationType == Constants::Operation::Init) {
-        mStaticLength = mCurrentLength = mCountNode;
+// mCurrentLength must be adjusted manually
+void DynamicArray::updateCarrier() {
+    if (mCarrier.mOperationType == Constants::Operation::Init
+        || (mCarrier.mOperationType == Constants::Operation::Insert
+            && mCurrentLength == mStaticLength)) {
+        mStaticLength = mCountNode;
     }
     mCarrier.mCountNode = mCurrentLength;
 }
 
-Animation StaticArray::applyOperation() {
+Animation DynamicArray::applyOperation() {
     mCarrier.mPlayIsPressed = false;
     while (!mStatesHolder.empty()) {
         mStatesHolder.back().apply();
@@ -29,6 +32,7 @@ Animation StaticArray::applyOperation() {
     switch (mCarrier.mOperationType) {
         case Constants::Operation::Init: {
             updateArray(mCarrier.mArr);
+            mCurrentLength = mCountNode;
             updateCarrier();
             return Animation();
             break;
@@ -37,22 +41,22 @@ Animation StaticArray::applyOperation() {
         case Constants::Operation::Insert: {
             Animation animation;
 
-            if (mCurrentLength < mStaticLength && mCarrier.mPos <= mCurrentLength) {
-                SceneNode* ptr = find(mCarrier.mPos);
-                // it should be find(mCurrentLength) and mTail->mChildren but ok
-                SceneNode* mTail = find(mCurrentLength);
+            //if (mCurrentLength < mStaticLength && mCarrier.mPos <= mCurrentLength) {
+            //    SceneNode* ptr = find(mCarrier.mPos);
+            //    // it should be find(mCurrentLength) and mTail->mChildren but ok
+            //    SceneNode* mTail = find(mCurrentLength);
 
-                 animation = buildAnimationInsertStaticArray(ptr, mTail,
-                                                            sf::Color::Red,
-                                                            sf::Color::Red,
-                                                            sf::Color::White,
-                                                            Constants::OrangeColor,
-                                                            Constants::OrangeColor,
-                                                            sf::Color::White,
-                                                            mCarrier.mVal);
-                ++mCurrentLength;
-                 updateCarrier();
-            }
+            //    animation = buildAnimationInsertStaticArray(ptr, mTail,
+            //                                                sf::Color::Red,
+            //                                                sf::Color::Red,
+            //                                                sf::Color::White,
+            //                                                Constants::OrangeColor,
+            //                                                Constants::OrangeColor,
+            //                                                sf::Color::White,
+            //                                                mCarrier.mVal);
+            //    ++mCurrentLength;
+            //    updateCarrier();
+            //}
             return animation;
             break;
         }
@@ -61,8 +65,8 @@ Animation StaticArray::applyOperation() {
             Animation animation;
 
             if (mCurrentLength > 0 && mCarrier.mPos < mCurrentLength) {
-                 SceneNode* ptr   = find(mCarrier.mPos);
-                 SceneNode* mTail = find(mCurrentLength - 1);
+                SceneNode* ptr   = find(mCarrier.mPos);
+                SceneNode* mTail = find(mCurrentLength - 1);
 
                 animation = buildAnimationDeleteStaticArray(ptr, mTail,
                                                             sf::Color::Red,
@@ -85,9 +89,9 @@ Animation StaticArray::applyOperation() {
             mStatesHolder  = holdColorAnimationFind(ptr, ptr);
 
             Animation animation1 = buildAnimationAccess(ptr,
-                                                       Constants::OrangeColor,
-                                                       Constants::OrangeColor,
-                                                       sf::Color::White);
+                                                        Constants::OrangeColor,
+                                                        Constants::OrangeColor,
+                                                        sf::Color::White);
             if (ptr == nullptr) return animation1;
 
             Animation animation2 = buildAnimationUpdate(ptr,
@@ -117,7 +121,7 @@ Animation StaticArray::applyOperation() {
         case Constants::Operation::Search: {
             if (mCurrentLength == 0) break;
 
-            SceneNode* ptr   = search(mCarrier.mVal);
+            SceneNode* ptr = search(mCarrier.mVal);
             SceneNode* mTail = find(mCurrentLength - 1);
             mStatesHolder  = holdColorAnimationFind(mHead, ptr);
 

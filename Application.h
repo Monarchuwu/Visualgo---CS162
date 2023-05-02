@@ -8,6 +8,7 @@
 #include "Queue.h"
 #include "Stack.h"
 #include "StaticArray.h"
+#include "DynamicArray.h"
 #include "DataStructureButtonBlock.h"
 
 class Application {

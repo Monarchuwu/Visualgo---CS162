@@ -96,6 +96,10 @@ void Application::setDataStructure(int dataStructure) {
             mList = new StaticArray(mCarrier);
             break;
 
+        case Constants::DataStructure::DynamicArray:
+            mList = new DynamicArray(mCarrier);
+            break;
+
         default:
             break;
     }

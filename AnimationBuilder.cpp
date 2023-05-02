@@ -797,7 +797,7 @@ buildAnimationAccess(SceneNode* ptr,
 }
 
 Animation
-buildAnimationFindWithoutTextBelow(SceneNode* src, SceneNode* dest,
+buildAnimationFindWithoutTextBelow(SceneNode* src, SceneNode* dest, SceneNode* mTail,
                                    sf::Color colorBody,
                                    sf::Color colorOutline,
                                    sf::Color colorText) {
@@ -841,6 +841,7 @@ buildAnimationFindWithoutTextBelow(SceneNode* src, SceneNode* dest,
         // Animation add
         animation.addState(scene2);
 
+        if (src == mTail) break;
         src = src->mChildren;
         // ++pos;
     }

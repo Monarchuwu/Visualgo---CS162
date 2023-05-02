@@ -99,7 +99,7 @@ buildAnimationFind(SceneNode* src, SceneNode* dest,
 
 // Copy from buildAnimationFind
 Animation
-buildAnimationFindWithoutTextBelow(SceneNode* src, SceneNode* dest,
+buildAnimationFindWithoutTextBelow(SceneNode* src, SceneNode* dest, SceneNode* mTail,
                                    sf::Color colorBody,
                                    sf::Color colorOutline,
                                    sf::Color colorText);

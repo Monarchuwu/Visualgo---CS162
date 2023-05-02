@@ -155,6 +155,7 @@
     <ClCompile Include="ControlTable.cpp" />
     <ClCompile Include="DataStructureButtonBlock.cpp" />
     <ClCompile Include="DoublyLinkedList.cpp" />
+    <ClCompile Include="DynamicArray.cpp" />
     <ClCompile Include="InitArrayBlock.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Queue.cpp" />
@@ -184,6 +185,7 @@
     <ClInclude Include="ControlTable.h" />
     <ClInclude Include="DataStructureButtonBlock.h" />
     <ClInclude Include="DoublyLinkedList.h" />
+    <ClInclude Include="DynamicArray.h" />
     <ClInclude Include="InitArrayBlock.h" />
     <ClInclude Include="Queue.h" />
     <ClInclude Include="Random.h" />
