@@ -31,9 +31,27 @@ Animation DynamicArray::applyOperation() {
 
     switch (mCarrier.mOperationType) {
         case Constants::Operation::Init: {
-            updateArray(mCarrier.mArr);
-            mCurrentLength = mCountNode;
+            // Get arr data
+            Vector<int> arr = mCarrier.mArr;
+            mCurrentLength  = arr.size();
+
+            // allocate size to 2^x
+            int sz = 1;
+            while (sz < arr.size()) sz <<= 1;
+            while (arr.size() < sz) arr.push_back(0);
+
+            // update arr and Carrier
+            updateArray(arr);
             updateCarrier();
+
+            // change color of allocate element(s) to gray
+            SceneNode* ptr = find(mCurrentLength);
+            sf::Color gray = Constants::GrayColor;
+            while (ptr != nullptr) {
+                ptr->mNode.setFillColorBody(gray);
+                ptr = ptr->mChildren;
+            }
+
             return Animation();
             break;
         }
