@@ -1,6 +1,5 @@
 #include "Queue.h"
-
-#include "SinglyLinkedList.h"
+#include "SceneNodeHolder.h"
 
 Queue::Queue(Carrier& carrier)
     : mCarrier(carrier),
@@ -16,7 +15,6 @@ void Queue::updateCarrier() {
 }
 
 Animation Queue::applyOperation() {
-    /*
     mCarrier.mPlayIsPressed = false;
     while (!mStatesHolder.empty()) {
         mStatesHolder.back().apply();
@@ -32,65 +30,77 @@ Animation Queue::applyOperation() {
         }
 
         case Constants::Operation::Add: {
-            SceneNode* ptr = find(mCarrier.mPos);
+            Animation animation;
+            if (mCountNode == 0) { // Just Insert = Init 1 element
+                Vector<int> arr;
+                arr.push_back(mCarrier.mVal);
+                updateArray(arr);
+                updateCarrier();
+            }
+            else { // Insert At End
+                SceneNode* mTail = find(mCarrier.mPos - 1);
 
-            SceneNode* newPtr    = new SceneNode(BasicNode(mRadiusNode,
-                                                           mOutlineThicknessNode,
-                                                           mPointCountNode,
-                                                           mInitAngleNode,
-                                                           mCarrier.mVal),
-                                                 mDoubleHeadedArrow,
-                                                 false);
-            Animation animation = buildAnimationInsert(ptr, mHead, newPtr,
-                                                        sf::Color::Red,
-                                                        sf::Color::Red,
-                                                        sf::Color::White,
-                                                        Constants::OrangeColor,
-                                                        Constants::OrangeColor,
-                                                        sf::Color::White,
-                                                        mCarrier.mPos == 0,
-                                                        mCarrier.mPos == mCarrier.mCountNode,
-                                                        mShiftNode);
+                SceneNode* newPtr = new SceneNode(BasicNode(mRadiusNode,
+                                                            mOutlineThicknessNode,
+                                                            mPointCountNode,
+                                                            mInitAngleNode,
+                                                            mCarrier.mVal),
+                                                  mDoubleHeadedArrow,
+                                                  false);
 
-            ++mCountNode;
-            // no need this because the head position will be update while animation
-            // updateHeadPosition();
-            updateCarrier();
+                animation = buildAnimationInsertAtEnd(mHead, mTail, newPtr,
+                                                      sf::Color::Red,
+                                                      sf::Color::Red,
+                                                      sf::Color::White,
+                                                      Constants::OrangeColor,
+                                                      Constants::OrangeColor,
+                                                      sf::Color::White,
+                                                      mShiftNode);
 
+                ++mCountNode;
+                // no need this because the head position will be update while animation
+                // updateHeadPosition();
+                updateCarrier();
+            }
             return animation;
             break;
         }
 
         case Constants::Operation::Remove: {
-            SceneNode* ptr = find(mCarrier.mPos);
+            Animation animation;
+            if (mCountNode == 0) break;
+            if (mCountNode == 1) { // Just Delete = Init empty
+                updateArray(Vector<int>());
+                updateCarrier();
+            }
+            else { // Delete At Beginning
+                SceneNodeHolder::Holder21 = &mHead;
 
-            if (ptr == mTail) return Animation();
+                animation = buildAnimationDeleteAtBeginning(mHead,
+                                                            sf::Color::Red,
+                                                            sf::Color::Red,
+                                                            sf::Color::White,
+                                                            Constants::OrangeColor,
+                                                            Constants::OrangeColor,
+                                                            sf::Color::White,
+                                                            mShiftNode,
+                                                            mHead->getPosition());
 
-            Animation animation = buildAnimationDelete(ptr, mHead,
-                                                        sf::Color::Red,
-                                                        sf::Color::Red,
-                                                        sf::Color::White,
-                                                        Constants::OrangeColor,
-                                                        Constants::OrangeColor,
-                                                        sf::Color::White,
-                                                        mCarrier.mPos == 0,
-                                                        mCarrier.mPos + 1 == mCarrier.mCountNode,
-                                                        mShiftNode);
-
-            --mCountNode;
-            // no need this because the head position will be update while animation
-            // updateHeadPosition();
-            updateCarrier();
-
+                --mCountNode;
+                // no need this because the head position will be update while animation
+                // updateHeadPosition();
+                updateCarrier();
+            }
             return animation;
             break;
         }
 
         case Constants::Operation::Clear: {
-            updateArray(Vector<int>());
-            updateCarrier();
+            Animation animation = buildAnimationClearFromBeginning(mHead);
 
-            return Animation();
+            mCountNode = 0;
+            updateCarrier();
+            return animation;
             break;
         }
 
@@ -98,6 +108,5 @@ Animation Queue::applyOperation() {
             return Animation();
             break;
     }
-    */
     return Animation();
 }

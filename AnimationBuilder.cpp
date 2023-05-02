@@ -437,19 +437,21 @@ buildAnimationDeleteAtEnd(SceneNode* mTail, SceneNode* mHead,
     update1_1.setOutlineColor(colorOutline2);
     update1_1.setTextColor(colorText2);
     update1_1.addTextBelow("tmp/");
+    // Update 1.2
+    UpdateSceneNode update1_2(mTail);
+    update1_2.setFillColor(colorBody1);
+    update1_2.setOutlineColor(colorOutline1);
+    update1_2.setTextColor(colorText1);
     // Scene add
     scene1.addUpdateSceneNode(update1_1);
+    scene1.addUpdateSceneNode(update1_2);
     /* ----------------------------- */
 
     /* ---------- Scene 2 ---------- */
     AnimationState scene2(0.75f);
-    /* ------ Highlight mTail ------ */
     /* ------ Invisible arrow ------ */
     // Update 2.1
     UpdateSceneNode update2_1(mTail);
-    update2_1.setFillColor(colorBody1);
-    update2_1.setOutlineColor(colorOutline1);
-    update2_1.setTextColor(colorText1);
     update2_1.setArrowVisible(false);
     /* ------- Set TextBelow ------- */
     // Update 2.2-4
@@ -637,6 +639,67 @@ buildAnimationDeleteAtMiddle(SceneNode* ptr, SceneNode* mHead,
     animation.addState(scene4);
     animation.addState(scene5);
 
+    return animation;
+}
+
+Animation
+buildAnimationClearFromBeginning(SceneNode* mHead) {
+    Animation animation;
+    while (mHead != nullptr) {
+        /* ---------- Scene 1 ---------- */
+        AnimationState scene(0.75f);
+        /* ------ Invisible Node  ------ */
+        // Update 1 (invisible mHead)
+        UpdateSceneNode update1(mHead);
+        update1.setFillColor(Constants::ControlTableThemeColor);
+        update1.setOutlineColor(Constants::ControlTableThemeColor);
+        update1.setTextColor(Constants::ControlTableThemeColor);
+        update1.setTextBelow("");
+        // Scene add
+        scene.addUpdateSceneNode(update1);
+        // Update 2 (invisible arrow from mChildren)
+        if (mHead->mChildren) {
+            UpdateSceneNode update2(mHead->mChildren);
+            update2.setArrowVisible(false);
+            update2.addTextBelow("Head/");
+            update2.handleTailHeadTextBelow();
+            // Scene add
+            scene.addUpdateSceneNode(update2);
+        }
+
+        animation.addState(scene);
+        mHead = mHead->mChildren;
+    }
+    return animation;
+}
+
+Animation
+buildAnimationClearFromEnd(SceneNode* mTail) {
+    Animation animation;
+    while (mTail != nullptr) {
+        /* ---------- Scene 1 ---------- */
+        AnimationState scene(0.75f);
+        /* ------ Invisible Node  ------ */
+        // Update 1 (invisible mTail, invisible arrow)
+        UpdateSceneNode update1(mTail);
+        update1.setFillColor(Constants::ControlTableThemeColor);
+        update1.setOutlineColor(Constants::ControlTableThemeColor);
+        update1.setTextColor(Constants::ControlTableThemeColor);
+        update1.setTextBelow("");
+        update1.setArrowVisible(false);
+        // Scene add
+        scene.addUpdateSceneNode(update1);
+        // Update 2 (Set TextBelow)
+        if (mTail->mParent) {
+            UpdateSceneNode update2(mTail->mParent);
+            update2.addTextBelow("Tail/");
+            // Scene add
+            scene.addUpdateSceneNode(update2);
+        }
+
+        animation.addState(scene);
+        mTail = mTail->mParent;
+    }
     return animation;
 }
 

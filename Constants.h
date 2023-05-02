@@ -104,8 +104,8 @@ namespace Constants {
         (1 << Middle_0_n),                                       // Search
         (1 << Beginning_0),                                      // Push
         (1 << Beginning_0),                                      // Pop
-        (1 << Beginning_0),                                      // Add
-        (1 << End_n1),                                           // Remove
+        (1 << End_n),                                            // Add
+        (1 << Beginning_0),                                      // Remove
         (1 << Middle_0_n1),                                      // Clear
     };
 

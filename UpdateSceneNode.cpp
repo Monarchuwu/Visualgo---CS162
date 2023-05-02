@@ -8,7 +8,6 @@ UpdateSceneNode::UpdateSceneNode(SceneNode* ptr)
       mColorOutline(),
       mColorText(),
       mArrowVisible() {
-    setArrowVisible(true);
 }
 
 void UpdateSceneNode::setVal(int val) {

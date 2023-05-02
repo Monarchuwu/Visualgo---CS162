@@ -79,6 +79,12 @@ buildAnimationDeleteAtMiddle(SceneNode* ptr, SceneNode* mHead,
                              sf::Vector2f shiftNode);
 
 Animation
+buildAnimationClearFromBeginning(SceneNode* mHead);
+
+Animation
+buildAnimationClearFromEnd(SceneNode* mTail);
+
+Animation
 buildAnimationUpdate(SceneNode* ptr,
                      int val,
                      sf::Color colorBody,
