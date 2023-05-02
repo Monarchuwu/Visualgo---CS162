@@ -54,9 +54,46 @@ Animation SinglyLinkedList::applyOperation() {
                                                               sf::Color::White,
                                                               mShiftNode,
                                                               mHead->getPosition()));
+
+                ++mCountNode;
+                // no need this because the head position will be update while animation
+                // updateHeadPosition();
+                updateCarrier();
             }
-            else if (mCarrier.mPos == mCountNode) {
-            } // Insert At End
+            else if (mCarrier.mPos == mCountNode) { // Insert At End
+                SceneNode* mTail = find(mCarrier.mPos - 1);
+
+                mStatesHolder        = holdColorAnimationFind(mHead, mTail);
+                Animation animation1 = buildAnimationFind(mHead, mTail,
+                                                          Constants::OrangeColor,
+                                                          Constants::OrangeColor,
+                                                          sf::Color::White);
+                if (mTail == nullptr) return animation1;
+
+                SceneNode* newPtr    = new SceneNode(BasicNode(mRadiusNode,
+                                                               mOutlineThicknessNode,
+                                                               mPointCountNode,
+                                                               mInitAngleNode,
+                                                               mCarrier.mVal),
+                                                     mDoubleHeadedArrow,
+                                                     false);
+                Animation animation2 = buildAnimationInsertAtEnd(mHead, mTail, newPtr,
+                                                                    sf::Color::Red,
+                                                                    sf::Color::Red,
+                                                                    sf::Color::White,
+                                                                    Constants::OrangeColor,
+                                                                    Constants::OrangeColor,
+                                                                    sf::Color::White,
+                                                                    mShiftNode);
+
+                animation.add(animation1);
+                animation.add(animation2);
+
+                ++mCountNode;
+                // no need this because the head position will be update while animation
+                // updateHeadPosition();
+                updateCarrier();
+            }
             else { // Insert At Middle
                 SceneNode* ptr = find(mCarrier.mPos - 1);
 

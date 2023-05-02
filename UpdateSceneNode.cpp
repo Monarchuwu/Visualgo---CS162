@@ -74,6 +74,9 @@ void UpdateSceneNode::resetTextBelow() {
 void UpdateSceneNode::handleHeadTailTextBelow() {
     mStatus |= 1 << HeadTailTextBelow;
 }
+void UpdateSceneNode::setHoldHeadTextBelow() {
+    mStatus |= 1 << HoldHeadTextBelow;
+}
 
 void UpdateSceneNode::apply() {
     if (mStatus >> Val & 1) {
@@ -153,6 +156,19 @@ void UpdateSceneNode::apply() {
             if (tmp == "Head/Tail/") {
                 str = "Tail/";
             }
+            else str = "";
+        }
+        else str = "";
+
+        mPtr->mNode.setTextBelow(str);
+    }
+
+    if (mStatus >> HoldHeadTextBelow & 1) {
+        std::string str = mPtr->mNode.getTextBelow();
+        if (str.size() >= 5) {
+            std::string tmp;
+            for (int i = 0; i < 5; ++i) tmp += str[i];
+            if (tmp == "Head/") str = tmp;
             else str = "";
         }
         else str = "";

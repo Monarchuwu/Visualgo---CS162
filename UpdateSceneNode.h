@@ -16,7 +16,8 @@ enum AnimationUpdate {
     TextBelow,
     AddTextBelow,
     ResetTextBelow,
-    HeadTailTextBelow
+    HeadTailTextBelow,
+    HoldHeadTextBelow
 };
 
 class UpdateSceneNode {
@@ -39,6 +40,7 @@ public:
     void addTextBelow(std::string str);
     void resetTextBelow();
     void handleHeadTailTextBelow();
+    void setHoldHeadTextBelow();
 
     void apply();
 
