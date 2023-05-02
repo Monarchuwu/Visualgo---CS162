@@ -36,7 +36,7 @@ Animation SinglyLinkedList::applyOperation() {
                 arr.push_back(mCarrier.mVal);
                 updateArray(arr);
                 updateCarrier();
-            }        
+            }
             else if (mCarrier.mPos == 0) { // Insert At Beginning
                 SceneNodeHolder::Holder31 = &mHead;
                 SceneNode* newPtr         = new SceneNode(BasicNode(mRadiusNode,
@@ -134,7 +134,10 @@ Animation SinglyLinkedList::applyOperation() {
 
         case Constants::Operation::Delete: {
             if (mCountNode == 0) break;
-            if (mCountNode == 1) {}                      // Just Delete = Init empty
+            if (mCountNode == 1) { // Just Delete = Init empty
+                updateArray(Vector<int>());
+                updateCarrier();
+            }
             else if (mCarrier.mPos == 0) {}              // Delete At Beginning
             else if (mCarrier.mPos == mCountNode - 1) {} // Delete At End
             else { // Delete At Middle
