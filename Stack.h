@@ -1,11 +1,11 @@
 #pragma once
 #include "BasicList.h"
 
-// The function of Queue.h is combined with a ControlTable to handle Frontend
-class Queue : public BasicList {
+// The function of Stack.h is combined with a ControlTable to handle Frontend
+class Stack : public BasicList {
 public:
     // Constructor
-    Queue(Carrier &carrier);
+    Stack(Carrier &carrier);
 
 public:
     Animation applyOperation();

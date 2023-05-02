@@ -162,6 +162,7 @@
     <ClCompile Include="SceneNodeHolder.cpp" />
     <ClCompile Include="SelectPositionBlock.cpp" />
     <ClCompile Include="SinglyLinkedList.cpp" />
+    <ClCompile Include="Stack.cpp" />
     <ClCompile Include="UpdateSceneNode.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -187,6 +188,7 @@
     <ClInclude Include="SceneNodeHolder.h" />
     <ClInclude Include="SelectPositionBlock.h" />
     <ClInclude Include="SinglyLinkedList.h" />
+    <ClInclude Include="Stack.h" />
     <ClInclude Include="UpdateSceneNode.h" />
     <ClInclude Include="Vector.h" />
   </ItemGroup>

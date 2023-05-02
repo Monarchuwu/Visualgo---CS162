@@ -10,7 +10,6 @@ public:
 public:
     Animation applyOperation();
 
-private:
     // Update Carrier
     void updateCarrier();
 

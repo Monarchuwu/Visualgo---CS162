@@ -5,6 +5,7 @@
 #include "SinglyLinkedList.h"
 #include "DoublyLinkedList.h"
 #include "Queue.h"
+#include "Stack.h"
 #include "DataStructureButtonBlock.h"
 
 class Application {
@@ -27,6 +28,7 @@ private:
     SinglyLinkedList mSLL;
     DoublyLinkedList mDLL;
     Queue mQueue;
+    Stack mStack;
     ControlTable mControlTable;
 
     Animation mAnimation;
