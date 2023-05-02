@@ -64,7 +64,11 @@ void BasicList::updateArray(Vector<int> arr) {
 }
 
 void BasicList::clear() {
-    if (mHead) {
+    if (mHead != nullptr) {
+        if (mHead->mParent) {
+            mHead->mParent->mChildren = nullptr;
+        }
+
         delete mHead;
         mHead = nullptr;
     }
@@ -80,7 +84,7 @@ void BasicList::updateArray() {
     clear();
 
     // Array
-    SceneNode* cur = mHead;
+    SceneNode* cur = nullptr;
     for (int i = 0; i < mArr.size(); ++i) {
         SceneNode* tmp = new SceneNode(BasicNode(mRadiusNode,
                                                  mOutlineThicknessNode,

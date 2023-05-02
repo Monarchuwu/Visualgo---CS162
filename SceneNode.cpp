@@ -10,7 +10,8 @@ SceneNode::SceneNode(BasicNode node,
       mDoubleHeadedArrow(doubleHeadedArrow),
       mReverseArrow(reverseArrow),
       mArrowVisible(arrowVisible),
-      mParent(nullptr) {
+      mParent(nullptr),
+      mChildren(nullptr) {
 }
 SceneNode::~SceneNode() {
     if (mChildren) {

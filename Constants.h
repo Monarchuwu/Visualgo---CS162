@@ -171,7 +171,7 @@ namespace Constants {
             | (1 << Operation::Insert)
             | (1 << Operation::Delete)
             | (1 << Operation::Update)
-            | (1 << Operation::Allocate)
+            //| (1 << Operation::Allocate) // Allocate is a feature
             | (1 << Operation::Access)
             | (1 << Operation::Search)
     };

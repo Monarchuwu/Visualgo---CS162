@@ -5,11 +5,30 @@ DynamicArray::DynamicArray(Carrier& carrier)
     : mCarrier(carrier),
       mStaticLength(0),
       mCurrentLength(0),
+      mHeadBonus(nullptr),
       BasicList(Constants::CirleNodeRadius,
                 Constants::NodeOutlineThinkness,
                 4, Constants::pi / 4,
                 sf::Vector2f(Constants::CirleNodeRadius * 1.415f + Constants::NodeOutlineThinkness * 2, 0),
                 false, Vector<int>(), true) {
+
+    Vector<int> arr;
+    arr.push_back(0);
+    updateArray(arr);
+    mCurrentLength = 0;
+    updateCarrier();
+    sf::Color gray = Constants::GrayColor;
+    mHead->mNode.setFillColorBody(gray);
+}
+DynamicArray::~DynamicArray() { delete mHeadBonus; }
+
+void DynamicArray::draw(sf::RenderTarget& target, sf::RenderStates states) const {
+    BasicList::draw(target, states);
+    // i cant delete it so... i set the value to -100 instead of delete command
+    if (mHeadBonus != nullptr && mHeadBonus->mNode.getValue() != -100) {
+        mHeadBonus->drawArrow(target, states);
+        mHeadBonus->draw(target, states);
+    }
 }
 
 // mCurrentLength must be adjusted manually
@@ -38,13 +57,14 @@ Animation DynamicArray::applyOperation() {
             // allocate size to 2^x
             int sz = 1;
             while (sz < arr.size()) sz <<= 1;
-            while (arr.size() < sz) arr.push_back(0);
-
+            while (arr.size() < sz) {
+                arr.push_back(0);
+            }
             // update arr and Carrier
             updateArray(arr);
             updateCarrier();
 
-            // change color of allocate element(s) to gray
+            //// change color of allocate element(s) to gray
             SceneNode* ptr = find(mCurrentLength);
             sf::Color gray = Constants::GrayColor;
             while (ptr != nullptr) {
@@ -57,24 +77,86 @@ Animation DynamicArray::applyOperation() {
         }
 
         case Constants::Operation::Insert: {
+            if (mCarrier.mPos > mCurrentLength) break;
+
             Animation animation;
 
-            //if (mCurrentLength < mStaticLength && mCarrier.mPos <= mCurrentLength) {
-            //    SceneNode* ptr = find(mCarrier.mPos);
-            //    // it should be find(mCurrentLength) and mTail->mChildren but ok
-            //    SceneNode* mTail = find(mCurrentLength);
+            bool isAllocated = false;
+            // Allocate before Insert
+            if (mCurrentLength == mStaticLength && mStaticLength > 0) {
+                isAllocated = true;
 
-            //    animation = buildAnimationInsertStaticArray(ptr, mTail,
-            //                                                sf::Color::Red,
-            //                                                sf::Color::Red,
-            //                                                sf::Color::White,
-            //                                                Constants::OrangeColor,
-            //                                                Constants::OrangeColor,
-            //                                                sf::Color::White,
-            //                                                mCarrier.mVal);
-            //    ++mCurrentLength;
-            //    updateCarrier();
-            //}
+                // Create a copy (SceneNode and Vector<int>)
+                std::pair<SceneNode*, int> mCopy = createACopyOfList();
+                Vector<int> arr;
+
+                // Double the size
+                int sz = mCopy.second * 2;
+                for (int i = 0; i < sz; ++i) arr.push_back(0);
+
+                // update arr and Carrier
+                updateArray(arr);
+                updateCarrier();
+
+                // change color of all element(s) to gray
+                SceneNode* ptr = mHead;
+                sf::Color gray = Constants::GrayColor;
+                while (ptr != nullptr) {
+                    ptr->mNode.setFillColorBody(gray);
+                    ptr = ptr->mChildren;
+                }
+
+                // prep before buildAnimation
+                delete mHeadBonus;
+                mHeadBonus = mCopy.first;
+                if (mHeadBonus != nullptr && mHead != nullptr) {
+                    mHeadBonus->setPosition(mHead->getPosition() + sf::Vector2f(0, -Constants::ShiftNode.x));
+                }
+
+                animation.add(buildAnimationAllocateDynamicArray(mHead, mHeadBonus,
+                                                                 sf::Color::Red,
+                                                                 sf::Color::Red,
+                                                                 sf::Color::White,
+                                                                 Constants::OrangeColor,
+                                                                 Constants::OrangeColor,
+                                                                 sf::Color::White));
+            }
+            
+            if (mCurrentLength < mStaticLength) { // Insert
+                SceneNode* ptr = find(mCarrier.mPos);
+                // it should be find(mCurrentLength) and mTail->mChildren but ok
+                SceneNode* mTail = find(mCurrentLength);
+
+                if (!isAllocated) {
+                    animation.add(buildAnimationInsertStaticArray(ptr, mTail,
+                                                                  sf::Color::Red,
+                                                                  sf::Color::Red,
+                                                                  sf::Color::White,
+                                                                  Constants::OrangeColor,
+                                                                  Constants::OrangeColor,
+                                                                  sf::Color::White,
+                                                                  mCarrier.mVal));
+                }
+                else {
+                    SceneNode* mHeadBonusTail = mHeadBonus;
+                    while (mHeadBonusTail != nullptr && mHeadBonusTail->mChildren != nullptr) {
+                        mHeadBonusTail = mHeadBonusTail->mChildren;
+                    }
+
+                    animation.add(buildAnimationInsertStaticArrayAfterAllocate(
+                        ptr, mTail, mHeadBonusTail,
+                        sf::Color::Red,
+                        sf::Color::Red,
+                        sf::Color::White,
+                        Constants::OrangeColor,
+                        Constants::OrangeColor,
+                        sf::Color::White,
+                        mCarrier.mVal));
+                }
+
+                ++mCurrentLength;
+                updateCarrier();
+            }
             return animation;
             break;
         }
@@ -155,4 +237,29 @@ Animation DynamicArray::applyOperation() {
             break;
     }
     return Animation();
+}
+
+std::pair<SceneNode*, int> DynamicArray::createACopyOfList() {
+    SceneNode *newHead = nullptr, *newTail = nullptr;
+    int sz = 0;
+
+    SceneNode* ptr = mHead;
+    while (ptr != nullptr) {
+        SceneNode* copyPtr = new SceneNode(*ptr);
+        copyPtr->mParent   = nullptr;
+        copyPtr->mChildren = nullptr;
+
+        if (newTail == nullptr) {
+            newHead = newTail = copyPtr;
+        }
+        else {
+            newTail->mChildren = copyPtr;
+            copyPtr->mParent   = newTail;
+            newTail            = copyPtr;
+        }
+        ++sz;
+
+        ptr = ptr->mChildren;
+    }
+    return std::make_pair(newHead, sz);
 }

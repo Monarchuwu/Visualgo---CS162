@@ -79,7 +79,7 @@ template<typename T>
 Vector<T>::Vector(const Vector& arg)
     : mSize(arg.mSize),
       mCapacity(arg.mCapacity),
-      mData(new T[arg.mSize]) {
+      mData(new T[arg.mCapacity]) {
     for (int i = 0; i < arg.mSize; ++i) {
         mData[i] = arg.mData[i];
     }
