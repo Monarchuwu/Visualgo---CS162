@@ -7,6 +7,7 @@
 #include "CircularLinkedList.h"
 #include "Queue.h"
 #include "Stack.h"
+#include "StaticArray.h"
 #include "DataStructureButtonBlock.h"
 
 class Application {

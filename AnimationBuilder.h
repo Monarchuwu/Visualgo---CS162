@@ -96,3 +96,45 @@ buildAnimationFind(SceneNode* src, SceneNode* dest,
                    sf::Color colorBody,
                    sf::Color colorOutline,
                    sf::Color colorText);
+
+// Copy from buildAnimationFind
+Animation
+buildAnimationFindWithoutTextBelow(SceneNode* src, SceneNode* dest,
+                                   sf::Color colorBody,
+                                   sf::Color colorOutline,
+                                   sf::Color colorText);
+
+Animation
+buildAnimationAccess(SceneNode* ptr,
+                   sf::Color colorBody,
+                   sf::Color colorOutline,
+                   sf::Color colorText);
+
+// color 1 is the color of the node that is updated the value
+// color 2 is the color of other nodes (highlight only)
+// while (cur != target)
+//   *(cur + 1) = *cur, cur = cur->prev
+// *cur = val
+Animation
+buildAnimationInsertStaticArray(SceneNode* ptr, SceneNode* mTail,
+                                sf::Color colorBody1,
+                                sf::Color colorOutline1,
+                                sf::Color colorText1,
+                                sf::Color colorBody2,
+                                sf::Color colorOutline2,
+                                sf::Color colorText2,
+                                int val);
+
+// color 1 is the color of the node that is updated the value
+// color 2 is the color of other nodes (highlight only)
+// while (cur != Tail)
+//   *cur = *(cur + 1), cur = cur->next
+// change color of cur
+Animation
+buildAnimationDeleteStaticArray(SceneNode* ptr, SceneNode* mTail,
+                                sf::Color colorBody1,
+                                sf::Color colorOutline1,
+                                sf::Color colorText1,
+                                sf::Color colorBody2,
+                                sf::Color colorOutline2,
+                                sf::Color colorText2);

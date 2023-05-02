@@ -164,6 +164,7 @@
     <ClCompile Include="SelectPositionBlock.cpp" />
     <ClCompile Include="SinglyLinkedList.cpp" />
     <ClCompile Include="Stack.cpp" />
+    <ClCompile Include="StaticArray.cpp" />
     <ClCompile Include="UpdateSceneNode.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -191,6 +192,7 @@
     <ClInclude Include="SelectPositionBlock.h" />
     <ClInclude Include="SinglyLinkedList.h" />
     <ClInclude Include="Stack.h" />
+    <ClInclude Include="StaticArray.h" />
     <ClInclude Include="UpdateSceneNode.h" />
     <ClInclude Include="Vector.h" />
   </ItemGroup>

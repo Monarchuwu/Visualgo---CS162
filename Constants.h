@@ -181,6 +181,7 @@ namespace Constants {
     constexpr int MaxVal        = 99;
     constexpr float pi          = 3.14159265359;
     const sf::Color OrangeColor = sf::Color(255, 165, 0);
+    const sf::Color GrayColor   = sf::Color(128, 128, 128);
 
     void init();
 

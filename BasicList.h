@@ -17,7 +17,8 @@ public:
               float initAngle,
               sf::Vector2f shiftNode,
               bool doubleHeadedArrow,
-              Vector<int> arr);
+              Vector<int> arr,
+              bool numberArrayElements = false);
 
     /* ------ Modify ------ */
     // return the number of Node
@@ -60,6 +61,7 @@ protected:
     float mInitAngleNode;
     sf::Vector2f mShiftNode;
     bool mDoubleHeadedArrow;
+    bool mNumberArray;
 
     SceneNode *mHead;
 

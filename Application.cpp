@@ -3,17 +3,6 @@
 #include "BasicList.h"
 #include "Constants.h"
 
-/*
-      mList(Constants::CirleNodeRadius,
-           Constants::NodeOutlineThinkness,
-           30, 0,
-           //4, Constants::pi / 4,
-           Constants::ShiftNode,
-           //sf::Vector2f(Constants::CirleNodeRadius * 1.405f + Constants::NodeOutlineThinkness * 2, 0),
-           true,
-           mCarrier, Vector<int>()),
-*/
-
 Application::Application()
     : mCarrier(),
       mWindow(),
@@ -101,6 +90,10 @@ void Application::setDataStructure(int dataStructure) {
 
         case Constants::DataStructure::Stack:
             mList = new Stack(mCarrier);
+            break;
+
+        case Constants::DataStructure::StaticArray:
+            mList = new StaticArray(mCarrier);
             break;
 
         default:

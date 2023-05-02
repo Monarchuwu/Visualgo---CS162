@@ -776,3 +776,273 @@ buildAnimationFind(SceneNode* src, SceneNode* dest,
 
     return animation;
 }
+
+Animation
+buildAnimationAccess(SceneNode* ptr,
+                     sf::Color colorBody,
+                     sf::Color colorOutline,
+                     sf::Color colorText) {
+    UpdateSceneNode update(ptr);
+    update.setFillColor(colorBody);
+    update.setOutlineColor(colorOutline);
+    update.setTextColor(colorText);
+
+    AnimationState scene;
+    scene.addUpdateSceneNode(update);
+
+    Animation animation;
+    animation.addState(scene);
+
+    return animation;
+}
+
+Animation
+buildAnimationFindWithoutTextBelow(SceneNode* src, SceneNode* dest,
+                                   sf::Color colorBody,
+                                   sf::Color colorOutline,
+                                   sf::Color colorText) {
+    Animation animation;
+
+    // int pos = 0;
+    while (src != nullptr) {
+        sf::Color oldFillBody    = src->mNode.getFillColorBody();
+        sf::Color oldFillText    = src->mNode.getFillColorText();
+        std::string oldTextBelow = src->mNode.getTextBelow();
+
+        UpdateSceneNode update1(src);
+        update1.setFillColor(colorBody);
+        update1.setOutlineColor(colorOutline);
+        update1.setTextColor(colorText);
+        // update1.addTextBelow(std::to_string(pos) + "/");
+
+        AnimationState scene1(src == dest ? 1.4f : 0.7f);
+        scene1.addUpdateSceneNode(update1);
+        // Animation add
+        animation.addState(scene1);
+
+        if (src == dest) {
+            UpdateSceneNode update2(src);
+            update2.setTextBelow(oldTextBelow);
+
+            AnimationState scene2(0.1f);
+            scene2.addUpdateSceneNode(update2);
+            // Animation add
+            animation.addState(scene2);
+            break;
+        }
+
+        UpdateSceneNode update2(src);
+        update2.setFillColor(oldFillBody);
+        update2.setTextColor(oldFillText);
+        update2.setTextBelow(oldTextBelow);
+
+        AnimationState scene2(0.1f);
+        scene2.addUpdateSceneNode(update2);
+        // Animation add
+        animation.addState(scene2);
+
+        src = src->mChildren;
+        // ++pos;
+    }
+
+    return animation;
+}
+
+Animation
+buildAnimationInsertStaticArray(SceneNode* ptr, SceneNode* mTail,
+                                sf::Color colorBody1,
+                                sf::Color colorOutline1,
+                                sf::Color colorText1,
+                                sf::Color colorBody2,
+                                sf::Color colorOutline2,
+                                sf::Color colorText2,
+                                int val) {
+
+    Animation animation;
+
+    while (mTail != ptr) {
+        SceneNode* prev = mTail->mParent;
+
+        /* ---------- Scene 1 ---------- */
+        /* ------ Highlight Node  ------ */
+        AnimationState scene1(0.5f);
+        // Update 1.1
+        UpdateSceneNode update1_1(prev);
+        update1_1.setFillColor(colorBody2);
+        update1_1.setOutlineColor(colorOutline2);
+        update1_1.setTextColor(colorText2);
+        // Update 1.2
+        UpdateSceneNode update1_2(mTail);
+        update1_2.setFillColor(colorBody2);
+        update1_2.setOutlineColor(colorOutline2);
+        update1_2.setTextColor(colorText2);
+        // Scene add
+        scene1.addUpdateSceneNode(update1_1);
+        scene1.addUpdateSceneNode(update1_2);
+        /* ----------------------------- */
+
+        /* ---------- Scene 2 ---------- */
+        /* -- Highlight Node (color1) -- */
+        /* ------- Update Value  ------- */
+        AnimationState scene2(1.0f);
+        // Update 2.1
+        UpdateSceneNode update2_1(mTail);
+        update2_1.setFillColor(colorBody1);
+        update2_1.setOutlineColor(colorOutline1);
+        update2_1.setTextColor(colorText1);
+        update2_1.setVal(std::stoi(prev->mNode.getText()));
+        // Scene add
+        scene2.addUpdateSceneNode(update2_1);
+        /* ----------------------------- */
+
+        /* ---------- Scene 3 ---------- */
+        /* ----- Un-Highlight Node ----- */
+        AnimationState scene3(0.5f);
+        // Update 3.1
+        UpdateSceneNode update3_1(prev);
+        update3_1.setFillColor(Constants::NodeFillColor);
+        update3_1.setOutlineColor(Constants::NodeOutlineColor);
+        update3_1.setTextColor(Constants::TextNodeColor);
+        // Update 3.2
+        UpdateSceneNode update3_2(mTail);
+        update3_2.setFillColor(Constants::NodeFillColor);
+        update3_2.setOutlineColor(Constants::NodeOutlineColor);
+        update3_2.setTextColor(Constants::TextNodeColor);
+        // Scene add
+        scene3.addUpdateSceneNode(update3_1);
+        scene3.addUpdateSceneNode(update3_2);
+        /* ----------------------------- */
+
+        // Animation add
+        animation.addState(scene1);
+        animation.addState(scene2);
+        animation.addState(scene3);
+
+        mTail = prev;
+    }
+
+    // mTail = ptr now
+    // Just Update Value
+
+    /* ---------- Scene 1 ---------- */
+    /* -- Highlight Node (color1) -- */
+    /* ------- Update Value  ------- */
+    AnimationState scene1(1.5f);
+    // Update 1.1
+    UpdateSceneNode update1_1(ptr);
+    update1_1.setFillColor(colorBody1);
+    update1_1.setOutlineColor(colorOutline1);
+    update1_1.setTextColor(colorText1);
+    update1_1.setVal(val);
+    // Scene add
+    scene1.addUpdateSceneNode(update1_1);
+    /* ----------------------------- */
+
+    /* ---------- Scene 2 ---------- */
+    /* ----- Un-Highlight Node ----- */
+    AnimationState scene2(0.5f);
+    // Update 2.1
+    UpdateSceneNode update2_1(ptr);
+    update2_1.setFillColor(Constants::NodeFillColor);
+    update2_1.setOutlineColor(Constants::NodeOutlineColor);
+    update2_1.setTextColor(Constants::TextNodeColor);
+    // Scene add
+    scene2.addUpdateSceneNode(update2_1);
+    /* ----------------------------- */
+
+    // Animation add
+    animation.addState(scene1);
+    animation.addState(scene2);
+
+    return animation;
+}
+
+Animation
+buildAnimationDeleteStaticArray(SceneNode* ptr, SceneNode* mTail,
+                                sf::Color colorBody1,
+                                sf::Color colorOutline1,
+                                sf::Color colorText1,
+                                sf::Color colorBody2,
+                                sf::Color colorOutline2,
+                                sf::Color colorText2) {
+    Animation animation;
+
+    while (ptr != mTail) {
+        SceneNode* next = ptr->mChildren;
+
+        /* ---------- Scene 1 ---------- */
+        /* ------ Highlight Node  ------ */
+        AnimationState scene1(0.5f);
+        // Update 1.1
+        UpdateSceneNode update1_1(ptr);
+        update1_1.setFillColor(colorBody2);
+        update1_1.setOutlineColor(colorOutline2);
+        update1_1.setTextColor(colorText2);
+        // Update 1.2
+        UpdateSceneNode update1_2(next);
+        update1_2.setFillColor(colorBody2);
+        update1_2.setOutlineColor(colorOutline2);
+        update1_2.setTextColor(colorText2);
+        // Scene add
+        scene1.addUpdateSceneNode(update1_1);
+        scene1.addUpdateSceneNode(update1_2);
+        /* ----------------------------- */
+
+        /* ---------- Scene 2 ---------- */
+        /* -- Highlight Node (color1) -- */
+        /* ------- Update Value  ------- */
+        AnimationState scene2(1.0f);
+        // Update 2.1
+        UpdateSceneNode update2_1(ptr);
+        update2_1.setFillColor(colorBody1);
+        update2_1.setOutlineColor(colorOutline1);
+        update2_1.setTextColor(colorText1);
+        update2_1.setVal(std::stoi(next->mNode.getText()));
+        // Scene add
+        scene2.addUpdateSceneNode(update2_1);
+        /* ----------------------------- */
+
+        /* ---------- Scene 3 ---------- */
+        /* ----- Un-Highlight Node ----- */
+        AnimationState scene3(0.5f);
+        // Update 3.1
+        UpdateSceneNode update3_1(ptr);
+        update3_1.setFillColor(Constants::NodeFillColor);
+        update3_1.setOutlineColor(Constants::NodeOutlineColor);
+        update3_1.setTextColor(Constants::TextNodeColor);
+        // Update 3.2
+        UpdateSceneNode update3_2(next);
+        update3_2.setFillColor(Constants::NodeFillColor);
+        update3_2.setOutlineColor(Constants::NodeOutlineColor);
+        update3_2.setTextColor(Constants::TextNodeColor);
+        // Scene add
+        scene3.addUpdateSceneNode(update3_1);
+        scene3.addUpdateSceneNode(update3_2);
+        /* ----------------------------- */
+
+        // Animation add
+        animation.addState(scene1);
+        animation.addState(scene2);
+        animation.addState(scene3);
+
+        ptr = next;
+    }
+
+    // ptr = mTail now
+    // Just change the color
+
+    /* ---------- Scene 1 ---------- */
+    /* ------- Change color  ------- */
+    AnimationState scene1(1.5f);
+    // Update 1.1
+    UpdateSceneNode update1_1(ptr);
+    update1_1.setFillColor(Constants::GrayColor);
+    // Scene add
+    scene1.addUpdateSceneNode(update1_1);
+    /* ----------------------------- */
+
+    // Animation add
+    animation.addState(scene1);
+
+    return animation;
+}

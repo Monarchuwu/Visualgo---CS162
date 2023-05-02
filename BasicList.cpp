@@ -9,7 +9,8 @@ BasicList::BasicList(float radiusNode,
                      float initAngle,
                      sf::Vector2f shiftNode,
                      bool doubleHeadedArrow,
-                     Vector<int> arr)
+                     Vector<int> arr,
+                     bool numberArrayElements)
     : mRadiusNode(radiusNode),
       mOutlineThicknessNode(outlineThickness),
       mPointCountNode(pointCount),
@@ -18,6 +19,7 @@ BasicList::BasicList(float radiusNode,
       mDoubleHeadedArrow(doubleHeadedArrow),
       mArr(arr),
       mCountNode(arr.size()),
+      mNumberArray(numberArrayElements),
       mHead(nullptr) {
     updateArray();
 }
@@ -112,7 +114,18 @@ void BasicList::updateTextBelow() {
     if (mHead == nullptr) return;
     clearTextBelow();
 
-    mHead->mNode.setTextBelow("Head/");
-    SceneNode* mTail = find(mCountNode - 1);
-    mTail->mNode.setTextBelow(mTail->mNode.getTextBelow() + "Tail/");
+    if (!mNumberArray) {
+        mHead->mNode.setTextBelow("Head/");
+        SceneNode* mTail = find(mCountNode - 1);
+        mTail->mNode.setTextBelow(mTail->mNode.getTextBelow() + "Tail/");
+    }
+    else {
+        int pos = 0;
+        SceneNode* ptr = mHead;
+        while (ptr != nullptr) {
+            ptr->mNode.setTextBelow(std::to_string(pos) + "/");
+            ptr = ptr->mChildren;
+            ++pos;
+        }
+    }
 }
