@@ -158,7 +158,32 @@ Animation SinglyLinkedList::applyOperation() {
                 // updateHeadPosition();
                 updateCarrier();
             }
-            else if (mCarrier.mPos == mCountNode - 1) {} // Delete At End
+            else if (mCarrier.mPos == mCountNode - 1) { // Delete At End
+                SceneNode* ptr = find(mCountNode - 2);
+
+                mStatesHolder        = holdColorAnimationFind(mHead, ptr);
+                Animation animation1 = buildAnimationFind(mHead, ptr,
+                                                          Constants::OrangeColor,
+                                                          Constants::OrangeColor,
+                                                          sf::Color::White);
+                if (ptr == nullptr) return animation1;
+                animation.add(animation1);
+
+                Animation animation2 = buildAnimationDeleteAtEnd(ptr->mChildren, mHead,
+                                                                 sf::Color::Red,
+                                                                 sf::Color::Red,
+                                                                 sf::Color::White,
+                                                                 Constants::OrangeColor,
+                                                                 Constants::OrangeColor,
+                                                                 sf::Color::White,
+                                                                 mShiftNode);
+                animation.add(animation2);
+
+                --mCountNode;
+                // no need this because the head position will be update while animation
+                // updateHeadPosition();
+                updateCarrier();
+            }
             else { // Delete At Middle
                 SceneNode* ptr = find(mCarrier.mPos - 1);
 

@@ -355,21 +355,19 @@ buildAnimationDeleteAtBeginning(SceneNode* mHead,
     update1_1.setFillColor(colorBody2);
     update1_1.setOutlineColor(colorOutline2);
     update1_1.setTextColor(colorText2);
-    // Update 1.2
-    UpdateSceneNode update1_2(tmp);
-    update1_2.setFillColor(colorBody1);
-    update1_2.setOutlineColor(colorOutline1);
-    update1_2.setTextColor(colorText1);
     // Scene add
     scene1.addUpdateSceneNode(update1_1);
-    scene1.addUpdateSceneNode(update1_2);
     /* ----------------------------- */
 
     /* ---------- Scene 2 ---------- */
     AnimationState scene2(0.75f);
+    /* ------ Highlight Node  ------ */
     /* ------ Invisible arrow ------ */
     /* ------- Set TextBelow ------- */
     UpdateSceneNode update2_1(tmp);
+    update2_1.setFillColor(colorBody1);
+    update2_1.setOutlineColor(colorOutline1);
+    update2_1.setTextColor(colorText1);
     update2_1.setArrowVisible(false);
     update2_1.addTextBelow("Head/");
     update2_1.handleTailHeadTextBelow();
@@ -394,6 +392,95 @@ buildAnimationDeleteAtBeginning(SceneNode* mHead,
     // Scene add
     scene3.addUpdateSceneNode(update3_1);
     scene3.addUpdateSceneNode(update3_2);
+    /* ----------------------------- */
+
+    /* ---------- Scene 4 ---------- */
+    AnimationState scene4(0.75f);
+    /* ---- Un-hightlight Node  ---- */
+    UpdateSceneNode update4_1(tmp);
+    update4_1.setFillColor(Constants::NodeFillColor);
+    update4_1.setOutlineColor(Constants::NodeOutlineColor);
+    update4_1.setTextColor(Constants::TextNodeColor);
+    // Scene add
+    scene4.addUpdateSceneNode(update4_1);
+    /* ----------------------------- */
+
+    // Animation add
+    animation.addState(scene1);
+    animation.addState(scene2);
+    animation.addState(scene3);
+    animation.addState(scene4);
+
+    return animation;
+}
+
+Animation
+buildAnimationDeleteAtEnd(SceneNode* mTail, SceneNode* mHead,
+                                sf::Color colorBody1,
+                                sf::Color colorOutline1,
+                                sf::Color colorText1,
+                                sf::Color colorBody2,
+                                sf::Color colorOutline2,
+                                sf::Color colorText2,
+                                sf::Vector2f shiftNode) {
+    SceneNode* tmp = mTail->mParent;
+
+    Animation animation;
+
+    /* ---------- Scene 1 ---------- */
+    AnimationState scene1(0.75f);
+    /* ------ Highlight Node  ------ */
+    /* ------- Set TextBelow ------- */
+    // Update 1.1
+    UpdateSceneNode update1_1(tmp);
+    update1_1.setFillColor(colorBody2);
+    update1_1.setOutlineColor(colorOutline2);
+    update1_1.setTextColor(colorText2);
+    update1_1.addTextBelow("tmp/");
+    // Scene add
+    scene1.addUpdateSceneNode(update1_1);
+    /* ----------------------------- */
+
+    /* ---------- Scene 2 ---------- */
+    AnimationState scene2(0.75f);
+    /* ------ Highlight mTail ------ */
+    /* ------ Invisible arrow ------ */
+    // Update 2.1
+    UpdateSceneNode update2_1(mTail);
+    update2_1.setFillColor(colorBody1);
+    update2_1.setOutlineColor(colorOutline1);
+    update2_1.setTextColor(colorText1);
+    update2_1.setArrowVisible(false);
+    /* ------- Set TextBelow ------- */
+    // Update 2.2-4
+    UpdateSceneNode update2_2(tmp);
+    update2_2.resetTextBelow();
+    UpdateSceneNode update2_3(tmp);
+    update2_3.addTextBelow("Tail/");
+    UpdateSceneNode update2_4(mTail);
+    update2_4.setTextBelow("tmp/");
+    // Scene add
+    scene2.addUpdateSceneNode(update2_1);
+    scene2.addUpdateSceneNode(update2_2);
+    scene2.addUpdateSceneNode(update2_3);
+    scene2.addUpdateSceneNode(update2_4);
+    /* ----------------------------- */
+
+    /* ---------- Scene 3 ---------- */
+    AnimationState scene3(0.75f);
+    /* ---- Detach tmp - mTail  ---- */
+    UpdateSceneNode update3_1(tmp);
+    update3_1.setDetach(&SceneNodeHolder::Holder01);
+    /* -------- Set Delete  -------- */
+    UpdateSceneNode update3_2(mTail);
+    update3_2.setDelete();
+    /* ------- Set Position  ------- */
+    UpdateSceneNode update3_3(mHead);
+    update3_3.setTranslation(shiftNode / 2.f);
+    // Scene add
+    scene3.addUpdateSceneNode(update3_1);
+    scene3.addUpdateSceneNode(update3_2);
+    scene3.addUpdateSceneNode(update3_3);
     /* ----------------------------- */
 
     /* ---------- Scene 4 ---------- */
