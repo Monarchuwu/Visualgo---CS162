@@ -14,7 +14,7 @@ public:
     void updateCarrier();
 
     /* ----- Interact ----- */
-    //virtual void draw(sf::RenderTarget &target, sf::RenderStates states = sf::RenderStates::Default) const;
+    virtual void draw(sf::RenderTarget &target, sf::RenderStates states = sf::RenderStates::Default) const override;
 
 private:
     Carrier &mCarrier;

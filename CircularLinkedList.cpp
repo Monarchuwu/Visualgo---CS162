@@ -1,5 +1,6 @@
 #include "CircularLinkedList.h"
 #include "SceneNodeHolder.h"
+#include "Arrow.h"
 
 CircularLinkedList::CircularLinkedList(Carrier& carrier)
     : mCarrier(carrier),
@@ -14,9 +15,59 @@ void CircularLinkedList::updateCarrier() {
     mCarrier.mCountNode = mCountNode;
 }
 
-//void CircularLinkedList::draw(sf::RenderTarget& target, sf::RenderStates states) {
-//    //BasicList::draw(target, states);
-//}
+void CircularLinkedList::draw(sf::RenderTarget& target, sf::RenderStates states) const {
+    if (mHead == nullptr) return;
+
+    { // draw a Rectangle Arrow
+        /*
+            ____3____
+           |         |
+          4|         |2
+           `-->   ---'
+             5     1
+        */
+        sf::Vector2f src = mHead->getPosition();
+        sf::Vector2f dest;
+        SceneNode* ptr = mHead;
+        while (ptr != nullptr) {
+            dest += ptr->getPosition();
+            ptr = ptr->mChildren;
+        }
+        float thickness = Constants::NodeOutlineThinkness;
+
+        sf::RectangleShape rect1(sf::Vector2f(mShiftNode.x, thickness));
+        rect1.setFillColor(sf::Color::Black);
+        rect1.setOrigin(0.f, thickness / 2);
+        rect1.setPosition(dest);
+        target.draw(rect1);
+
+        sf::RectangleShape rect2(sf::Vector2f(mShiftNode.x, thickness));
+        rect2.setFillColor(sf::Color::Black);
+        rect2.setOrigin(0.f, thickness / 2);
+        rect2.setPosition(dest + sf::Vector2f(mShiftNode.x, 0));
+        rect2.setRotation(-90);
+        target.draw(rect2);
+
+        sf::RectangleShape rect3(sf::Vector2f(dest.x - src.x + mShiftNode.x * 2, thickness));
+        rect3.setFillColor(sf::Color::Black);
+        rect3.setOrigin(0.f, thickness / 2);
+        rect3.setPosition(src + sf::Vector2f(-mShiftNode.x, -mShiftNode.x));
+        target.draw(rect3);
+
+        sf::RectangleShape rect4(sf::Vector2f(mShiftNode.x, thickness));
+        rect4.setFillColor(sf::Color::Black);
+        rect4.setOrigin(0.f, thickness / 2);
+        rect4.setPosition(src - sf::Vector2f(mShiftNode.x, 0));
+        rect4.setRotation(-90);
+        target.draw(rect4);
+
+        drawArrow2Point(src + sf::Vector2f(-mShiftNode.x, 0),
+                        src + sf::Vector2f(-mRadiusNode - mOutlineThicknessNode, 0),
+                        target);
+    }
+
+    BasicList::draw(target, states);
+}
 
 Animation CircularLinkedList::applyOperation() {
     mCarrier.mPlayIsPressed = false;
