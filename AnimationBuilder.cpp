@@ -730,34 +730,48 @@ buildAnimationFind(SceneNode* src, SceneNode* dest,
                    sf::Color colorOutline,
                    sf::Color colorText) {
 
-    UpdateSceneNode temp;
-    AnimationState state;
     Animation animation;
 
+    int pos = 0;
     while (src != nullptr) {
+        sf::Color oldFillBody    = src->mNode.getFillColorBody();
+        sf::Color oldFillText    = src->mNode.getFillColorText();
+        std::string oldTextBelow = src->mNode.getTextBelow();
 
-        sf::Color oldFillBody = src->mNode.getFillColorBody();
-        sf::Color oldFillText = src->mNode.getFillColorText();
+        UpdateSceneNode update1(src);
+        update1.setFillColor(colorBody);
+        update1.setOutlineColor(colorOutline);
+        update1.setTextColor(colorText);
+        update1.addTextBelow(std::to_string(pos) + "/");
 
-        temp = UpdateSceneNode(src);
-        temp.setFillColor(colorBody);
-        temp.setOutlineColor(colorOutline);
-        temp.setTextColor(colorText);
+        AnimationState scene1(src == dest ? 1.4f : 0.7f);
+        scene1.addUpdateSceneNode(update1);
+        // Animation add
+        animation.addState(scene1);
 
-        state.addUpdateSceneNode(temp);
-        animation.addState(state);
-        state.popUpdateSceneNode();
+        if (src == dest) {
+            UpdateSceneNode update2(src);
+            update2.setTextBelow(oldTextBelow);
 
-        if (src == dest) break;
+            AnimationState scene2(0.1f);
+            scene2.addUpdateSceneNode(update2);
+            // Animation add
+            animation.addState(scene2);
+            break;
+        }
 
-        temp = UpdateSceneNode(src);
-        temp.setFillColor(oldFillBody);
-        temp.setTextColor(oldFillText);
-        state.addUpdateSceneNode(temp);
-        animation.addState(state);
-        state.popUpdateSceneNode();
+        UpdateSceneNode update2(src);
+        update2.setFillColor(oldFillBody);
+        update2.setTextColor(oldFillText);
+        update2.setTextBelow(oldTextBelow);
+
+        AnimationState scene2(0.1f);
+        scene2.addUpdateSceneNode(update2);
+        // Animation add
+        animation.addState(scene2);
 
         src = src->mChildren;
+        ++pos;
     }
 
     return animation;
