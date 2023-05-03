@@ -87,10 +87,22 @@ Vector<T>::Vector(const Vector& arg)
 
 template<typename T>
 Vector<T>& Vector<T>::operator=(const Vector<T>& arg) {
+    if (this == &arg) return *this; // Self-assingment not work needed
+
+    // Current Vector has enough space, so there is no need for new allocation
+    if (arg.mSize <= mCapacity) {
+        mSize = arg.mSize;
+        for (int i = 0; i < arg.mSize; ++i) {
+            mData[i] = arg.mData[i];
+        }
+        return *this;
+    }
+
     mSize     = arg.mSize;
     mCapacity = arg.mCapacity;
-    mData     = new T[mCapacity];
-    for (int i = 0; i < mSize; ++i) {
+    delete[] mData;
+    mData = new T[arg.mCapacity];
+    for (int i = 0; i < arg.mSize; ++i) {
         mData[i] = arg.mData[i];
     }
     return *this;

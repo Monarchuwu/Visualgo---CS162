@@ -19,6 +19,8 @@ public:
               bool doubleHeadedArrow,
               Vector<int> arr,
               bool numberArrayElements = false);
+    // Destructor
+    ~BasicList();
 
     /* ------ Modify ------ */
     // return the number of Node

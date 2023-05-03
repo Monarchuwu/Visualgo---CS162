@@ -65,6 +65,9 @@ void Application::processEvents() {
 }
 
 void Application::setDataStructure(int dataStructure) {
+    // apply all animation before set other DS
+    mAnimation.applyAll();
+
     mDataStructure = dataStructure;
     mControlTable.setButtonMainList(Constants::DSOperationList[mDataStructure]);
 

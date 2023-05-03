@@ -5,7 +5,7 @@ class Animation {
 public:
     // Constructor
     Animation();
-    Animation(Vector<AnimationState> list);
+    //Animation(Vector<AnimationState> list);
 
     // Add AnimationState
     void addState(AnimationState state);

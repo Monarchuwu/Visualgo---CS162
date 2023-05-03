@@ -23,6 +23,9 @@ BasicList::BasicList(float radiusNode,
       mHead(nullptr) {
     updateArray();
 }
+BasicList::~BasicList() {
+    delete mHead;
+}
 
 size_t BasicList::getCountNode() const { return mArr.size(); }
 SceneNode* BasicList::find(const size_t index) const {
