@@ -197,7 +197,7 @@
     </Font>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="initSLL.txt">
+    <Text Include="initFromFile.txt">
       <Filter>Resource Files</Filter>
     </Text>
   </ItemGroup>

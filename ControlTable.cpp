@@ -16,7 +16,7 @@ ControlTable::ControlTable(Carrier &carrier)
 
     mInitBlock.setSize(540, 110);
     mInitBlock.setPosition(320, 550);
-    mInitBlock.setFileName("initSLL.txt");
+    mInitBlock.setFileName("initFromFile.txt");
 
     mSelectPosition.setSize(530, 50);
     mSelectPosition.setPosition(325, 680);
